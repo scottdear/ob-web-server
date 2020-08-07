@@ -6,7 +6,7 @@ admin.initializeApp({
         "type": config.get("type"),
         "project_id": config.get("projectId"),
         "private_key_id": config.get("privateKeyId"),
-        "private_key": config.get("privateKey"),
+        "private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
         "client_email": config.get("clientEmail"),
         "client_id": config.get("clientId"),
         "auth_uri": config.get("authUri"),
