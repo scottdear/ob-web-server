@@ -1,0 +1,349 @@
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+
+const { User } = require('../models/users/user');
+const { SeaPod } = require('../models/seapod/seapod');
+const { PermissionService } = require('../services/permission');
+const { generateFakeData, isOwnerAtSeaPod } = require('../helpers/utilites');
+const { filterUserAndSeapods, filterSeaPods } = require('../helpers/filtering');
+
+class SeaPodService {
+
+    async buildSeaPod(obj) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const user = await User.findById(obj.user)
+                .populate('seaPods')
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'accessRequests',
+                        model: 'ReqestAccess'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'accessInvitation',
+                        model: 'ReqestAccess'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'permissionSets',
+                        model: 'Permissions'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'lightScenes',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'users.lighting.lightScenes',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'users.permissionSet',
+                        model: 'Permissions'
+                    }
+                })
+                .populate('accessRequests')
+                .populate('accessInvitation');
+
+            if (!user) return {
+                isError: true,
+                statusCode: 404,
+                error: 'User Not Found!'
+            };
+
+            const token = obj.token;
+            const notificationToken = await this.getNotificationToken(user, token);
+
+            const seapod = await this.createSeapod(obj.body, notificationToken, obj.hostName, user);
+            user.seaPods.push(seapod._id);
+
+            await user.save();
+            const newSeaPod = await seapod.save();
+            user.seaPods.pop();
+            user.seaPods.push(newSeaPod);
+
+            await session.commitTransaction();
+
+            const updatedUser = filterUserAndSeapods(user.toJSON(), generateFakeData(user.seaPods.length));
+
+            return {
+                isError: false,
+                user: updatedUser
+            };
+        } catch (error) {
+            await session.abortTransaction();
+            return {
+                isError: true,
+                statusCode: 404,
+                error: error
+            };
+        } finally {
+            session.endSession();
+        }
+    }
+
+    async updateSeaPodName(seapodId, seapodName, userId) {
+        const seapod = await this.getSeapodById(seapodId);
+        if (!seapod) return {
+            isError: true,
+            statusCode: 404,
+            error: "Seapod not found!"
+        }
+
+        if (!isOwnerAtSeaPod(seapod.users, userId)) return {
+            isError: true,
+            statusCode: 403,
+            error: "Access denied. you are not allowed to update the seapod name!"
+        }
+
+        seapod.SeaPodName = seapodName;
+        await seapod.save();
+        return {
+            isError: false,
+            updateSeapod: filterSeaPods(JSON.parse(JSON.stringify([seapod])), userId, generateFakeData(1))
+        }
+    }
+
+    async getNotificationToken(user, token) {
+        for (const td of user.tokensAndDevices) {
+            const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+            if (decoded.jti == td.jti) //hasTheSameJti
+                return td.notificationToken;
+        }
+        return "";
+    }
+
+    async getAllSeapods() {
+        const seaPods = await SeaPod.find();
+        for (const seapod of seaPods)
+            seapod.data = generateFakeData(1).pop();
+
+        return seaPods;
+    }
+
+    async getSeapodById(seapodId) {
+        const seapod = await SeaPod.findById(seapodId);
+        if (!seapod) return;
+        seapod.data = generateFakeData(1).pop();
+        return seapod;
+    }
+
+    async getUserSeapods(userId) {
+        const userSeapods = await User.findById(userId).populate('seaPods').select('seaPods');
+
+        if (!userSeapods.seaPods) return {
+            isError: true,
+            statusCode: 404,
+            error: "SeaPods Not Found!"
+        }
+
+        const filteredSeapods = filterSeaPods(JSON.parse(JSON.stringify(userSeapods.seaPods)), userId, generateFakeData(userSeapods.seaPods.length));
+
+        return {
+            isError: false,
+            seaPods: filteredSeapods
+        };
+    }
+
+    async toggleIsDisableStatus(seapodId, userId, ownerId) {
+        const seapod = await this.getSeapodById(seapodId);
+
+        if (!seapod) return {
+            isError: true,
+            statusCode: 404,
+            error: 'Seapod Not found!'
+        };
+        let isOwner = isOwnerAtSeaPod(seapod.users, ownerId);
+        if (!isOwner) return {
+            isError: true,
+            statusCode: 403,
+            error: 'Your are not allowed to take this action on the current seapod'
+        };
+
+        for (const seapodUser of seapod.users) {
+            if (seapodUser._id === userId)
+                seapodUser.isDisabled = !seapodUser.isDisabled;
+        }
+
+        await seapod.save();
+
+        return {
+            isError: false,
+            seapodUsers: seapod.users
+        };
+    }
+
+
+    async removeUserFromSeapod(seapodId, userId, ownerId, eventEmitter) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const seapod = await this.getSeapodById(seapodId);
+
+            if (!seapod) return {
+                isError: true,
+                statusCode: 404,
+                error: "Seapod Not found!"
+            };
+
+            let isOwner = isOwnerAtSeaPod(seapod.users, ownerId);
+            if (!isOwner) return {
+                isError: true,
+                statusCode: 403,
+                error: "Your are not allowed to take this action on the current seapod"
+            };
+
+            if (seapod.users.length === 1) return {
+                isError: true,
+                statusCode: 400,
+                error: "This member can't be removed,SeaPod Must have at least one member"
+            };
+            const onwerName = seapod.users.id(ownerId).userName;
+            const index = this.indexOfUser(seapod.users, userId);
+            if (index == -1) return {
+                isError: true,
+                statusCode: 404,
+                error: "User not found!"
+            }
+
+            seapod.users.splice(index, 1);
+
+            await seapod.save();
+
+            const user = await User.findById(userId);
+            const seapodIndex = user.seaPods.indexOf(seapodId);
+            user.seaPods.splice(seapodIndex, 1);
+            await user.save();
+            await session.commitTransaction();
+
+            const notificationData = {
+                title: `You are no longer a member at Sea Pod ${seapod.name} (${seapod.vessleCode})`,
+                message: 'SEAPOD ACCESS UPDATE',
+                data: {
+                    "message": `You have been deleted by ${onwerName}`
+                },
+                type: 'seapod_member_removal'
+            };
+
+            eventEmitter.emit('sendRequestAccessNotification',
+                [user.tokensAndDevices[user.tokensAndDevices.length - 1].notificationToken], notificationData);
+
+            eventEmitter.emit('addNotificationDataToOnwers', [user._id],
+                notificationData);
+
+            return {
+                isError: false,
+                seapodUsers: seapod.users
+            };
+        } catch (error) {
+            await session.abortTransaction();
+            return {
+                isError: true,
+                statusCode: 500,
+                error: error.message
+            }
+        } finally {
+            session.endSession();
+        }
+    }
+
+    async createSeapod(seapodData, notificationToken, hostName, user) {
+        let seapod = new SeaPod(seapodData);
+
+        seapod.data = generateFakeData(1).pop();
+        seapod.location = seapod.generateRandomLocation();
+
+        seapod.users.push({
+            _id: user._id,
+            userName: user.getUserName(),
+            profilePicUrl: user.profileImageUrl,
+            notificationToken: notificationToken,
+            type: 'OWNER',
+        });
+
+        seapod.actionsHistory.push({
+            action: "Sea Pod Creation",
+            actionResult: "SUCCEESED",
+            userId: user._id,
+            userName: user.getUserName(),
+            userType: 'OWNER'
+        });
+        const vesselCode = seapod.generateVesselCode();
+        seapod.vessleCode = vesselCode;
+
+        const qrCodeUrl = await seapod.generateQrCode(vesselCode, hostName);
+        seapod.qrCodeImageUrl = qrCodeUrl;
+
+        const permissionService = new PermissionService();
+        seapod = await permissionService.addDefaultPremissionSets(seapod);
+
+        await seapod.populate('permissionSets').execPopulate();
+        seapod = await permissionService.addDefaultPremissionSet(user._id, seapod);
+
+        return seapod;
+    }
+
+    indexOfUser(users, userId) {
+        for (let index = 0; index < users.length; index++)
+            if (users[index]._id === userId)
+                return index;
+        return -1;
+    }
+
+    async getUserDetails(seapodId, userId) {
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                return {
+                    isError: true,
+                    statusCode: 404,
+                    error: 'User Not Found!'
+                };
+            }
+
+            let seapod = await this.getSeapodById(seapodId);
+            if (!seapod) return {
+                isError: true,
+                statusCode: 404,
+                error: "Seapod Not found!"
+            };
+
+            await seapod.populate('users.permissionSet')
+                .populate({
+                    path: "users.lighting.lightScenes",
+                    model: 'LightiningScenes'
+                })
+                .execPopulate();
+
+            const seapodUser = seapod.users.id(userId);
+
+            return {
+                isError: false,
+                seapodUsers: seapodUser
+            };
+        } catch (error) {
+            return {
+                isError: true,
+                statusCode: 500,
+                error: error.message
+            }
+        }
+    }
+}
+exports.SeaPodService = SeaPodService;

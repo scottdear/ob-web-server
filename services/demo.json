@@ -1,0 +1,2514 @@
+{
+  "lightScenes": [
+    {
+      "_id": "5f048538fb3b3621dc3d8b47",
+      "source": "seapod",
+      "sceneName": "Night Shift",
+      "rooms": [
+        {
+            "label": "BedRoom",
+            "moodes": [
+                {
+                    "lightName": "Lightstrip 1",
+                    "lightColor": "0xFF9B9591",
+                    "status": true,
+                    "brightness": 50
+                },
+                {
+                    "lightName": "Lightstrip 2",
+                    "lightColor": "0xFF123456",
+                    "status": true,
+                    "brightness": 50
+                }
+            ]
+        }
+      ],
+      "seapodId": "5f04843cfb3b3621dc3d8aaa",
+      "userId": "5f0483edfb3b3621dc3d8a0c",
+      "__v": 0
+    },
+    {
+      "_id": "5f048572fb3b3621dc3d8b4c",
+      "source": "seapod",
+      "sceneName": "Studying",
+      "rooms": [
+        {
+            "label": "BedRoom",
+            "moodes": [
+                {
+                    "lightName": "Lightstrip 1",
+                    "lightColor": "0xFF9B9591",
+                    "status": true,
+                    "brightness": 50
+                },
+                {
+                    "lightName": "Lightstrip 2",
+                    "lightColor": "0xFF123456",
+                    "status": true,
+                    "brightness": 50
+                }
+            ]
+        }
+      ],
+      "seapodId": "5f04843cfb3b3621dc3d8aaa",
+      "userId": "5f0483edfb3b3621dc3d8a0c",
+      "__v": 0
+    },
+    {
+      "_id": "5f048586fb3b3621dc3d8b51",
+      "source": "seapod",
+      "sceneName": "Raniy Day",
+      "rooms": [
+        {
+            "label": "BedRoom",
+            "moodes": [
+                {
+                    "lightName": "Lightstrip 1",
+                    "lightColor": "0xFF9B9591",
+                    "status": true,
+                    "brightness": 50
+                },
+                {
+                    "lightName": "Lightstrip 2",
+                    "lightColor": "0xFF123456",
+                    "status": true,
+                    "brightness": 50
+                }
+            ]
+        }
+      ],
+      "seapodId": "5f04843cfb3b3621dc3d8aaa",
+      "userId": "5f0483edfb3b3621dc3d8a0c",
+      "__v": 0
+    },
+    {
+      "_id": "5f0485a0fb3b3621dc3d8b56",
+      "source": "user",
+      "sceneName": "Entertainment",
+      "rooms": [
+        {
+            "label": "BedRoom",
+            "moodes": [
+                {
+                    "lightName": "Lightstrip 1",
+                    "lightColor": "0xFF9B9591",
+                    "status": true,
+                    "brightness": 50
+                },
+                {
+                    "lightName": "Lightstrip 2",
+                    "lightColor": "0xFF123456",
+                    "status": true,
+                    "brightness": 50
+                }
+            ]
+        }
+      ],
+      "seapodId": "5f04843cfb3b3621dc3d8aaa",
+      "userId": "5f0483edfb3b3621dc3d8a0c",
+      "__v": 0
+    },
+    {
+      "_id": "5f0485bffb3b3621dc3d8b5a",
+      "source": "user",
+      "sceneName": "Raniy Day",
+      "rooms": [
+        {
+            "label": "BedRoom",
+            "moodes": [
+                {
+                    "lightName": "Lightstrip 1",
+                    "lightColor": "0xFF9B9591",
+                    "status": true,
+                    "brightness": 50
+                },
+                {
+                    "lightName": "Lightstrip 2",
+                    "lightColor": "0xFF123456",
+                    "status": true,
+                    "brightness": 50
+                }
+            ]
+        }
+      ],
+      "seapodId": "5f0483edfb3b3621dc3d8a0f",
+      "userId": "5f0483edfb3b3621dc3d8a0c",
+      "__v": 0
+    },
+    {
+      "_id": "5f0485c9fb3b3621dc3d8b5e",
+      "source": "seapod",
+      "sceneName": "Studying",
+      "rooms": [
+        {
+            "label": "BedRoom",
+            "moodes": [
+                {
+                    "lightName": "Lightstrip 1",
+                    "lightColor": "0xFF9B9591",
+                    "status": true,
+                    "brightness": 50
+                },
+                {
+                    "lightName": "Lightstrip 2",
+                    "lightColor": "0xFF123456",
+                    "status": true,
+                    "brightness": 50
+                }
+            ]
+        }
+      ],
+      "seapodId": "5f0483edfb3b3621dc3d8a0f",
+      "userId": "5f0483edfb3b3621dc3d8a0c",
+      "__v": 0
+    }
+  ],
+  "permissionSets": [
+    {
+      "_id": "5f0483eefb3b3621dc3d8a12",
+      "isDefault": true,
+      "Name": "Default GUEST Permissions",
+      "Sets": [
+        {
+          "_id": "5f0483eefb3b3621dc3d8a23",
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "OFF",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "OFF",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "ON",
+              "Name": "stove"
+            },
+            {
+              "Status": "ON",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "_id": "5f0483eefb3b3621dc3d8a1f",
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "OFF",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "ON",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "OFF",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f0483eefb3b3621dc3d8a30",
+      "isDefault": true,
+      "Name": "Default MEMBER Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "ON",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "ON",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "ON",
+              "Name": "stove"
+            },
+            {
+              "Status": "ON",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "ON",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "ON",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f0483effb3b3621dc3d8a4e",
+      "isDefault": true,
+      "Name": "Default VISITOR Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "OFF",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "OFF",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "OFF",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "OFF",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "OFF",
+              "Name": "stove"
+            },
+            {
+              "Status": "OFF",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "OFF",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "OFF",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "OFF",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f0483effb3b3621dc3d8a6c",
+      "isDefault": true,
+      "Name": "Default ADMIN Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "stove"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f0483effb3b3621dc3d8a8a",
+      "isDefault": true,
+      "Name": "Default OWNER Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "ON",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "ON",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "ON",
+              "Name": "stove"
+            },
+            {
+              "Status": "ON",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "ON",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "ON",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "ON",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f04843cfb3b3621dc3d8aad",
+      "isDefault": true,
+      "Name": "Default GUEST Permissions",
+      "Sets": [
+        {
+          "_id": "5f0483eefb3b3621dc3d8a23",
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "OFF",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "OFF",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "ON",
+              "Name": "stove"
+            },
+            {
+              "Status": "ON",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "_id": "5f0483eefb3b3621dc3d8a1f",
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "OFF",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "ON",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "OFF",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f04843cfb3b3621dc3d8acb",
+      "isDefault": true,
+      "Name": "Default MEMBER Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "ON",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "ON",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "ON",
+              "Name": "stove"
+            },
+            {
+              "Status": "ON",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "ON",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "ON",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f04843cfb3b3621dc3d8ae9",
+      "isDefault": true,
+      "Name": "Default VISITOR Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "OFF",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "OFF",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "OFF",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "OFF",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "OFF",
+              "Name": "stove"
+            },
+            {
+              "Status": "OFF",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "OFF",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "OFF",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "OFF",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "OFF",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f04843cfb3b3621dc3d8b07",
+      "isDefault": true,
+      "Name": "Default ADMIN Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "stove"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f04843cfb3b3621dc3d8b25",
+      "isDefault": true,
+      "Name": "Default OWNER Permissions",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "ON",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "ON",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "ON",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "ON",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "ON",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "ON",
+              "Name": "stove"
+            },
+            {
+              "Status": "ON",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "ON",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "ON",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "ON",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "ON",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "ON",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f048688fb3b3621dc3d8b67",
+      "isDefault": false,
+      "Name": "visitor - no bedroom access",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "stove"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    },
+    {
+      "_id": "5f04869dfb3b3621dc3d8b88",
+      "isDefault": false,
+      "Name": "family access",
+      "Sets": [
+        {
+          "Name": "MainControls",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "changeOrientation"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "raiseLowerStairs"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "frostWindows"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyACTemp"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "doorsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "windowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "smartWindowsControl"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "powerSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "waterSupply"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "audioSystem"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "stove"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "oven"
+            }
+          ]
+        },
+        {
+          "Name": "Cameras",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "kitchen"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "livingRoom"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "Bedroom"
+            }
+          ]
+        },
+        {
+          "Name": "Lighting",
+          "Permissions": [
+            {
+              "Status": "EMERGENCY",
+              "Name": "turnLights"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "modifyIntensity"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "switchLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addPersonalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "addGlobalLightscene"
+            },
+            {
+              "Status": "EMERGENCY",
+              "Name": "manageGlobalLightscene"
+            }
+          ]
+        },
+        {
+          "Name": "AccessManagement",
+          "Permissions": [
+            {
+              "Status": "OFF",
+              "Name": "inviteGuests"
+            }
+          ]
+        },
+        {
+          "Name": "SeapodInfo",
+          "Permissions": [
+            {
+              "Status": "ON",
+              "Name": "serialNumber"
+            },
+            {
+              "Status": "ON",
+              "Name": "modelInfoAndSpec"
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    }
+  ],
+  "seapods": [
+    {
+      "_id": "5f0483edfb3b3621dc3d8a0f",
+      "powerUtilities": [],
+      "soundSystem": [],
+      "masterBedroomFloorFinishing": [],
+      "hasWeatherStation": false,
+      "hasFathometer": false,
+      "hasCleanWaterLevelIndicator": false,
+      "permissionSets": [
+        "5f0483eefb3b3621dc3d8a12",
+        "5f0483eefb3b3621dc3d8a30",
+        "5f0483effb3b3621dc3d8a4e",
+        "5f0483effb3b3621dc3d8a6c",
+        "5f0483effb3b3621dc3d8a8a",
+        "5f048688fb3b3621dc3d8b67",
+        "5f04869dfb3b3621dc3d8b88"
+      ],
+      "defaultLightiningScenes": [],
+      "lightScenes": [
+        "5f0485c9fb3b3621dc3d8b5e"
+      ],
+      "seaPodOrientation": 50,
+      "accessRequests": [
+        "5f04871afb3b3621dc3d8bac",
+        "5f048d7622b90a1580659582",
+        "5f048e5c22b90a1580659599"
+      ],
+      "accessInvitation": [
+        "5f04901322b90a1580659644"
+      ],
+      "SeaPodName": "Sea Breeze",
+      "exteriorFinish": "exfinish",
+      "exterioirColor": "0xff3399FF",
+      "sparFinish": "sparFinish",
+      "sparDesign": "sparDesign",
+      "deckEnclosure": "deckEnclosure",
+      "bedAndLivingRoomEnclousure": "bedAndLivingRoomEnclousure",
+      "power": "power",
+      "underWaterRoomFinishing": "underWaterRoomFinishing",
+      "underWaterWindows": "underWaterWindows",
+      "masterBedroomInteriorWallColor": "0xff3399FF",
+      "livingRoomloorFinishing": "livingRoomloorFinishing",
+      "livingRoomInteriorWallColor": "0xff3399FF",
+      "kitchenfloorFinishing": "kitchenfloorFinishing",
+      "kitchenInteriorWallColor": "0xff3399FF",
+      "entryStairs": "true",
+      "interiorBedroomWallColor": "0xff3399FF",
+      "deckFloorFinishMaterial": "deckFloorFinishMaterial",
+      "seaPodStatus": "seaPodStatus",
+      "users": [
+        {
+          "isDisabled": false,
+          "lighting": {
+            "status": false,
+            "lightScenes": [
+              "5f0485bffb3b3621dc3d8b5a",
+              "5f0485d8fb3b3621dc3d8b63"
+            ],
+            "_id": "5f0483edfb3b3621dc3d8a10"
+          },
+          "accessPeriod": 0,
+          "_id": "5f0483edfb3b3621dc3d8a0c",
+          "userName": "John Doe",
+          "profilePicUrl": "",
+          "notificationToken": "jsdfgdsfjghsdfghdfsjkghsfkdjghdfksjghdjf",
+          "type": "OWNER",
+          "checkInDate": 1594131437830,
+          "permissionSet": "5f0483effb3b3621dc3d8a8a"
+        },
+        {
+          "isDisabled": false,
+          "lighting": {
+            "status": false,
+            "lightScenes": [],
+            "_id": "5f048c7922b90a1580659579"
+          },
+          "accessPeriod": 86400000,
+          "_id": "5f048719fb3b3621dc3d8ba7",
+          "userName": "Ata Mahmoud",
+          "profilePicUrl": "",
+          "notificationToken": "dnsajdbazfhb",
+          "type": "GUEST",
+          "permissionSet": "5f048688fb3b3621dc3d8b67",
+          "checkInDate": 1594133625978
+        },
+        {
+          "isDisabled": false,
+          "lighting": {
+            "status": false,
+            "lightScenes": [],
+            "_id": "5f048e0522b90a1580659591"
+          },
+          "accessPeriod": 86400000,
+          "_id": "5f048719fb3b3621dc3d8ba7",
+          "userName": "Ata Mahmoud",
+          "profilePicUrl": "",
+          "notificationToken": "dnsajdbazfhb",
+          "type": "GUEST",
+          "permissionSet": "5f048688fb3b3621dc3d8b67",
+          "checkInDate": 1594134021474
+        }
+      ],
+      "actionsHistory": [
+        {
+          "_id": "5f0483edfb3b3621dc3d8a11",
+          "action": "Sea Pod Creation",
+          "actionResult": "SUCCEESED",
+          "userId": "5f0483edfb3b3621dc3d8a0c",
+          "userName": "John Doe",
+          "userType": "OWNER"
+        }
+      ],
+      "location": {
+        "latitude": 7.944364479142253,
+        "longitude": -82.07498781322919
+      },
+      "vessleCode": "S0F83ED",
+      "qrCodeImageUrl": "https://undefined/qrcodes/S0F83ED.png",
+      "__v": 11
+    },
+    {
+      "_id": "5f04843cfb3b3621dc3d8aaa",
+      "powerUtilities": [],
+      "soundSystem": [],
+      "masterBedroomFloorFinishing": [],
+      "hasWeatherStation": false,
+      "hasFathometer": false,
+      "hasCleanWaterLevelIndicator": false,
+      "permissionSets": [
+        "5f04843cfb3b3621dc3d8aad",
+        "5f04843cfb3b3621dc3d8acb",
+        "5f04843cfb3b3621dc3d8ae9",
+        "5f04843cfb3b3621dc3d8b07",
+        "5f04843cfb3b3621dc3d8b25"
+      ],
+      "defaultLightiningScenes": [],
+      "lightScenes": [
+        "5f048538fb3b3621dc3d8b47",
+        "5f048572fb3b3621dc3d8b4c",
+        "5f048586fb3b3621dc3d8b51"
+      ],
+      "seaPodOrientation": 50,
+      "accessRequests": [],
+      "accessInvitation": [],
+      "SeaPodName": "Blue Moon",
+      "exteriorFinish": "exfinish",
+      "exterioirColor": "0xff3399FF",
+      "sparFinish": "sparFinish",
+      "sparDesign": "sparDesign",
+      "deckEnclosure": "deckEnclosure",
+      "bedAndLivingRoomEnclousure": "bedAndLivingRoomEnclousure",
+      "power": "power",
+      "underWaterRoomFinishing": "underWaterRoomFinishing",
+      "underWaterWindows": "underWaterWindows",
+      "masterBedroomInteriorWallColor": "0xff3399FF",
+      "livingRoomloorFinishing": "livingRoomloorFinishing",
+      "livingRoomInteriorWallColor": "0xff3399FF",
+      "kitchenfloorFinishing": "kitchenfloorFinishing",
+      "kitchenInteriorWallColor": "0xff3399FF",
+      "entryStairs": "true",
+      "interiorBedroomWallColor": "0xff3399FF",
+      "deckFloorFinishMaterial": "deckFloorFinishMaterial",
+      "seaPodStatus": "seaPodStatus",
+      "users": [
+        {
+          "isDisabled": false,
+          "lighting": {
+            "status": false,
+            "lightScenes": [
+              "5f0485a0fb3b3621dc3d8b56"
+            ],
+            "_id": "5f04843cfb3b3621dc3d8aab"
+          },
+          "accessPeriod": 0,
+          "_id": "5f0483edfb3b3621dc3d8a0c",
+          "userName": "John Doe",
+          "profilePicUrl": "",
+          "notificationToken": "jsdfgdsfjghsdfghdfsjkghsfkdjghdfksjghdjf",
+          "type": "OWNER",
+          "checkInDate": 1594131516628,
+          "permissionSet": "5f04843cfb3b3621dc3d8b25"
+        }
+      ],
+      "actionsHistory": [
+        {
+          "_id": "5f04843cfb3b3621dc3d8aac",
+          "action": "Sea Pod Creation",
+          "actionResult": "SUCCEESED",
+          "userId": "5f0483edfb3b3621dc3d8a0c",
+          "userName": "John Doe",
+          "userType": "OWNER"
+        }
+      ],
+      "location": {
+        "latitude": 8.053562908380442,
+        "longitude": -82.05865331761062
+      },
+      "vessleCode": "SAA843C",
+      "qrCodeImageUrl": "https://undefined/qrcodes/SAA843C.png",
+      "__v": 4
+    },
+    {
+      "_id": "5f048f4622b90a15806595a5",
+      "powerUtilities": [],
+      "soundSystem": [],
+      "masterBedroomFloorFinishing": [],
+      "hasWeatherStation": false,
+      "hasFathometer": false,
+      "hasCleanWaterLevelIndicator": false,
+      "permissionSets": [
+        "5f048f4722b90a15806595a8",
+        "5f048f4722b90a15806595c6",
+        "5f048f4722b90a15806595e4",
+        "5f048f4722b90a1580659602",
+        "5f048f4722b90a1580659620"
+      ],
+      "defaultLightiningScenes": [],
+      "lightScenes": [],
+      "seaPodOrientation": 50,
+      "accessRequests": [],
+      "accessInvitation": [],
+      "SeaPodName": "Bahama",
+      "exteriorFinish": "exfinish",
+      "exterioirColor": "0xff3399FF",
+      "sparFinish": "sparFinish",
+      "sparDesign": "sparDesign",
+      "deckEnclosure": "deckEnclosure",
+      "bedAndLivingRoomEnclousure": "bedAndLivingRoomEnclousure",
+      "power": "power",
+      "underWaterRoomFinishing": "underWaterRoomFinishing",
+      "underWaterWindows": "underWaterWindows",
+      "masterBedroomInteriorWallColor": "0xff3399FF",
+      "livingRoomloorFinishing": "livingRoomloorFinishing",
+      "livingRoomInteriorWallColor": "0xff3399FF",
+      "kitchenfloorFinishing": "kitchenfloorFinishing",
+      "kitchenInteriorWallColor": "0xff3399FF",
+      "entryStairs": "true",
+      "interiorBedroomWallColor": "0xff3399FF",
+      "deckFloorFinishMaterial": "deckFloorFinishMaterial",
+      "seaPodStatus": "seaPodStatus",
+      "users": [
+        {
+          "isDisabled": false,
+          "lighting": {
+            "status": false,
+            "lightScenes": [],
+            "_id": "5f048f4622b90a15806595a6"
+          },
+          "accessPeriod": 0,
+          "_id": "5f048f4622b90a15806595a2",
+          "userName": "Abdullah Asad",
+          "profilePicUrl": "",
+          "notificationToken": "jsdfgdsfjghsdfghdfsjkghsfkdjghdfksjghdjf",
+          "type": "OWNER",
+          "checkInDate": 1594134342925,
+          "permissionSet": "5f048f4722b90a1580659620"
+        }
+      ],
+      "actionsHistory": [
+        {
+          "_id": "5f048f4622b90a15806595a7",
+          "action": "Sea Pod Creation",
+          "actionResult": "SUCCEESED",
+          "userId": "5f048f4622b90a15806595a2",
+          "userName": "Abdullah Asad",
+          "userType": "OWNER"
+        }
+      ],
+      "location": {
+        "latitude": 8.112037214495809,
+        "longitude": -82.02457887016371
+      },
+      "vessleCode": "SA58F46",
+      "qrCodeImageUrl": "https://undefined/qrcodes/SA58F46.png",
+      "__v": 0
+    }
+  ],
+  "users": [
+    {
+      "_id": "5f0483edfb3b3621dc3d8a0c",
+      "previousPasswords": [],
+      "profileImageUrl": "",
+      "seaPods": [
+        "5f0483edfb3b3621dc3d8a0f",
+        "5f04843cfb3b3621dc3d8aaa"
+      ],
+      "isVerified": true,
+      "accessRequests": [],
+      "accessInvitation": [],
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "JohnDoe21@gmail.com",
+      "mobileNumber": "+20156432452",
+      "password": "$2b$11$PumbFaU6U8H8yaALg6d8UeQER6MZFl5RI3dY19fluj5r9eQ1jKzMu",
+      "country": "Spain",
+      "loginAuditTrials": [],
+      "notifications": [
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048723fb3b3621dc3d8bad",
+          "title": "Ata Mahmoud has requested access to your SeaPod Sea Breeze (S0F83ED) for 1 DAY starting on February 8, 2020",
+          "message": "SEAPOD ACCESS REQUEST",
+          "data": {
+            "period": 86400000,
+            "_id": "5f04871afb3b3621dc3d8bac",
+            "user": {
+              "_id": "5f048719fb3b3621dc3d8ba7",
+              "name": "Ata Mahmoud",
+              "imageUrl": "",
+              "email": "AtaMahmoud@hotmail.com",
+              "mobileNumber": "+201092101362"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "GUEST",
+            "status": "PENDING",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048719fb3b3621dc3d8ba7",
+            "__v": 0
+          }
+        },
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048d7722b90a1580659583",
+          "title": "Ola Galal has requested access to your SeaPod Sea Breeze (S0F83ED) for PERMANENT ACCESS starting on February 8, 2020",
+          "message": "SEAPOD ACCESS REQUEST",
+          "data": {
+            "period": 0,
+            "_id": "5f048d7622b90a1580659582",
+            "user": {
+              "_id": "5f048d7522b90a158065957b",
+              "name": "Ola Galal",
+              "imageUrl": "",
+              "email": "OlaGalald@hotmail.com",
+              "mobileNumber": "+201113216161"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "MEMBER",
+            "status": "PENDING",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048d7522b90a158065957b",
+            "__v": 0
+          }
+        },
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048de222b90a1580659588",
+          "title": "Ola Galal canceled his access request to your SeaPod Sea Breeze (S0F83ED) for PERMANENT ACCESS starting on February 8, 2020",
+          "message": "SEAPOD ACCESS REQUEST UPDATE",
+          "data": {
+            "period": 0,
+            "_id": "5f048d7622b90a1580659582",
+            "user": {
+              "_id": "5f048d7522b90a158065957b",
+              "name": "Ola Galal",
+              "imageUrl": "",
+              "email": "OlaGalald@hotmail.com",
+              "mobileNumber": "+201113216161"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "MEMBER",
+            "status": "CANCELED",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048d7522b90a158065957b",
+            "__v": 0
+          }
+        },
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048e5c22b90a158065959a",
+          "title": "Ola Galal has requested access to your SeaPod Sea Breeze (S0F83ED) for PERMANENT ACCESS starting on February 8, 2020",
+          "message": "SEAPOD ACCESS REQUEST",
+          "data": {
+            "period": 0,
+            "_id": "5f048e5c22b90a1580659599",
+            "user": {
+              "_id": "5f048d7522b90a158065957b",
+              "name": "Ola Galal",
+              "imageUrl": "",
+              "email": "OlaGalald@hotmail.com",
+              "mobileNumber": "+201113216161"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "MEMBER",
+            "status": "PENDING",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048d7522b90a158065957b",
+            "__v": 0
+          }
+        }
+      ],
+      "actionHistorys": [
+        {
+          "_id": "5f0483edfb3b3621dc3d8a0e",
+          "action": "Account Registration",
+          "actionResult": "SUCCEESED",
+          "tokenAndDeviceId": "5f0483edfb3b3621dc3d8a0d",
+          "itemId": "5f0483edfb3b3621dc3d8a0c"
+        }
+      ],
+      "loginHistory": [],
+      "emergencyContacts": [
+        {
+          "_id": "5f04908d22b90a1580659646",
+          "firstName": "Handerik",
+          "lastName": "Hagala",
+          "email": "Handerik2@gmail.com",
+          "mobileNumber": "+201092101362"
+        }
+      ],
+      "tokensAndDevices": [
+        {
+          "_id": "5f08a4499b1adb2318998b72",
+          "jti": "e09910d1-d6d1-471e-a01c-5e646351dbb9",
+          "notificationToken": "jsdfgdsfjghsdfghdfsjkghsfkdjghdfksjghdjf",
+          "hardwareId": "0F186115-4740-41ED-AC8C-08101CD32BEB",
+          "model": "Android"
+        }
+      ],
+      "__v": 2
+    },
+    {
+      "_id": "5f048719fb3b3621dc3d8ba7",
+      "previousPasswords": [],
+      "profileImageUrl": "",
+      "seaPods": [
+        "5f0483edfb3b3621dc3d8a0f",
+        "5f0483edfb3b3621dc3d8a0f"
+      ],
+      "isVerified": true,
+      "accessRequests": [
+        "5f04871afb3b3621dc3d8bac"
+      ],
+      "accessInvitation": [],
+      "firstName": "Ata",
+      "lastName": "Mahmoud",
+      "email": "AtaMahmoud@hotmail.com",
+      "mobileNumber": "+201092101362",
+      "password": "$2b$11$FWZaI7Jhnc/QTiGDVbvrLukGuoEpByXdR1xstpV4Cd21ioE/lpnLC",
+      "country": "Egypt",
+      "loginAuditTrials": [],
+      "notifications": [
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048c8522b90a158065957a",
+          "title": "Your Request to access Sea Breeze(S0F83ED) has been ACEPTED",
+          "message": "SEAPOD ACCESS REQUEST UPDATE",
+          "data": {
+            "period": 86400000,
+            "_id": "5f04871afb3b3621dc3d8bac",
+            "user": {
+              "_id": "5f048719fb3b3621dc3d8ba7",
+              "name": "Ata Mahmoud",
+              "imageUrl": "",
+              "email": "AtaMahmoud@hotmail.com",
+              "mobileNumber": "+201092101362"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "GUEST",
+            "status": "ACCEPTED",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048719fb3b3621dc3d8ba7",
+            "__v": 0,
+            "permissionSetId": "5f048688fb3b3621dc3d8b67"
+          }
+        },
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048e0522b90a1580659592",
+          "title": "Your Request to access Sea Breeze(S0F83ED) has been ACEPTED",
+          "message": "SEAPOD ACCESS REQUEST UPDATE",
+          "data": {
+            "period": 86400000,
+            "_id": "5f04871afb3b3621dc3d8bac",
+            "user": {
+              "_id": "5f048719fb3b3621dc3d8ba7",
+              "name": "Ata Mahmoud",
+              "imageUrl": "",
+              "email": "AtaMahmoud@hotmail.com",
+              "mobileNumber": "+201092101362"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "GUEST",
+            "status": "ACCEPTED",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048719fb3b3621dc3d8ba7",
+            "__v": 0,
+            "permissionSetId": "5f048688fb3b3621dc3d8b67"
+          }
+        }
+      ],
+      "actionHistorys": [
+        {
+          "_id": "5f04871afb3b3621dc3d8ba9",
+          "action": "Account Registration",
+          "actionResult": "SUCCEESED",
+          "tokenAndDeviceId": "5f04871afb3b3621dc3d8ba8",
+          "itemId": "5f048719fb3b3621dc3d8ba7"
+        }
+      ],
+      "loginHistory": [],
+      "emergencyContacts": [],
+      "tokensAndDevices": [
+        {
+          "_id": "5f04871afb3b3621dc3d8ba8",
+          "jti": "bad9fcd2-75cb-45b8-b73e-ba2e07375c1c",
+          "notificationToken": "dnsajdbazfhb",
+          "hardwareId": "hshdhjsds",
+          "model": "X"
+        }
+      ],
+      "__v": 1
+    },
+    {
+      "_id": "5f048d7522b90a158065957b",
+      "previousPasswords": [],
+      "profileImageUrl": "",
+      "seaPods": [],
+      "isVerified": true,
+      "accessRequests": [
+        "5f048d7622b90a1580659582",
+        "5f048e5c22b90a1580659599"
+      ],
+      "accessInvitation": [],
+      "firstName": "Ola",
+      "lastName": "Galal",
+      "email": "OlaGalald@hotmail.com",
+      "mobileNumber": "+201113216161",
+      "password": "$2b$11$jHEoD/aZEQWyoBCHRLLbce7ok86eEU780w45xDHsK5cMHZFKRK4MC",
+      "country": "Egypt",
+      "loginAuditTrials": [],
+      "notifications": [
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f048eb922b90a15806595a1",
+          "title": "Your Request to access Sea Breeze(S0F83ED) has been REJECTED",
+          "message": "SEAPOD ACCESS REQUEST REJECTED",
+          "data": {
+            "period": 0,
+            "_id": "5f048e5c22b90a1580659599",
+            "user": {
+              "_id": "5f048d7522b90a158065957b",
+              "name": "Ola Galal",
+              "imageUrl": "",
+              "email": "OlaGalald@hotmail.com",
+              "mobileNumber": "+201113216161"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "MEMBER",
+            "status": "REJECTED",
+            "checkIn": 1581191756216,
+            "isRecieved": false,
+            "senderId": "5f048d7522b90a158065957b",
+            "__v": 0
+          }
+        }
+      ],
+      "actionHistorys": [
+        {
+          "_id": "5f048d7622b90a158065957d",
+          "action": "Account Registration",
+          "actionResult": "SUCCEESED",
+          "tokenAndDeviceId": "5f048d7622b90a158065957c",
+          "itemId": "5f048d7522b90a158065957b"
+        }
+      ],
+      "loginHistory": [],
+      "emergencyContacts": [],
+      "tokensAndDevices": [
+        {
+          "_id": "5f048d7622b90a158065957c",
+          "jti": "061bf755-c2d4-4792-9b93-b7274fd5a671",
+          "notificationToken": "dnsajdbazfhb",
+          "hardwareId": "hshdhjsds",
+          "model": "X"
+        }
+      ],
+      "__v": 2
+    },
+    {
+      "_id": "5f048f4622b90a15806595a2",
+      "previousPasswords": [],
+      "profileImageUrl": "",
+      "seaPods": [
+        "5f048f4622b90a15806595a5"
+      ],
+      "isVerified": true,
+      "accessRequests": [],
+      "accessInvitation": [
+        "5f04901322b90a1580659644"
+      ],
+      "firstName": "Abdullah",
+      "lastName": "Asad",
+      "email": "AbdullahAsad6@gmail.com",
+      "mobileNumber": "+3274455263852",
+      "password": "$2b$11$dgAklrhHKPMfTXCuGQMgBu6DpoMG8I3gwKrs4kbhUxkhM97sB3prC",
+      "country": "India",
+      "loginAuditTrials": [],
+      "notifications": [
+        {
+          "seen": false,
+          "priority": 0,
+          "_id": "5f04901322b90a1580659645",
+          "title": "You are invited to join a sea pod (Sea Breeze) as a Member",
+          "message": "SEAPOD ACCESS INVITATION",
+          "data": {
+            "period": 0,
+            "_id": "5f04901322b90a1580659644",
+            "user": {
+              "_id": "5f048f4622b90a15806595a2",
+              "name": "Abdullah Asad",
+              "imageUrl": "",
+              "email": "AbdullahAsad6@gmail.com",
+              "mobileNumber": "+3274455263852"
+            },
+            "seaPod": {
+              "_id": "5f0483edfb3b3621dc3d8a0f",
+              "name": "Sea Breeze",
+              "vessleCode": "S0F83ED"
+            },
+            "type": "MEMBER",
+            "status": "PENDING",
+            "checkIn": 1594134547451,
+            "isRecieved": true,
+            "senderId": "5f0483edfb3b3621dc3d8a0c",
+            "recieverId": "5f048f4622b90a15806595a2",
+            "permissionSetId": "5f04869dfb3b3621dc3d8b88"
+          }
+        }
+      ],
+      "actionHistorys": [
+        {
+          "_id": "5f048f4622b90a15806595a4",
+          "action": "Account Registration",
+          "actionResult": "SUCCEESED",
+          "tokenAndDeviceId": "5f048f4622b90a15806595a3",
+          "itemId": "5f048f4622b90a15806595a2"
+        }
+      ],
+      "loginHistory": [],
+      "emergencyContacts": [
+        {
+          "_id": "5f0490cd22b90a1580659647",
+          "firstName": "Diego",
+          "lastName": "Ocampo",
+          "email": "Diego21@gmail.com",
+          "mobileNumber": "+201292101362"
+        }
+      ],
+      "tokensAndDevices": [
+        {
+          "_id": "5f048f4622b90a15806595a3",
+          "jti": "15d604c5-811c-47da-8a97-f923990ffc54",
+          "notificationToken": "jsdfgdsfjghsdfghdfsjkghsfkdjghdfksjghdjf",
+          "hardwareId": "sdfgfdsgjsdfklgsdfg",
+          "model": "Android"
+        }
+      ],
+      "__v": 2
+    }
+  ],
+  "requests": [
+    {
+      "_id": "5f04871afb3b3621dc3d8bac",
+      "period": 86400000,
+      "user": {
+        "_id": "5f048719fb3b3621dc3d8ba7",
+        "name": "Ata Mahmoud",
+        "imageUrl": "",
+        "email": "AtaMahmoud@hotmail.com",
+        "mobileNumber": "+201092101362"
+      },
+      "seaPod": {
+        "_id": "5f0483edfb3b3621dc3d8a0f",
+        "name": "Sea Breeze",
+        "vessleCode": "S0F83ED"
+      },
+      "type": "GUEST",
+      "status": "ACCEPTED",
+      "checkIn": 1581191756216,
+      "isRecieved": false,
+      "senderId": "5f048719fb3b3621dc3d8ba7",
+      "__v": 0,
+      "permissionSetId": "5f048688fb3b3621dc3d8b67"
+    },
+    {
+      "_id": "5f048d7622b90a1580659582",
+      "period": 0,
+      "user": {
+        "_id": "5f048d7522b90a158065957b",
+        "name": "Ola Galal",
+        "imageUrl": "",
+        "email": "OlaGalald@hotmail.com",
+        "mobileNumber": "+201113216161"
+      },
+      "seaPod": {
+        "_id": "5f0483edfb3b3621dc3d8a0f",
+        "name": "Sea Breeze",
+        "vessleCode": "S0F83ED"
+      },
+      "type": "MEMBER",
+      "status": "CANCELED",
+      "checkIn": 1581191756216,
+      "isRecieved": false,
+      "senderId": "5f048d7522b90a158065957b",
+      "__v": 0
+    },
+    {
+      "_id": "5f048e5c22b90a1580659599",
+      "period": 0,
+      "user": {
+        "_id": "5f048d7522b90a158065957b",
+        "name": "Ola Galal",
+        "imageUrl": "",
+        "email": "OlaGalald@hotmail.com",
+        "mobileNumber": "+201113216161"
+      },
+      "seaPod": {
+        "_id": "5f0483edfb3b3621dc3d8a0f",
+        "name": "Sea Breeze",
+        "vessleCode": "S0F83ED"
+      },
+      "type": "MEMBER",
+      "status": "REJECTED",
+      "checkIn": 1581191756216,
+      "isRecieved": false,
+      "senderId": "5f048d7522b90a158065957b",
+      "__v": 0
+    },
+    {
+      "_id": "5f04901322b90a1580659644",
+      "period": 0,
+      "user": {
+        "_id": "5f048f4622b90a15806595a2",
+        "name": "Abdullah Asad",
+        "imageUrl": "",
+        "email": "AbdullahAsad6@gmail.com",
+        "mobileNumber": "+3274455263852"
+      },
+      "seaPod": {
+        "_id": "5f0483edfb3b3621dc3d8a0f",
+        "name": "Sea Breeze",
+        "vessleCode": "S0F83ED"
+      },
+      "type": "MEMBER",
+      "status": "PENDING",
+      "checkIn": 1594134547451,
+      "isRecieved": true,
+      "senderId": "5f0483edfb3b3621dc3d8a0c",
+      "permissionSetId": "5f04869dfb3b3621dc3d8b88",
+      "__v": 0
+    }
+  ]
+}
