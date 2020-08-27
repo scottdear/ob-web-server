@@ -6,7 +6,7 @@ const { User, validatePassword } = require('../models/users/user');
 const { filterUserTokensAndDevices } = require('../helpers/filtering');
 const { MailService } = require('./mail');
 
-const slatRounds = config.get("userSalt");
+const slatRounds = parseInt(config.get("userSalt"));
 
 class UserService {
     async createUser(obj) {

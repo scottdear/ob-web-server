@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const speakeasy = require('speakeasy');
 const config=require('config');
 
-const slatRounds = config.get('adminSalt');
+const slatRounds = parseInt(config.get('adminSalt'));
 
 class AdminService {
     async createAdmin(req) {
