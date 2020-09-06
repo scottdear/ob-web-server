@@ -1,9 +1,11 @@
 const bcrypt = require('bcrypt');
-const config=require('config');
+const config = require('config');
 const { v4: uuidv4 } = require('uuid');
 
 const { User, validatePassword } = require('../models/users/user');
-const { filterUserTokensAndDevices } = require('../helpers/filtering');
+const { generateFakeData } = require('../helpers/utilites');
+const { filterUserTokensAndDevices, filterUserAndSeapods } = require('../helpers/filtering');
+
 const { MailService } = require('./mail');
 
 const slatRounds = parseInt(config.get("userSalt"));
@@ -339,6 +341,73 @@ class UserService {
         return await User.exists({
             email: emailAddress
         });
+    }
+
+    async selectWeatherSource(userId, source) {
+        let user = await User.findById(userId)
+            .populate('seaPods')
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'accessRequests',
+                    model: 'ReqestAccess'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'accessInvitation',
+                    model: 'ReqestAccess'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'permissionSets',
+                    model: 'Permissions'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'lightScenes',
+                    model: 'LightiningScenes'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'users.lighting.lightScenes',
+                    model: 'LightiningScenes'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'users.permissionSet',
+                    model: 'Permissions'
+                }
+            })
+            .populate('accessRequests')
+            .populate('accessInvitation');
+
+        if(source != 'external' && source != 'local'){
+            return {
+                isError: true,
+                error: 'Source value is invalid',
+                statusCode: 400
+            }
+        }
+
+        user.selectedWeatherSource = source;
+        user.save();
+        
+        user = filterUserAndSeapods(user.toJSON(), generateFakeData(user.seaPods.length));
+        return {
+            isError: false,
+            user: user,
+            statusCode: 200
+        };
     }
 
     async invalidateToken(userId, jti) {
