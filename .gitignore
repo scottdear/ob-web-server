@@ -5,3 +5,4 @@ Work/
 logs.log
 unhandledExceptions.log
 coverage/
+.env
