@@ -2132,6 +2132,38 @@
           }
         }
       ],
+      "notificationSettings": [
+        {
+            "_id": "5f57a45419e71f239c3c6d21",
+            "name": "ACCESS REQUEST RECEIVEDE",
+            "phone": "ON",
+            "mail": "ON"
+        },
+        {
+            "_id": "5f57a45419e71f239c3c6d22",
+            "name": "ACCESS REQUEST APPROVED OR REJECTED",
+            "phone": "ON",
+            "mail": "OFF"
+        },
+        {
+            "_id": "5f57a45419e71f239c3c6d23",
+            "name": "INVITATION RECEIVED",
+            "phone": "ON",
+            "mail": "ON"
+        },
+        {
+            "_id": "5f57a45419e71f239c3c6d24",
+            "name": "INVITATION ACCEPTED OR REJECTED",
+            "phone": "OFF",
+            "mail": "OFF"
+        },
+        {
+            "_id": "5f57a45419e71f239c3c6d25",
+            "name": "URGENT NOTIFICATIONS",
+            "phone": "URGENT",
+            "mail": "URGENT"
+        }
+      ],
       "actionHistorys": [
         {
           "_id": "5f0483edfb3b3621dc3d8a0e",
@@ -2155,7 +2187,7 @@
         {
           "_id": "5f08a4499b1adb2318998b72",
           "jti": "e09910d1-d6d1-471e-a01c-5e646351dbb9",
-          "notificationToken": "jsdfgdsfjghsdfghdfsjkghsfkdjghdfksjghdjf",
+          "notificationToken": "fluMksedKxY:APA91bFMdxZD7Ouwh0aiVWuDcLrzPfNMkU6WbH_zljlCm_57samv/g3hLcsrcM9MkA45568IUWCnXI-7cBEMrl6NLtfqlauc8Wssa-xN5vXXFS2hb7mka0y1RJ698YD6aFrdGXTk1eVCF",
           "hardwareId": "0F186115-4740-41ED-AC8C-08101CD32BEB",
           "model": "Android"
         }
