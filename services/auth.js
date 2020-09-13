@@ -250,10 +250,10 @@ class AuthService {
         session.startTransaction();
 
         try {
-            data.users.forEach(async user => {
-                const existed = await User.findById(user._id);
+            data.users.forEach(async userData => {
+                const existed = await User.findById(userData._id);
                 if (!existed) {
-                    let obj = new User(user)
+                    let obj = new User(userData)
                     await obj.save();
                 }
             });
