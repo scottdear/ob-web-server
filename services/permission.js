@@ -373,8 +373,8 @@ class PermissionService {
             };
 
             let existedPermission;
-            seapod.permissionSets.forEach(permission => {
-                if (permission._id == permissionData._id) existedPermission = permission._id;
+            seapod.permissionSets.forEach(perm => {
+                if (perm._id == permissionData._id) existedPermission = perm._id;
             });
             if (!existedPermission) return {
                 isError: true,
@@ -437,8 +437,8 @@ class PermissionService {
         };
 
         let existedPermission;
-        seapod.permissionSets.forEach(permission => {
-            if (permission._id == permissionId) existedPermission = permission._id;
+        seapod.permissionSets.forEach(perm => {
+            if (perm._id == permissionId) existedPermission = perm._id;
         });
         if (!existedPermission) return {
             isError: true,
@@ -495,8 +495,8 @@ class PermissionService {
             };
 
             let existedPermission;
-            seapod.permissionSets.forEach(permission => {
-                if (permission._id == permissionId) existedPermission = permission._id;
+            seapod.permissionSets.forEach(perm => {
+                if (perm._id == permissionId) existedPermission = perm._id;
             });
             if (!existedPermission) return {
                 isError: true,
@@ -515,9 +515,9 @@ class PermissionService {
 
             seapod.users.forEach(user => {
                 if (user.permissionSet == permissionId) {
-                    seapod.permissionSets.forEach(permission => {
-                        if (permission.Name == `Default ${user.type} Permissions`) {
-                            user['permissionSet'] = permission._id;
+                    seapod.permissionSets.forEach(perm => {
+                        if (perm.Name == `Default ${user.type} Permissions`) {
+                            user['permissionSet'] = perm._id;
                         }
                     });
                 }
