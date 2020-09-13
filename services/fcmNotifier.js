@@ -18,7 +18,7 @@ admin.initializeApp({
 });
 
 exports.sendMultipleNotification = function (notificationData, tokens) {
-    console.log(notificationData);
+    // console.log(notificationData);
     admin.messaging().sendMulticast(notificationData).then((response) => {
         const failedTokens = [];
         if (response.failureCount > 0) {
@@ -26,7 +26,7 @@ exports.sendMultipleNotification = function (notificationData, tokens) {
                 if (!resp.success)
                     failedTokens.push(tokens[idx]);
             });
-            console.log('List of tokens that caused failures: ' + failedTokens);
+            // console.log('List of tokens that caused failures: ' + failedTokens);
         }
     });
 }

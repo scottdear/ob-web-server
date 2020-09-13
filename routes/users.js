@@ -76,9 +76,8 @@ router.put('/reset', auth, async (req, res) => {
     const userService = new UserService();
     const result = await userService.updatePassword(contextObject);
 
-    console.log(result);
     if (result.isError) return res.status(result.statusCode).json({
-        'message': result.message
+        'message': result.error
     });
 
     return res.header('x-auth-token', result.jwtoken).status(200).json({

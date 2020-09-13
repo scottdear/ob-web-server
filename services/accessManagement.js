@@ -253,7 +253,7 @@ class AccessManagement {
             if (spu.type === 'OWNER')
                 notificationTokens.push(spu.notificationToken);
         }
-        console.log(notificationTokens);
+        // console.log(notificationTokens);
         return notificationTokens;
     }
 
@@ -438,7 +438,7 @@ class AccessManagement {
                 invitation: accessInvitation
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             await session.abortTransaction();
             return {
                 isError: true,
@@ -617,7 +617,7 @@ class AccessManagement {
                 accessRequest: accessInvitation.toJSON()
             };
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             await session.abortTransaction();
             return {
                 isError: true,
