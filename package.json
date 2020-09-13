@@ -1,10 +1,11 @@
 {
-  "name": "oceanbuilder_backend",
-  "version": "0.5.0",
-  "description": "the back end server for ocean builder mobile app",
+  "name": "ob-web-server",
+  "version": "0.7.0",
+  "description": "the backend server for ocean builder mobile app",
   "main": "index.js",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFiles": ["dotenv/config"]
   },
   "scripts": {
     "test": "jest --watchAll --verbose --forceExit --detectOpenHandles --maxWorkers=1",

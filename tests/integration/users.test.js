@@ -140,7 +140,7 @@ describe('/api/users', () => {
         })
     })
 
-    describe('PUT /password', () => {
+    describe('PUT /reset', () => {
         let user, token, body;
         const jti = uuidv4();
         const hardwareId = 'anything';
@@ -149,7 +149,7 @@ describe('/api/users', () => {
 
         const exec = async (body) => {
             return await request(server)
-            .put('/v1/api/users/password')
+            .put('/v1/api/users/reset')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
             .set('model', model)
@@ -225,7 +225,7 @@ describe('/api/users', () => {
             token = new User(user).generateAuthToken(null);
 
             const res = await request(server)
-            .put('/v1/api/users/password')
+            .put('/v1/api/users/reset')
             .set('x-auth-token', 'x')
             .set('hardwareId', hardwareId)
             .send(body);

@@ -1,5 +1,5 @@
 const winston = require('winston');
-require('winston-mongodb');
+// require('winston-mongodb');
 module.exports = function () {
     process.on('unhandledRejection', (ex) => {
         throw (ex);
@@ -12,7 +12,7 @@ module.exports = function () {
 
     winston.add(new winston.transports.File({ filename: 'logs.log' }));
 
-    winston.add(new winston.transports.MongoDB({
-        db: 'mongodb://localhost/oceanbuilders',
-    }));
+    // winston.add(new winston.transports.MongoDB({
+    //     db: 'mongodb://localhost/oceanbuilders',
+    // }));
 }
