@@ -1305,12 +1305,12 @@ describe('/api/accessRequest', () => {
         const jti = uuidv4();
         const hardwareId = 'anything';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post('/v1/api/access-requests/existing')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
