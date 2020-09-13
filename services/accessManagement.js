@@ -84,7 +84,7 @@ class AccessManagement {
                         };
                     }
 
-                    const reqBody = obj.body;
+                    // const reqBody = obj.body;
                     accessRequest.type = reqBody.type;
                     accessRequest.period = reqBody.period;
                     accessRequest.checkIn = reqBody.checkIn;
