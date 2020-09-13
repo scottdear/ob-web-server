@@ -208,7 +208,7 @@ seaPodSchema.methods.generateRandomLocation = function () {
 const SeaPod = mongoose.model('SeaPods', seaPodSchema);
 
 
-function validateSeaPod(SeaPod) {
+function validateSeaPod(seapod) {
     const schema = Joi.object({
         SeaPodName: Joi.string().min(5).max(50).required(),
         exteriorFinish: Joi.string().required(),
@@ -237,7 +237,7 @@ function validateSeaPod(SeaPod) {
         seaPodStatus: Joi.string(),
     });
 
-    return schema.validate(SeaPod);
+    return schema.validate(seapod);
 }
 
 
