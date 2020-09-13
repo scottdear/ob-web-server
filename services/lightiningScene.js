@@ -310,11 +310,7 @@ class LightiningSceneService {
             error: 'User Not Found!'
         };
 
-        const seapod = await SeaPod.findById(seapodId)
-        .populate({
-            path: 'users.lighting.lightScenes',
-            model: 'LightiningScenes'
-        });
+        const seapod = await SeaPod.findById(seapodId);
         if (!seapod) return {
             isError: true,
             statusCode: 404,
@@ -327,18 +323,20 @@ class LightiningSceneService {
             error: 'Access denied. Not A member at the seapod!'
         }
 
-        let currentUser;
-        for (const user of seapod.users)
-            if (user._id == userId)
-                currentUser = user;
+        const updatedSeapod = await SeaPod.findByIdAndUpdate( seapodId ,
+            { $set: { 'users.$[element].lighting.intensity': intensity } },
+            { arrayFilters: [{ 'element._id': userId }] }
+        ).populate({
+            path: 'users.lighting.lightScenes',
+            model: 'LightiningScenes'
+        });
 
-        currentUser.lighting.intensity = intensity;
-        await seapod.save();
+        const lighting = updatedSeapod.users.find(user => user._id === userId).lighting;
 
         return {
             isError: false,
             statusCode: 200,
-            lighting: currentUser.lighting
+            lighting: lighting
         }
     }
 
