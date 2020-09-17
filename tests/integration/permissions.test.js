@@ -28,12 +28,12 @@ describe('/api/users', () => {
         const seapodId = mongoose.Types.ObjectId().toHexString();
         const userId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post('/v1/api/permissions/' + seapodId)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -230,13 +230,12 @@ describe('/api/users', () => {
         const permissionId = mongoose.Types.ObjectId().toHexString();
         const userId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/permissions/' + seapodId)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -470,12 +469,12 @@ describe('/api/users', () => {
         const permissionId = mongoose.Types.ObjectId().toHexString();
         const userId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put(`/v1/api/permissions/${permissionId}/seapod/${seapodId}/name`)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -877,12 +876,12 @@ describe('/api/users', () => {
         const permissionId = mongoose.Types.ObjectId().toHexString();
         const userId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post(`/v1/api/permissions/${seapodId}/user`)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -1073,12 +1072,12 @@ describe('/api/users', () => {
         const defaultPermissionId = mongoose.Types.ObjectId().toHexString();
         const userId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .delete(`/v1/api/permissions/${seapodId}/user`)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
