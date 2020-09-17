@@ -27,12 +27,12 @@ describe('/api/users', () => {
         const jti = uuidv4();
         const hardwareId = 'anything';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/users/')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -147,14 +147,14 @@ describe('/api/users', () => {
         const model = 'model';
         const notificationToken = 'token';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/users/reset')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
             .set('model', model)
             .set('notificationToken', notificationToken)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -412,12 +412,12 @@ describe('/api/users', () => {
         const hardwareId = 'anything';
         const notificationId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/users/notifications')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -533,9 +533,9 @@ describe('/api/users', () => {
         const hardwareId = 'anything';
         const notificationId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (notificationId) => {
+        const exec = async (notifId) => {
             return await request(server)
-            .put('/v1/api/users/notifications/'+ notificationId)
+            .put('/v1/api/users/notifications/'+ notifId)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId);
         }
@@ -761,12 +761,12 @@ describe('/api/users', () => {
         const jti = uuidv4();
         const hardwareId = 'anything';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/users/emergency-contacts')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -859,12 +859,12 @@ describe('/api/users', () => {
         const jti = uuidv4();
         const hardwareId = 'anything';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/users/emergency-contacts/'+contactId)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
