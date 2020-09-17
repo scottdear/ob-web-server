@@ -29,12 +29,12 @@ describe('/api/seapods', () => {
         const hardwareId = 'anything';
         const userId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post('/v1/api/seapods')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -167,12 +167,12 @@ describe('/api/seapods', () => {
         const userId = mongoose.Types.ObjectId().toHexString();
         const seapodId = mongoose.Types.ObjectId().toHexString();
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/seapods/'+seapodId+'/name')
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
