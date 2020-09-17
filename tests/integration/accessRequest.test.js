@@ -672,9 +672,9 @@ describe('/api/accessRequest', () => {
         const jti = uuidv4();
         const hardwareId = 'anything';
 
-        const exec = async (seapodId) => {
+        const exec = async (seapodIdparameter) => {
             return await request(server)
-            .post('/v1/api/access-requests/invitations/' + seapodId)
+            .post('/v1/api/access-requests/invitations/' + seapodIdparameter)
             .set('x-auth-token', token)
             .set('hardwareId', hardwareId)
             .send(body)
