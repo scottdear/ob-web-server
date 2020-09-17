@@ -106,13 +106,13 @@ describe('/api/accessRequest', () => {
 
     describe('POST /new', () => {
         let body;
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post('/v1/api/access-requests/new')
             .set('notificationToken', 'x')
             .set('hardwareId', 'id')
             .set('model', 'y')
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
