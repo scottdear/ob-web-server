@@ -22,10 +22,10 @@ describe('/api/admins', () => {
     describe('POST /registration', () => {
         let body;
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post('/v1/api/admins/registration')
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
