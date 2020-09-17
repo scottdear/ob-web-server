@@ -27,13 +27,13 @@ describe('/api/auth', () => {
         const hardwareId = 'anything';
         const model = 'model';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .post('/v1/api/auth/')
             .set('notificationToken', notificationToken)
             .set('hardwareId', hardwareId)
             .set('model', model)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
@@ -152,13 +152,13 @@ describe('/api/auth', () => {
         const hardwareId = 'anything';
         const model = 'model';
 
-        const exec = async (body) => {
+        const exec = async (reqBody) => {
             return await request(server)
             .put('/v1/api/auth/')
             .set('notificationToken', notificationToken)
             .set('hardwareId', hardwareId)
             .set('model', model)
-            .send(body);
+            .send(reqBody);
         }
 
         beforeEach(() => {
