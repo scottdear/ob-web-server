@@ -4,9 +4,10 @@ const config = require('config');
 
 const { User } = require('../models/users/user');
 const { SeaPod } = require('../models/seapod/seapod');
-const { PermissionService } = require('../services/permission');
+const { PermissionService } = require('./permission');
 const { generateFakeData, isOwnerAtSeaPod } = require('../helpers/utilites');
 const { filterUserAndSeapods, filterSeaPods } = require('../helpers/filtering');
+const { LightiningSceneService } = require('./lightiningScene');
 
 class SeaPodService {
 
@@ -292,9 +293,12 @@ class SeaPodService {
 
         const permissionService = new PermissionService();
         seapod = await permissionService.addDefaultPremissionSets(seapod);
-
-        await seapod.populate('permissionSets').execPopulate();
+        await seapod.populate('permissionSets').execPopulate();        
         seapod = await permissionService.addDefaultPremissionSet(user._id, seapod);
+
+        const lightiningSceneService = new LightiningSceneService();
+        seapod = await lightiningSceneService.addDefaultLightScenes(user._id, seapod);
+        await seapod.populate('defaultLightiningScenes').execPopulate();
 
         return seapod;
     }

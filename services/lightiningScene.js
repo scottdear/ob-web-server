@@ -494,6 +494,148 @@ class LightiningSceneService {
             lightScene: lightScene
         }
     }
+
+    async addDefaultLightScenes(userId, seapod){
+        const day = new LightiningScene({
+            source: "seapod",
+            sceneName: "Default Day LightScene",
+            rooms: [
+                {
+                    label: "BedRoom",
+                    moodes: [
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 1",
+                            lightColor: "0xFF959B1B"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 2",
+                            lightColor: "0xFF1322FF"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Counter 4",
+                            lightColor: "0xFF9B1F0E"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Ocrhead 3",
+                            lightColor: "0xFF219B8C"
+                        }
+                    ]
+                },
+                {
+                    label: "Living",
+                    moodes: [
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 1",
+                            lightColor: "0xFF959B1B"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 2",
+                            lightColor: "0xFF1322FF"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Light 3",
+                            lightColor: "0xFFFF1EEE"
+                        }
+                    ]
+                }
+            ],
+            seapodId: seapod._id,
+            userId: userId,
+        });
+        await day.save();
+
+        const night = new LightiningScene({
+            source: "seapod",
+            sceneName: "Default Night LightScene",
+            rooms: [
+                {
+                    label: "BedRoom",
+                    moodes: [
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 1",
+                            lightColor: "0xFF959B1B"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 2",
+                            lightColor: "0xFF1322FF"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Counter 4",
+                            lightColor: "0xFF9B1F0E"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Ocrhead 3",
+                            lightColor: "0xFF219B8C"
+                        }
+                    ]
+                },
+                {
+                    label: "Living",
+                    moodes: [
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 1",
+                            lightColor: "0xFF959B1B"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Lightstrip 2",
+                            lightColor: "0xFF1322FF"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Light 3",
+                            lightColor: "0xFFFF1EEE"
+                        }
+                    ]
+                }
+            ],
+            seapodId: seapod._id,
+            userId: userId,
+        });
+        await night.save();
+
+        seapod.defaultLightiningScenes.push(
+            day._id,
+            night._id
+        );
+
+        const userAtSeapod = seapod.users.find(user =>  user._id == userId);
+        if (!userAtSeapod) return {
+            isError: true,
+            statusCode: 404,
+            error: 'User is not at Seapod'
+        };
+        userAtSeapod.lighting['selectedScene'] = day._id;
+        await seapod.populate('users.lighting.selectedScene').execPopulate();
+        
+        return seapod;
+    }
 }
 
 exports.LightiningSceneService = LightiningSceneService;
