@@ -55,6 +55,27 @@ class SeaPodService {
                 .populate({
                     path: 'seaPods',
                     populate: {
+                        path: 'users.lighting.lightScenes',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'defaultLightiningScenes',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'users.lighting.selectedScene',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
                         path: 'users.permissionSet',
                         model: 'Permissions'
                     }
@@ -298,7 +319,6 @@ class SeaPodService {
 
         const lightiningSceneService = new LightiningSceneService();
         seapod = await lightiningSceneService.addDefaultLightScenes(user._id, seapod);
-        await seapod.populate('defaultLightiningScenes').execPopulate();
 
         return seapod;
     }

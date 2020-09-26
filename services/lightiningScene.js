@@ -624,6 +624,7 @@ class LightiningSceneService {
             day._id,
             night._id
         );
+        await seapod.populate('defaultLightiningScenes').execPopulate();
 
         const userAtSeapod = seapod.users.find(user =>  user._id == userId);
         if (!userAtSeapod) return {

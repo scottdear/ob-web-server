@@ -96,6 +96,20 @@ class AuthService {
             .populate({
                 path: 'seaPods',
                 populate: {
+                    path: 'defaultLightiningScenes',
+                    model: 'LightiningScenes'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'users.lighting.selectedScene',
+                    model: 'LightiningScenes'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
                     path: 'users.permissionSet',
                     model: 'Permissions'
                 }
@@ -221,6 +235,20 @@ class AuthService {
             .populate({
                 path: 'seaPods',
                 populate: {
+                    path: 'defaultLightiningScenes',
+                    model: 'LightiningScenes'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
+                    path: 'users.lighting.selectedScene',
+                    model: 'LightiningScenes'
+                }
+            })
+            .populate({
+                path: 'seaPods',
+                populate: {
                     path: 'users.permissionSet',
                     model: 'Permissions'
                 }
@@ -327,6 +355,20 @@ class AuthService {
                     path: 'seaPods',
                     populate: {
                         path: 'users.lighting.lightScenes',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'defaultLightiningScenes',
+                        model: 'LightiningScenes'
+                    }
+                })
+                .populate({
+                    path: 'seaPods',
+                    populate: {
+                        path: 'users.lighting.selectedScene',
                         model: 'LightiningScenes'
                     }
                 })
