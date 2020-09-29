@@ -149,10 +149,6 @@ const seaPodSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Permissions'
     }],
-    defaultLightiningScenes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'LightiningScenes'
-    }],
     lightScenes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'LightiningScenes',

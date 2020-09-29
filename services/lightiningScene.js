@@ -498,6 +498,7 @@ class LightiningSceneService {
     async addDefaultLightScenes(userId, seapod){
         const day = new LightiningScene({
             source: "seapod",
+            isDefault: true, 
             sceneName: "Default Day LightScene",
             rooms: [
                 {
@@ -560,6 +561,7 @@ class LightiningSceneService {
 
         const night = new LightiningScene({
             source: "seapod",
+            isDefault: true,
             sceneName: "Default Night LightScene",
             rooms: [
                 {
@@ -620,11 +622,11 @@ class LightiningSceneService {
         });
         await night.save();
 
-        seapod.defaultLightiningScenes.push(
+        seapod.lightScenes.push(
             day._id,
             night._id
         );
-        await seapod.populate('defaultLightiningScenes').execPopulate();
+        await seapod.populate('lightScenes').execPopulate();
 
         const userAtSeapod = seapod.users.find(user =>  user._id == userId);
         if (!userAtSeapod) return {

@@ -7,6 +7,11 @@ const LightiningScene = mongoose.model('LightiningScenes', new mongoose.Schema({
         enum: ['seapod','user'], 
         required: true
     },
+    isDefault: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
     seapodId: {
         type:mongoose.Schema.Types.ObjectId
     },
@@ -38,7 +43,6 @@ const LightiningScene = mongoose.model('LightiningScenes', new mongoose.Schema({
                     lightColor: {
                         type: String,
                         match: /^(0xFF|0xff)([0-9A-Fa-f]{8}|[0-9A-Fa-f]{6})$/,
-                        required: true,
                     },
                     status: {
                         type: Boolean,
@@ -50,7 +54,6 @@ const LightiningScene = mongoose.model('LightiningScenes', new mongoose.Schema({
                         min: 0,
                         max: 100,
                         default: 50,
-                        required: true,
                     }
                 }]
             },
