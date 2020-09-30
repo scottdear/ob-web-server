@@ -129,15 +129,19 @@ class LightiningSceneService {
                 }
 
             const user = await User.findById(userId);
-            if (!user) {
-                return {
-                    isError: true,
-                    statusCode: 404,
-                    error: 'User Not Found!'
-                };
-            }
+            if (!user) return {
+                isError: true,
+                statusCode: 404,
+                error: 'User Not Found!'
+            };
 
-            const selectedLighScene = await LightiningScene.findById(lightScene._id);
+            const selectedLightScene = await LightiningScene.findById(lightScene._id);
+            if(userId != selectedLightScene.userId) return {
+                isError: true,
+                statusCode: 401,
+                error: 'Access denied. Not your own LightScene!!'
+            };
+
 
             let allLightScenes;
             seapod.users.forEach(sp => {
@@ -149,7 +153,7 @@ class LightiningSceneService {
 
             for (var i in allLightScenes) {
                 if (allLightScenes[i].sceneName.toLowerCase() === lightScene.sceneName.toLowerCase()) {
-                    if (allLightScenes[i].sceneName.toLowerCase() === selectedLighScene.sceneName.toLowerCase()) continue;
+                    if (allLightScenes[i].sceneName.toLowerCase() === selectedLightScene.sceneName.toLowerCase()) continue;
                     return {
                         isError: true,
                         statusCode: 400,
@@ -201,14 +205,19 @@ class LightiningSceneService {
                 };
             }
 
+            const selectedLightScene = await LightiningScene.findByIdAndRemove(lightSceneId);
+            if(userId != selectedLightScene.userId) return {
+                isError: true,
+                statusCode: 401,
+                error: 'Access denied. Not your own LightScene!!'
+            };
+
             const lightScene = await LightiningScene.findByIdAndDelete(lightSceneId);
-            if (!lightScene) {
-                return {
-                    isError: true,
-                    statusCode: 404,
-                    error: 'Light Scene Not Found!'
-                };
-            }
+            if (!lightScene) return {
+                isError: true,
+                statusCode: 404,
+                error: 'Light Scene Not Found!'
+            };
 
             await SeaPod.updateMany(
                 { _id: { $in: lightScene.seapodId } },
