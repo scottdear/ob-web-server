@@ -9,7 +9,7 @@ require('./startup/config')();
 require('./startup/db')();
 require('./startup/prod')(app);
 require('./startup/jobs')();
-
+require('./startup/initData')();
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
