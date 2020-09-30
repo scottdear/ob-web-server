@@ -166,6 +166,10 @@ const seaPodSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ReqestAccess'
     }],
+    seaPodConfig: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SeaPodConfig'
+    }
 });
 
 seaPodSchema.methods.generateVesselCode = function () {

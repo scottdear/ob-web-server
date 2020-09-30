@@ -4,6 +4,7 @@ const config = require('config');
 
 const { User } = require('../models/users/user');
 const { SeaPod } = require('../models/seapod/seapod');
+const { SeaPodConfig } = require('../models/seapod/seaPodConfig');
 const { PermissionService } = require('./permission');
 const { generateFakeData, isOwnerAtSeaPod } = require('../helpers/utilites');
 const { filterUserAndSeapods, filterSeaPods } = require('../helpers/filtering');
@@ -291,9 +292,21 @@ class SeaPodService {
         const qrCodeUrl = await seapod.generateQrCode(vesselCode, hostName);
         seapod.qrCodeImageUrl = qrCodeUrl;
 
+        const model = "A";
+        const seaPodConfig = await SeaPodConfig.findOne({model});
+        seapod.seaPodConfig = seaPodConfig;
+        await seapod.populate('seaPodConfig')
+        .populate({
+            path: 'seaPodConfig',
+            populate: {
+                path: 'rooms.lightConfig',
+                model: 'LightConfig'
+            }
+        }).execPopulate();
+
         const permissionService = new PermissionService();
         seapod = await permissionService.addDefaultPremissionSets(seapod);
-        await seapod.populate('permissionSets').execPopulate();        
+        await seapod.populate('permissionSets').execPopulate();    
         seapod = await permissionService.addDefaultPremissionSet(user._id, seapod);
 
         const lightiningSceneService = new LightiningSceneService();
