@@ -169,7 +169,11 @@ const seaPodSchema = new mongoose.Schema({
     seaPodConfig: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SeaPodConfig'
-    }
+    },
+    selectedScene:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'LightiningScenes',
+    },
 });
 
 seaPodSchema.methods.generateVesselCode = function () {

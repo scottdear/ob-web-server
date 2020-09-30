@@ -5,10 +5,6 @@ module.exports=new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    selectedScene:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'LightiningScenes',
-    },
     intensity:{
         type: Number,
         min: 0,

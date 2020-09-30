@@ -113,20 +113,17 @@ class LightiningSceneService {
                     model: 'LightiningScenes'
                 });
 
-            if (!seapod) {
-                return {
-                    isError: true,
-                    statusCode: 404,
-                    error: 'SeaPod Not Found!'
-                };
-            }
+            if (!seapod) return {
+                isError: true,
+                statusCode: 404,
+                error: 'SeaPod Not Found!'
+            };
 
-            if (!this.isSeaPodUser(seapod, userId))
-                return {
-                    isError: true,
-                    statusCode: 401,
-                    error: 'Access denied. Not A member at the seapod!'
-                }
+            if (!this.isSeaPodUser(seapod, userId)) return {
+                isError: true,
+                statusCode: 401,
+                error: 'Access denied. Not A member at the seapod!'
+            }
 
             const user = await User.findById(userId);
             if (!user) return {
@@ -141,7 +138,6 @@ class LightiningSceneService {
                 statusCode: 401,
                 error: 'Access denied. Not your own LightScene!!'
             };
-
 
             let allLightScenes;
             seapod.users.forEach(sp => {
@@ -430,13 +426,33 @@ class LightiningSceneService {
             error: 'Access denied. LightScene is not avaliable for this user'
         }
     
-        currentUser.lighting.selectedScene = found;
+        seapod.selectedScene = found._id;
         await seapod.save();
-    
+
+        await seapod.populate({
+            path: 'accessRequests',
+            model: 'ReqestAccess'
+        }).populate({
+            path: 'accessInvitation',
+            model: 'ReqestAccess'
+        }).populate({
+            path: 'permissionSets',
+            model: 'Permissions'
+        }).populate({
+            path: 'lightScenes',
+            model: 'LightiningScenes'
+        }).populate({
+            path: 'users.lighting.lightScenes',
+            model: 'LightiningScenes'
+        }).populate({
+            path: 'users.permissionSet',
+            model: 'Permissions'
+        }).execPopulate();
+
         return {
             isError: false,
             statusCode: 200,
-            lighting: currentUser.lighting
+            lighting: seapod
         }
     }
 
