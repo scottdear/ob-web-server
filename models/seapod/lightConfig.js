@@ -7,7 +7,7 @@ const LightConfig = mongoose.model('LightConfig', new mongoose.Schema({
     },
     compatibleRoomTypes: [String],
     lights: [{
-        label: {
+        lightName: {
             type: String,
             required: true
         },
