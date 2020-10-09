@@ -101,32 +101,32 @@ module.exports = async () => {
             rooms: [{
                 label: "Main Bedroom",
                 type: "Bedroom",
-                lightConfig: bigBedroom5Lights._id
+                lightsConfig: bigBedroom5Lights._id
             },
             {
                 label: "Small Bedroom 1",
                 type: "Bedroom",
-                lightConfig: smallBedroom3Lights._id
+                lightsConfig: smallBedroom3Lights._id
             },
             {
                 label: "Small Bedroom 2",
                 type: "Bedroom",
-                lightConfig: smallBedroom3Lights._id
+                lightsConfig: smallBedroom3Lights._id
             },
             {
                 label: "Main Bathroom",
                 type: "Bathroom",
-                lightConfig: twoBrightLights._id
+                lightsConfig: twoBrightLights._id
             },
             {
                 label: "Secondary Bathroom",
                 type: "Bathroom",
-                lightConfig: oneCustomizableLight._id
+                lightsConfig: oneCustomizableLight._id
             },
             {
                 label: "Kitchen",
                 type: "Kitchen",
-                lightConfig: oneCustomizableLight._id
+                lightsConfig: oneCustomizableLight._id
             }]
         });
         SeaPodConfig.exists({model: "A"}, async (err, res) => {

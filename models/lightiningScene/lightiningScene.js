@@ -32,12 +32,20 @@ const LightiningScene = mongoose.model('LightiningScenes', new mongoose.Schema({
                 maxlength: 50,
                 required: true
             },
+            config: {
+                type: String,
+                required: true
+            },
             moodes: {
                 type: [{
                     lightName: {
                         type: String,
                         minlength: 3,
                         maxlength: 50,
+                        required: true,
+                    },
+                    type:{
+                        type: String,
                         required: true,
                     },
                     lightColor: {

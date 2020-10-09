@@ -13,7 +13,7 @@ const SeaPodConfig = mongoose.model('SeaPodConfig', new mongoose.Schema({
         type: {
             type: String,
         },
-        lightConfig: {
+        lightsConfig: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'LightConfig'
         },
