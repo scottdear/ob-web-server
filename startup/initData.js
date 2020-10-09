@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const { SeaPodConfig } = require('../models/seapod/seaPodConfig');
-const { LightConfig } = require('../models/seapod/lightConfig');
+const { RoomConfig } = require('../models/seapod/roomConfig');
 
 module.exports = async () => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
-        //create lightConfig
-        const bigBedroom5Lights = new LightConfig({
+        //create roomConfig
+        const bigBedroom5Lights = new RoomConfig({
             label: "Big Bedroom 5 Lights",
             compatibleRoomTypes: ["Bedroom"],
             lights: [{
@@ -37,11 +37,11 @@ module.exports = async () => {
                 canChangeIntensity: true
             }]
         });
-        LightConfig.exists({label: "Big Bedroom 5 Lights"}, async (err, res) => {
+        RoomConfig.exists({label: "Big Bedroom 5 Lights"}, async (err, res) => {
             if (!res) await bigBedroom5Lights.save();
         });
         
-        const smallBedroom3Lights = new LightConfig({
+        const smallBedroom3Lights = new RoomConfig({
             label: "Small Bedroom 3 Lights",
             compatibleRoomTypes: ["Bedroom"],
             lights: [{
@@ -60,11 +60,11 @@ module.exports = async () => {
                 canChangeIntensity: true
             }]
         });
-        LightConfig.exists({label: "Small Bedroom 3 Lights"}, async (err, res) => {
+        RoomConfig.exists({label: "Small Bedroom 3 Lights"}, async (err, res) => {
             if (!res) await smallBedroom3Lights.save();
         });
         
-        const twoBrightLights = new LightConfig({
+        const twoBrightLights = new RoomConfig({
             label: "Two Bright Lights",
             compatibleRoomTypes: ['Bedroom', 'Bathroom', 'Kitchen', 'Living Room'],
             lights: [{
@@ -78,11 +78,11 @@ module.exports = async () => {
                 canChangeIntensity: false
             }]
         });
-        LightConfig.exists({label: "Two Bright Lights"}, async (err, res) => {
+        RoomConfig.exists({label: "Two Bright Lights"}, async (err, res) => {
             if (!res) await twoBrightLights.save();
         });
         
-        const oneCustomizableLight = new LightConfig({
+        const oneCustomizableLight = new RoomConfig({
             label: "One Customizable Light",
             compatibleRoomTypes: ["Bedroom", "Bathroom", "Kitchen", "Living Room"],
             lights: [{
@@ -91,7 +91,7 @@ module.exports = async () => {
                 canChangeIntensity: true
             }]
         });
-        LightConfig.exists({label: "One Customizable Light"}, async (err, res) => {
+        RoomConfig.exists({label: "One Customizable Light"}, async (err, res) => {
             if (!res) await oneCustomizableLight.save();
         });
 
@@ -101,32 +101,32 @@ module.exports = async () => {
             rooms: [{
                 label: "Main Bedroom",
                 type: "Bedroom",
-                lightsConfig: bigBedroom5Lights._id
+                roomConfig: bigBedroom5Lights._id
             },
             {
                 label: "Small Bedroom 1",
                 type: "Bedroom",
-                lightsConfig: smallBedroom3Lights._id
+                roomConfig: smallBedroom3Lights._id
             },
             {
                 label: "Small Bedroom 2",
                 type: "Bedroom",
-                lightsConfig: smallBedroom3Lights._id
+                roomConfig: smallBedroom3Lights._id
             },
             {
                 label: "Main Bathroom",
                 type: "Bathroom",
-                lightsConfig: twoBrightLights._id
+                roomConfig: twoBrightLights._id
             },
             {
                 label: "Secondary Bathroom",
                 type: "Bathroom",
-                lightsConfig: oneCustomizableLight._id
+                roomConfig: oneCustomizableLight._id
             },
             {
                 label: "Kitchen",
                 type: "Kitchen",
-                lightsConfig: oneCustomizableLight._id
+                roomConfig: oneCustomizableLight._id
             }]
         });
         SeaPodConfig.exists({model: "A"}, async (err, res) => {

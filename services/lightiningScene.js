@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { SeaPod }= require('../models/seapod/seapod');
 const { User } = require('../models/users/user');
 const { LightiningScene } = require('../models/lightiningScene/lightiningScene');
+const { RoomConfig } = require('../models/seapod/roomConfig');
 
 class LightiningSceneService {
     async createLightScne(lightScene, seapodId, userId) {
@@ -464,20 +465,37 @@ class LightiningSceneService {
             error: 'User Not Found!'
         };
 
-        const lightScene = await LightiningScene.findById(lightSceneId)   
+        const lightScene = await LightiningScene.findById(lightSceneId).populate('rooms.config')   
         if (!lightScene) return {
             isError: true,
             statusCode: 404,
             error: 'LightScene Not Found!'
         };
 
-        let currentLight;
+        let currentLight, lightConfig, roomConfig;
         lightScene.rooms.forEach(room =>{
             room.moodes.forEach(mood =>{
-                if(mood._id == lightId) currentLight = mood
+                if(mood._id == lightId) {
+                    currentLight = mood
+                    roomConfig = room.config
+                    lightConfig = mood.type
+                }
             })
         })
+
+        if(!currentLight) return {
+            isError: true,
+            statusCode: 404,
+            error: 'Light Not Found!'
+        }
         
+        const config = roomConfig.lights.find(light => light.label == lightConfig)
+        if(!config || !config.canChangeIntensity) return {
+            isError: true,
+            statusCode: 400,
+            error: 'Cannot change intensity'
+        }
+
         currentLight.intensity = intensity;
         await lightScene.save();
 
@@ -509,7 +527,12 @@ class LightiningSceneService {
                 if(mood._id == lightId) currentLight = mood
             })
         })
-        
+
+        if(!currentLight) return {
+            isError: true,
+            statusCode: 404,
+            error: 'Light Not Found!'
+        }
         currentLight.status = !currentLight.status;
         await lightScene.save();
 
@@ -521,6 +544,9 @@ class LightiningSceneService {
     }
 
     async addDefaultLightScenes(userId, seapod){
+        const bigBedroom5Lights = await RoomConfig.findOne({label: 'Big Bedroom 5 Lights'});
+        const twoBrightLights = await RoomConfig.findOne({label: 'Two Bright Lights'});
+
         const day = new LightiningScene({
             source: "seapod",
             isDefault: true, 
@@ -528,53 +554,62 @@ class LightiningSceneService {
             rooms: [
                 {
                     label: "BedRoom",
+                    config: bigBedroom5Lights,
                     moodes: [
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 1",
-                            lightColor: "0xFF959B1B"
+                            lightColor: "0xFF959B1B",
+                            type: "Led line 1"
                         },
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 2",
-                            lightColor: "0xFF1322FF"
+                            lightColor: "0xFF1322FF",
+                            type: "Led line 2"
                         },
                         {
                             status: true,
                             intensity: 50,
-                            lightName: "Counter 4",
-                            lightColor: "0xFF9B1F0E"
+                            lightName: "Counter 3",
+                            lightColor: "0xFF9B1F0E",
+                            type: "Big center bulb"
                         },
                         {
                             status: true,
                             intensity: 50,
-                            lightName: "Ocrhead 3",
-                            lightColor: "0xFF219B8C"
+                            lightName: "Ocrhead 4",
+                            lightColor: "0xFF219B8C",
+                            type: "Night lamp 1"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Ocrhead 5",
+                            lightColor: "0xFF219B8C",
+                            type: "Night lamp 2"
                         }
                     ]
                 },
                 {
                     label: "Living",
+                    config: twoBrightLights,
                     moodes: [
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 1",
-                            lightColor: "0xFF959B1B"
+                            lightColor: "0xFF959B1B",
+                            type: "Ceiling light 1"
                         },
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 2",
-                            lightColor: "0xFF1322FF"
-                        },
-                        {
-                            status: true,
-                            intensity: 50,
-                            lightName: "Light 3",
-                            lightColor: "0xFFFF1EEE"
+                            lightColor: "0xFF1322FF",
+                            type: "Ceiling light 2"
                         }
                     ]
                 }
@@ -591,53 +626,62 @@ class LightiningSceneService {
             rooms: [
                 {
                     label: "BedRoom",
+                    config: bigBedroom5Lights,
                     moodes: [
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 1",
-                            lightColor: "0xFF959B1B"
+                            lightColor: "0xFF959B1B",
+                            type: "Led line 1"
                         },
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 2",
-                            lightColor: "0xFF1322FF"
+                            lightColor: "0xFF1322FF",
+                            type: "Led line 2"
                         },
                         {
                             status: true,
                             intensity: 50,
-                            lightName: "Counter 4",
-                            lightColor: "0xFF9B1F0E"
+                            lightName: "Counter 3",
+                            lightColor: "0xFF9B1F0E",
+                            type: "Big center bulb"
                         },
                         {
                             status: true,
                             intensity: 50,
-                            lightName: "Ocrhead 3",
-                            lightColor: "0xFF219B8C"
+                            lightName: "Ocrhead 4",
+                            lightColor: "0xFF219B8C",
+                            type: "Night lamp 1"
+                        },
+                        {
+                            status: true,
+                            intensity: 50,
+                            lightName: "Ocrhead 5",
+                            lightColor: "0xFF219B8C",
+                            type: "Night lamp 2"
                         }
                     ]
                 },
                 {
                     label: "Living",
+                    config: twoBrightLights,
                     moodes: [
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 1",
-                            lightColor: "0xFF959B1B"
+                            lightColor: "0xFF959B1B",
+                            type: "Ceiling light 1"
                         },
                         {
                             status: true,
                             intensity: 50,
                             lightName: "Lightstrip 2",
-                            lightColor: "0xFF1322FF"
-                        },
-                        {
-                            status: true,
-                            intensity: 50,
-                            lightName: "Light 3",
-                            lightColor: "0xFFFF1EEE"
+                            lightColor: "0xFF1322FF",
+                            type: "Ceiling light 2"
                         }
                     ]
                 }

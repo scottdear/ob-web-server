@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const LightConfig = mongoose.model('LightConfig', new mongoose.Schema({
+const RoomConfig = mongoose.model('RoomConfig', new mongoose.Schema({
     label: {
         type: String, 
         required: true 
@@ -22,4 +22,4 @@ const LightConfig = mongoose.model('LightConfig', new mongoose.Schema({
     }],
 }));
 
-exports.LightConfig = LightConfig;
+exports.RoomConfig = RoomConfig;

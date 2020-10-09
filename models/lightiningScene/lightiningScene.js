@@ -33,8 +33,8 @@ const LightiningScene = mongoose.model('LightiningScenes', new mongoose.Schema({
                 required: true
             },
             config: {
-                type: String,
-                required: true
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'RoomConfig'
             },
             moodes: {
                 type: [{

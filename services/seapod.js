@@ -299,8 +299,8 @@ class SeaPodService {
         .populate({
             path: 'seaPodConfig',
             populate: {
-                path: 'rooms.lightConfig',
-                model: 'LightConfig'
+                path: 'rooms.roomConfig',
+                model: 'RoomConfig'
             }
         }).execPopulate();
 
