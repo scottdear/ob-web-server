@@ -40,7 +40,7 @@
     "lodash": "^4.17.19",
     "mongoose": "^5.7.14",
     "node-forge": "^0.10.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.6",
     "qrcode": "^1.4.4",
     "random-location": "^1.1.2",
     "run-rs": "^0.6.2",
