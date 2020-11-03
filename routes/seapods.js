@@ -47,7 +47,7 @@ router.get('/', [auth, admin], async (req, res) => {
 });
 
 router.get('/:id', [auth, admin], async (req, res) => {
-    const { error } = validateObjectId({ id: req.params.id });
+    const { error } = validateObjectId(req.params.id);
     if (error) return res.status(400).json({
         "message": "Invalid seapod id!"
     });
