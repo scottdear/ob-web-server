@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { User } = require('../models/users/user');
+const { Admin } = require('../models/users/admin');
 
 module.exports = async function (req, res, next) {
     const token = req.header('x-auth-token');
@@ -10,7 +11,13 @@ module.exports = async function (req, res, next) {
 
     try {
         const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
-        const user = await User.findById(decoded._id);
+
+        let user;
+        if(decoded.role === 'A')
+            user = await Admin.findById(decoded._id);
+        else 
+            user = await User.findById(decoded._id);
+
         let allowed = false;
         
         if (user.tokensAndDevices.length > 0){
