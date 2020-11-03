@@ -7,6 +7,7 @@ const config=require('config');
 
 const extendSchema = require('../../helpers/extendSchema');
 const personSchema = require('./person');
+const tokenAndDevice = require('./tokenAndDevice');
 
 const adminSchema = extendSchema(personSchema, {
     verificationLevel: {
@@ -19,7 +20,7 @@ const adminSchema = extendSchema(personSchema, {
         enum: ['ADMIN', 'MASTER'],
         default: 'ADMIN'
     },
-    tokens: [String]
+    tokensAndDevices: [tokenAndDevice]
 });
 
 function validateAdmin(admin) {

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const speakeasy = require('speakeasy');
 const config=require('config');
 const { v4: uuidv4 } = require('uuid');
+const { AuthService } = require('./auth');
 
 const slatRounds = parseInt(config.get('adminSalt'));
 
@@ -19,23 +20,24 @@ class AdminService {
             const salt = await bcrypt.genSalt(slatRounds);
             admin.password = await bcrypt.hash(admin.password, salt);
 
+            const jti = uuidv4();
+            const adminJwt = await admin.generateAuthToken(jti);
+
+            admin.tokensAndDevices.push({
+                jti: jti,
+                notificationToken: adminData.notificationToken,
+                hardwareId: adminData.hardwareId,
+                model: adminData.model,
+            });
+
             admin.actionHistorys.push({
                 action: "Account Registration",
                 actionResult: "SUCCEESED",
                 tokenAndDeviceId: admin._id,
                 itemId: admin._id,
             });
-
-            const jti = uuidv4();
-            const adminJwt = await admin.generateAuthToken(jti);
-            // const otpAuth = await admin.generateAuthQrCode();
-            // const verificationToken = new VerificationToken({
-            //     _userId: admin._id,
-            //     token: otpAuth.secret
-            // });
-
+            
             await admin.save();
-            // await verificationToken.save();
             await session.commitTransaction();
 
             return {
@@ -55,12 +57,12 @@ class AdminService {
         }
     }
 
-    async login(email, password) {
+    async login(obj) {
         const session = await mongoose.startSession();
         session.startTransaction();
         try {
             const admin = await Admin.findOne({
-                email: email
+                email: obj.email
             });
             if (!admin) return {
                 isError: true,
@@ -68,7 +70,7 @@ class AdminService {
                 error: "Invalid email or password"
             }
 
-            const isValidPassword = await bcrypt.compare(password, admin.password);
+            const isValidPassword = await bcrypt.compare(obj.password, admin.password);
             //TODO: enhance faild senario here
             if (!isValidPassword) return {
                 isError: true,
@@ -79,10 +81,13 @@ class AdminService {
             const jti = uuidv4();
             const adminJwt = admin.generateAuthToken(jti);
 
+            const auth = new AuthService();
+            const tokenAndDeviceId = auth.logReturnTokenAndDeviceId(obj, jti, admin.tokensAndDevices);
+
             admin.actionHistorys.push({
                 action: "Account LOGIN",
                 actionResult: "SUCCEESED",
-                tokenAndDeviceId: admin._id,
+                tokenAndDeviceId: tokenAndDeviceId,
                 itemId: admin._id,
             });
 
