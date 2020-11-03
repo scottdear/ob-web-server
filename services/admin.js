@@ -5,15 +5,16 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const speakeasy = require('speakeasy');
 const config=require('config');
+const { v4: uuidv4 } = require('uuid');
 
 const slatRounds = parseInt(config.get('adminSalt'));
 
 class AdminService {
-    async createAdmin(req) {
+    async createAdmin(adminData) {
         const session = await mongoose.startSession();
         session.startTransaction();
         try {
-            const admin = new Admin(req);
+            const admin = new Admin(adminData);
 
             const salt = await bcrypt.genSalt(slatRounds);
             admin.password = await bcrypt.hash(admin.password, salt);
@@ -25,20 +26,22 @@ class AdminService {
                 itemId: admin._id,
             });
 
-            const otpAuth = await admin.generateAuthQrCode();
-            const verificationToken = new VerificationToken({
-                _userId: admin._id,
-                token: otpAuth.secret
-            });
+            const jti = uuidv4();
+            const adminJwt = await admin.generateAuthToken(jti);
+            // const otpAuth = await admin.generateAuthQrCode();
+            // const verificationToken = new VerificationToken({
+            //     _userId: admin._id,
+            //     token: otpAuth.secret
+            // });
 
             await admin.save();
-            await verificationToken.save();
+            // await verificationToken.save();
             await session.commitTransaction();
 
             return {
                 isError: false,
-                otpAuthImage: otpAuth.otpAuthUrl,
-                secret: otpAuth.secret
+                admin: _.pick(admin, ["firstName", "lastName", "email", "mobileNumber", "country"]),
+                jwtoken: adminJwt
             };
         } catch (error) {
             await session.abortTransaction();
@@ -49,6 +52,73 @@ class AdminService {
             }
         } finally {
             session.endSession();
+        }
+    }
+
+    async login(email, password) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const admin = await Admin.findOne({
+                email: email
+            });
+            if (!admin) return {
+                isError: true,
+                statusCode: 400,
+                error: "Invalid email or password"
+            }
+
+            const isValidPassword = await bcrypt.compare(password, admin.password);
+            //TODO: enhance faild senario here
+            if (!isValidPassword) return {
+                isError: true,
+                statusCode: 400,
+                error: "Invalid email or password"
+            }
+
+            const jti = uuidv4();
+            const adminJwt = admin.generateAuthToken(jti);
+
+            admin.actionHistorys.push({
+                action: "Account LOGIN",
+                actionResult: "SUCCEESED",
+                tokenAndDeviceId: admin._id,
+                itemId: admin._id,
+            });
+
+            // const otpAuth = await admin.generateAuthQrCode();
+            // const verificationToken = new VerificationToken({
+            //     _userId: admin._id,
+            //     token: otpAuth.secret
+            // });
+
+            await admin.save();
+            // await verificationToken.save();
+            await session.commitTransaction();
+
+            return {
+                isError: false,
+                admin: _.pick(admin, ["firstName", "lastName", "email", "mobileNumber", "country"]),
+                jwtoken: adminJwt
+            };
+        } catch (error) {
+            await session.abortTransaction();
+        } finally {
+            session.endSession();
+        }
+    }
+
+    async autoLogin(adminId) {
+        const admin = await Admin.findById(adminId);
+        if (!admin) return {
+            isError: true,
+            statusCode: 400,
+            error: 'Invalid Token!'
+        }
+
+        return {
+            isError: false,
+            admin: _.pick(admin, ["firstName", "lastName", "email", "mobileNumber", "country"]),
         }
     }
 
@@ -102,71 +172,6 @@ class AdminService {
                 "country"
             ]),
             jwt: adminJwt
-        }
-    }
-
-    async login(req) {
-        const session = await mongoose.startSession();
-        session.startTransaction();
-        try {
-            const admin = await Admin.findOne({
-                email: req.email
-            });
-            if (!admin) return {
-                isError: true,
-                statusCode: 400,
-                error: "Invalid email or password"
-            }
-
-            const isValidPassword = await bcrypt.compare(req.password, admin.password);
-            //TODO: enhance faild senario here
-            if (!isValidPassword) return {
-                isError: true,
-                statusCode: 400,
-                error: "Invalid email or password"
-            }
-            admin.actionHistorys.push({
-                action: "Account LOGIN",
-                actionResult: "SUCCEESED",
-                tokenAndDeviceId: admin._id,
-                itemId: admin._id,
-            });
-
-            const otpAuth = await admin.generateAuthQrCode();
-            const verificationToken = new VerificationToken({
-                _userId: admin._id,
-                token: otpAuth.secret
-            });
-
-            await admin.save();
-            await verificationToken.save();
-            await session.commitTransaction();
-
-            return {
-                isError: false,
-                otpAuthImage: otpAuth.otpAuthUrl,
-                secret: otpAuth.secret
-            };
-        } catch (error) {
-            await session.abortTransaction();
-        } finally {
-            session.endSession();
-        }
-    }
-
-    async autoLogin(adminId) {
-        const admin = await Admin.findById(adminId);
-        if (!admin) return {
-            isError: true,
-            statusCode: 400,
-            error: 'Invalid Token!'
-        }
-
-        return {
-            isError: false,
-            admin: _.pick(admin, ["firstName", "lastName", "email", "mobileNumber",
-                "country"
-            ]),
         }
     }
 }

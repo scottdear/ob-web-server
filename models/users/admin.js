@@ -33,10 +33,12 @@ function validateAdmin(admin) {
     });
     return schema.validate(admin);
 }
-adminSchema.methods.generateAuthToken = function () {
+
+adminSchema.methods.generateAuthToken = function (jti) {
     return jwt.sign({
         _id: this._id,
-        role: "A" // Admin
+        role: "A", // Admin
+        jti: jti
     }, config.get('jwtPrivateKey'));
 }
 
