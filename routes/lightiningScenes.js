@@ -58,7 +58,7 @@ router.delete('/:lightSceneId', auth, async (req, res) => {
     if (result.isError) return res.status(result.statusCode).json({
         "message": result.error
     });
-    return res.send(result.lightiningScene);
+    return res.send(result.lightiningScene).json('LightScene Deleted Successfully');
 });
 
 router.put('/order/:seaPodId/:source', auth, async (req, res) => {
