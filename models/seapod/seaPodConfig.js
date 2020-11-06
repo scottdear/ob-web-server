@@ -12,6 +12,7 @@ const SeaPodConfig = mongoose.model('SeaPodConfig', new mongoose.Schema({
         },
         type: {
             type: String,
+            required: true
         },
         roomConfig: {
             type: mongoose.Schema.Types.ObjectId,

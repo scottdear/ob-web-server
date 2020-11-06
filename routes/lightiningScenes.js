@@ -149,6 +149,25 @@ router.put('/:lightSceneId/lightIntensity', auth, async (req, res) => {
     return res.status(result.statusCode).json(result.lightScene);
 });
 
+router.put('/:lightSceneId/lightColor', auth, async (req, res) => {
+    const lightSceneIdError = validateObjectId(req.params.lightSceneId);
+    if (lightSceneIdError.error) return res.status(400).json({
+        "message": "Invalid LightScene ID!"
+    });
+
+    if (_.isEmpty(req.body)) return res.status(400).json({
+        'message': "Light data is required!"
+    });
+
+    const lightiningSceneService = new LightiningSceneService();
+    const result = await lightiningSceneService.updateLightColor(req.user._id, req.params.lightSceneId, req.body.lightId, req.body.color);
+
+    if (result.isError) return res.status(result.statusCode).json({
+        "message": result.error
+    });
+    return res.status(result.statusCode).json(result.lightScene);
+});
+
 router.put('/:lightSceneId/lightStatus', auth, async (req, res) => {
     const lightSceneIdError = validateObjectId(req.params.lightSceneId);
     if (lightSceneIdError.error) return res.status(400).json({

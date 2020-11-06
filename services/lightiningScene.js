@@ -506,6 +506,56 @@ class LightiningSceneService {
         }
     }
 
+    async updateLightColor(userId, lightSceneId, lightId, color){
+
+        const user = await User.findById(userId);
+        if (!user) return {
+            isError: true,
+            statusCode: 404,
+            error: 'User Not Found!'
+        };
+
+        const lightScene = await LightiningScene.findById(lightSceneId).populate('rooms.config')   
+        if (!lightScene) return {
+            isError: true,
+            statusCode: 404,
+            error: 'LightScene Not Found!'
+        };
+
+        let currentLight, lightConfig, roomConfig;
+        lightScene.rooms.forEach(room =>{
+            room.moodes.forEach(mood =>{
+                if(mood._id == lightId) {
+                    currentLight = mood
+                    roomConfig = room.config
+                    lightConfig = mood.type
+                }
+            })
+        })
+
+        if(!currentLight) return {
+            isError: true,
+            statusCode: 404,
+            error: 'Light Not Found!'
+        }
+        
+        const config = roomConfig.lights.find(light => light.label == lightConfig)
+        if(!config || !config.canChangeColor) return {
+            isError: true,
+            statusCode: 400,
+            error: 'Cannot change color'
+        }
+
+        currentLight.lightColor = color;
+        await lightScene.save();
+
+        return {
+            isError: false,
+            statusCode: 200,
+            lightScene: lightScene
+        }
+    }
+
     async updateLightStatus(userId, lightSceneId, lightId){
         const user = await User.findById(userId);
         if (!user) return {
