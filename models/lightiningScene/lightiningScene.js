@@ -46,7 +46,7 @@ const LightiningScene = mongoose.model('LightiningScenes', new mongoose.Schema({
                     },
                     type:{
                         type: String,
-                        required: true,
+                        required: false,
                     },
                     lightColor: {
                         type: String,
