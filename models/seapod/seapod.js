@@ -136,6 +136,10 @@ const seaPodSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    seaPodType: {
+        type: String,
+        required: true
+    },
     users: [{
         type: seaPodUser,
         default: []
@@ -239,6 +243,7 @@ function validateSeaPod(seapod) {
         interiorBedroomWallColor: Joi.string().pattern(hexColorsRegEx).required(),
         deckFloorFinishMaterial: Joi.string().required(),
         seaPodStatus: Joi.string(),
+        seaPodType: Joi.string(),
     });
 
     return schema.validate(seapod);
