@@ -202,18 +202,18 @@ class LightiningSceneService {
                 };
             }
 
-            const selectedLightScene = await LightiningScene.findByIdAndRemove(lightSceneId);
-            if(userId != selectedLightScene.userId) return {
-                isError: true,
-                statusCode: 401,
-                error: 'Access denied. Not your own LightScene!!'
-            };
-
-            const lightScene = await LightiningScene.findByIdAndDelete(lightSceneId);
+            const lightScene = await LightiningScene.findById(lightSceneId);
             if (!lightScene) return {
                 isError: true,
                 statusCode: 404,
                 error: 'Light Scene Not Found!'
+            };
+
+            const selectedLightScene = await LightiningScene.findByIdAndDelete(lightSceneId);
+            if(userId != selectedLightScene.userId) return {
+                isError: true,
+                statusCode: 401,
+                error: 'Access denied. Not your own LightScene!!'
             };
 
             await SeaPod.updateMany(
