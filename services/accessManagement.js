@@ -381,7 +381,7 @@ class AccessManagement {
             error: "User Not Found!"
         };
 
-        const permission = Permission.findById(body.permissionSetId);
+        const permission = await Permission.findById(body.permissionSetId);
         if (!permission) return {
             isError: true,
             statusCode: 404,
@@ -405,7 +405,7 @@ class AccessManagement {
                     name: seapod.SeaPodName,
                     vessleCode: seapod.vessleCode
                 },
-                type: "MEMBER",
+                type: body.type,
                 period: 0,
                 status: 'PENDING',
                 checkIn: Date.now(),
