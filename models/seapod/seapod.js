@@ -137,8 +137,7 @@ const seaPodSchema = new mongoose.Schema({
         required: true
     },
     seaPodType: {
-        type: String,
-        required: true
+        type: String
     },
     users: [{
         type: seaPodUser,
