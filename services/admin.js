@@ -179,6 +179,34 @@ class AdminService {
             jwt: adminJwt
         }
     }
+
+    async invalidateToken(adminId, jti) {
+        try {
+            const admin = await Admin.findById(adminId);
+            if (!admin) return {
+                isError: true,
+                statusCode: 404,
+                error: "Admin Not Found"
+            }
+
+            await Admin.updateOne({ _id: adminId },
+                { $pull: { 'tokensAndDevices': { 'jti': jti } } }
+            );
+
+            return {
+                isError: false,
+                message: 'Logged Out Successfully',
+                statusCode: 200
+            }
+        } catch (error) {
+            return {
+                isError: true,
+                error: 'Error Logging Out',
+                statusCode: 400
+            }
+        }
+    }
+
 }
 
 module.exports = AdminService;

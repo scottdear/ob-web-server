@@ -80,4 +80,14 @@ router.post('/totp-verification', async (req, res) => {
     return res.header('x-auth-token', result.jwt).status(200).send(result.admin);
 });
 
+router.post('/logout', [auth, admin], async (req, res) => {
+    const adminService = new AdminService();
+    const result = await adminService.invalidateToken(req.user._id, req.user.jti);
+
+    if (result.isError) return res.status(result.statusCode).json({
+        "message": result.error
+    });
+    return res.status(result.statusCode).json({ 'message': result.message });
+});
+
 module.exports = router;
