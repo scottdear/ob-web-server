@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const error = require('../middlewares/error');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
@@ -16,6 +17,8 @@ module.exports = function (app) {
     app.use(express.json());
     app.use(express.static('assets'));
     app.use(accessControlAllowOrigin);
+
+    app.use(cors());
 
     app.use('/', main);
     app.use(`/${API_VERSION}/api/users`, users);
