@@ -13,7 +13,9 @@ const swagger = require('../routes/swagger');
 const API_VERSION = 'v1';
 
 module.exports = function (app) {
-    app.use(cors());
+    app.use(cors({
+        optionsSuccessStatus: 200
+    }));
     app.use(express.json());
     app.use(express.static('assets'));
 
