@@ -17,6 +17,7 @@ module.exports = function (app) {
         optionsSuccessStatus: 200
     }));
     app.use(express.json());
+    app.use(express.urlencoded({extended:false}));
     app.use(express.static('assets'));
 
     app.use('/', main);
