@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const winston = require('winston');
+const cors=require('cors');
+
+app.use(cors());
 require('dotenv').config();
 
 require('./startup/logging')();
