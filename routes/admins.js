@@ -51,9 +51,10 @@ router.put('/auth', async (req, res) => {
     }
     const adminService = new AdminService();
     const result = await adminService.login(contextObject);
+    // console.log(result.isError)
 
     if (result.isError) return res.status(result.statusCode).json({ 'message': result.error });
-    return res.header('x-auth-token', result.jwtoken).status(200).json(result.admin);
+    return res.header({'x-auth-token': result.jwtoken, 'Access-Control-Expose-Headers': '*'}).status(200).json(result.admin);
 });
 
 router.get('/me', [auth, admin], async (req, res) => {
