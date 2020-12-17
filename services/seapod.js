@@ -132,7 +132,15 @@ class SeaPodService {
     }
 
     async getAllSeapods() {
-        const seaPods = await SeaPod.find();
+        const seaPods = await SeaPod.find()
+        .populate('permissionSets')
+        .populate('accessRequests')
+        .populate('accessInvitation')
+        .populate('lightScenes')
+        .populate('seaPodConfig')
+        .populate('users.lighting.lightScenes')
+        .populate('users.permissionSet');
+
         for (const seapod of seaPods)
             seapod.data = generateFakeData(1).pop();
 
@@ -140,7 +148,15 @@ class SeaPodService {
     }
 
     async getSeapodById(seapodId) {
-        const seapod = await SeaPod.findById(seapodId);
+        const seapod = await SeaPod.findById(seapodId)
+        .populate('permissionSets')
+        .populate('accessRequests')
+        .populate('accessInvitation')
+        .populate('lightScenes')
+        .populate('seaPodConfig')
+        .populate('users.lighting.lightScenes')
+        .populate('users.permissionSet');
+        
         if (!seapod) return;
         seapod.data = generateFakeData(1).pop();
         return seapod;
