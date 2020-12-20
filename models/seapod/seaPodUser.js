@@ -44,9 +44,5 @@ module.exports = new mongoose.Schema({
     accessPeriod: {
         type: Number,
         default: 0
-    },
-    memberSince: {
-        type: Date,
-        default: Date.now()
     }
 });

@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 const config = require('config');
 const { v4: uuidv4 } = require('uuid');
+const _ = require('lodash');
 
 const { User, validatePassword } = require('../models/users/user');
+const { SeaPod } = require('../models/seapod/seapod')
 const { generateFakeData } = require('../helpers/utilites');
 const { filterUserTokensAndDevices, filterUserAndSeapods } = require('../helpers/filtering');
 
@@ -233,6 +235,54 @@ class UserService {
     async getAllUsers() {
         const users = await User.find().select('-password -previousPasswords');
         return filterUserTokensAndDevices(users);
+    }
+
+    async getAllOwners() {
+        let owners = [];
+
+        try {
+            const seapods = await SeaPod.find();
+
+            seapods.forEach(async seapod => {
+                let owner = seapod.users.find(user => user.type == 'OWNER')
+                owner = _.pick(owner, ['_id', 'userName', 'checkInDate', 'profilePicUrl']);
+                
+                owners.push(owner)     
+            });
+
+            for(let i=0; i<owners.length; i++){
+                const ownerInfo = await User.findById(owners[i]._id).populate('seaPods');
+                
+                owners[i].seaPods = [];
+                ownerInfo.seaPods.forEach(seapod => {
+                    let seapodName = seapod.SeaPodName;
+                    let seapodUser = seapod.users.find(user => user._id == owners[i]._id)
+                    const seapodInstance = {
+                        seapodName,
+                        userType: seapodUser.type
+                    }
+                    owners[i].seaPods.push(seapodInstance)
+                })
+                
+                owners[i].country = ownerInfo.country;
+                owners[i].firstName = ownerInfo.firstName;
+                owners[i].lastName = ownerInfo.lastName;
+                owners[i].email = ownerInfo.email;
+                owners[i].mobileNumber = ownerInfo.mobileNumber;
+                owners[i].emergencyContacts = ownerInfo.emergencyContacts;
+            }
+        } catch (error) {
+            return {
+                statusCode: 500,
+                error: error.message
+            };
+        }
+        
+        return {
+            isError: false,
+            owners,
+            statusCode: 200
+        };
     }
 
     async getuserNotifications(userId) {

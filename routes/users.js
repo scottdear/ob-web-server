@@ -30,6 +30,17 @@ router.get('/', [auth, admin], async (req, res) => {
     return res.send(users);
 });
 
+router.get('/owners', [auth, admin], async (req, res) => {
+    const userService = new UserService();
+    const result = await userService.getAllOwners();
+
+    if (result.isError) return res.status(result.statusCode).json({
+        'message': result.error
+    });
+
+    return res.status(200).json(result.owners);
+});
+
 
 router.put('/', auth, async (req, res) => {
     if (_.isEmpty(req.body)) return res.status(400).json({
