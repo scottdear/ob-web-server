@@ -26,6 +26,7 @@
   "dependencies": {
     "@hapi/joi": "^16.1.8",
     "@sendgrid/mail": "^6.4.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -42,6 +43,7 @@
     "mongoose": "^5.7.14",
     "node-forge": "^0.10.0",
     "nodemon": "^2.0.6",
+    "path": "^0.12.7",
     "qrcode": "^1.4.4",
     "random-location": "^1.1.2",
     "run-rs": "^0.6.2",

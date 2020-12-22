@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
-const seaPodUser = require('./seaPodUser');
-const seaPodActionHistory = require('./seaPodActionHistory');
-const adminPermissions = require('./adminPermissions');
+const AWS = require('aws-sdk');
 const fs = require('fs');
 const qrcode = require('qrcode');
 const randomLocation = require('random-location');
+
+const seaPodUser = require('./seaPodUser');
+const seaPodActionHistory = require('./seaPodActionHistory');
+const adminPermissions = require('./adminPermissions');
 
 const hexColorsRegEx = /^(0xFF|0xff)([0-9A-Fa-f]{8}|[0-9A-Fa-f]{6})$/;
 const seaPodSchema = new mongoose.Schema({
@@ -173,9 +175,9 @@ const seaPodSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SeaPodConfig'
     },
-    selectedScene:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'LightiningScenes',
+    selectedScene: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'LightiningScenes',
     },
 });
 
@@ -188,6 +190,32 @@ seaPodSchema.methods.generateVesselCode = function () {
     return vesselCodeArray.join("").toUpperCase();
 }
 
+const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
+const IAM_USER_KEY = process.env.AWS_ACCESS_KEY_ID;
+const IAM_USER_SECRET = process.env.AWS_SECRET_ACCESS_KEY;
+
+const s3 = new AWS.S3({
+    accessKeyId: IAM_USER_KEY,
+    secretAccessKey: IAM_USER_SECRET
+});
+
+const uploadFile = (fileName) => {
+    const fileContent = fs.readFileSync(fileName);
+
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: fileName,
+        Body: fileContent
+    };
+
+    s3.upload(params, function (err, data) {
+        if (err) {
+            throw err;
+        }
+        console.log(`File uploaded successfully. ${data.Location}`);
+    });
+};
+
 seaPodSchema.methods.generateQrCode = async function (vesselCode, hostName) {
     const dir = 'assets/qrcodes';
 
@@ -196,8 +224,8 @@ seaPodSchema.methods.generateQrCode = async function (vesselCode, hostName) {
             recursive: true
         });
 
-    await qrcode
-        .toFile(`${dir}/${vesselCode}.png`, vesselCode);
+    await qrcode.toFile(`${dir}/${vesselCode}.png`, vesselCode);
+    uploadFile(`${dir}/${vesselCode}.png`);
 
     return `https://${hostName}/qrcodes/${vesselCode}.png`;
 }
