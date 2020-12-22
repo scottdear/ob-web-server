@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const AWS = require('aws-sdk');
+const fs = require('fs');
 
 const { User } = require('../models/users/user');
 const { SeaPod } = require('../models/seapod/seapod');
@@ -133,13 +135,13 @@ class SeaPodService {
 
     async getAllSeapods() {
         const seaPods = await SeaPod.find()
-        .populate('permissionSets')
-        .populate('accessRequests')
-        .populate('accessInvitation')
-        .populate('lightScenes')
-        .populate('seaPodConfig')
-        .populate('users.lighting.lightScenes')
-        .populate('users.permissionSet');
+            .populate('permissionSets')
+            .populate('accessRequests')
+            .populate('accessInvitation')
+            .populate('lightScenes')
+            .populate('seaPodConfig')
+            .populate('users.lighting.lightScenes')
+            .populate('users.permissionSet');
 
         for (const seapod of seaPods)
             seapod.data = generateFakeData(1).pop();
@@ -149,14 +151,14 @@ class SeaPodService {
 
     async getSeapodById(seapodId) {
         const seapod = await SeaPod.findById(seapodId)
-        .populate('permissionSets')
-        .populate('accessRequests')
-        .populate('accessInvitation')
-        .populate('lightScenes')
-        .populate('seaPodConfig')
-        .populate('users.lighting.lightScenes')
-        .populate('users.permissionSet');
-        
+            .populate('permissionSets')
+            .populate('accessRequests')
+            .populate('accessInvitation')
+            .populate('lightScenes')
+            .populate('seaPodConfig')
+            .populate('users.lighting.lightScenes')
+            .populate('users.permissionSet');
+
         if (!seapod) return;
         seapod.data = generateFakeData(1).pop();
         return seapod;
@@ -309,20 +311,20 @@ class SeaPodService {
         seapod.qrCodeImageUrl = qrCodeUrl;
 
         const model = "A";
-        const seaPodConfig = await SeaPodConfig.findOne({model});
+        const seaPodConfig = await SeaPodConfig.findOne({ model });
         seapod.seaPodConfig = seaPodConfig;
         await seapod.populate('seaPodConfig')
-        .populate({
-            path: 'seaPodConfig',
-            populate: {
-                path: 'rooms.roomConfig',
-                model: 'RoomConfig'
-            }
-        }).execPopulate();
+            .populate({
+                path: 'seaPodConfig',
+                populate: {
+                    path: 'rooms.roomConfig',
+                    model: 'RoomConfig'
+                }
+            }).execPopulate();
 
         const permissionService = new PermissionService();
         seapod = await permissionService.addDefaultPremissionSets(seapod);
-        await seapod.populate('permissionSets').execPopulate();    
+        await seapod.populate('permissionSets').execPopulate();
         seapod = await permissionService.addDefaultPremissionSet(user._id, seapod);
 
         const lightiningSceneService = new LightiningSceneService();
@@ -376,6 +378,47 @@ class SeaPodService {
                 error: error.message
             }
         }
+    }
+
+    encode(data) {
+        let buf = Buffer.from(data);
+        let base64 = buf.toString('base64');
+        return base64
+    }
+
+    async getQrImage(vessleCode) {
+
+        const seapod = await SeaPod.find({ 'vessleCode': vessleCode });
+        if (!seapod) return {
+            isError: true,
+            statusCode: 404,
+            error: "Seapod Not found!"
+        };
+
+        const dir = 'assets/qrcodes';
+        const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
+        const IAM_USER_KEY = process.env.AWS_ACCESS_KEY_ID;
+        const IAM_USER_SECRET = process.env.AWS_SECRET_ACCESS_KEY;
+
+        const s3 = new AWS.S3({
+            accessKeyId: IAM_USER_KEY,
+            secretAccessKey: IAM_USER_SECRET
+        });
+
+        const qrImagePath = `${dir}/${vessleCode}.png`
+        
+        const qrImage = await s3.getObject({
+            Bucket: BUCKET_NAME,
+            Key: qrImagePath
+        }).promise();
+
+        fs.writeFileSync(qrImagePath, qrImage.Body);
+
+        return {
+            isError: false,
+            qrImagePath
+        }
+
     }
 }
 exports.SeaPodService = SeaPodService;

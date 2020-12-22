@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const mime = require('mime-types');
 const qrcode = require('qrcode');
 const randomLocation = require('random-location');
 
@@ -202,10 +203,14 @@ const s3 = new AWS.S3({
 const uploadFile = (fileName) => {
     const fileContent = fs.readFileSync(fileName);
 
+    console.log(fileContent.mimetype)
+    console.log(fileContent.name)
+
     const params = {
         Bucket: BUCKET_NAME,
         Key: fileName,
-        Body: fileContent
+        Body: fileContent,
+        ContentType: mime.lookup(fileName)
     };
 
     s3.upload(params, function (err, data) {
@@ -216,7 +221,7 @@ const uploadFile = (fileName) => {
     });
 };
 
-seaPodSchema.methods.generateQrCode = async function (vesselCode, hostName) {
+seaPodSchema.methods.generateQrCode = async function (vessleCode, hostName) {
     const dir = 'assets/qrcodes';
 
     if (!fs.existsSync(dir))
@@ -224,10 +229,10 @@ seaPodSchema.methods.generateQrCode = async function (vesselCode, hostName) {
             recursive: true
         });
 
-    await qrcode.toFile(`${dir}/${vesselCode}.png`, vesselCode);
-    uploadFile(`${dir}/${vesselCode}.png`);
+    await qrcode.toFile(`${dir}/${vessleCode}.png`, vessleCode);
+    uploadFile(`${dir}/${vessleCode}.png`);
 
-    return `https://${hostName}/qrcodes/${vesselCode}.png`;
+    return `https://${hostName}/qrcodes/${vessleCode}.png`;
 }
 
 seaPodSchema.methods.generateRandomLocation = function () {

@@ -1,11 +1,13 @@
 const express = require('express');
+const _ = require('lodash');
+const path = require('path');
+
 const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 const { validateSeaPod } = require('../models/seapod/seapod');
 const { SeaPodService } = require('../services/seapod');
 const { validateObjectId, validateSeapdName } = require('../services/validation');
 const attachAccessRequestListner = require('../subscribers/accessManagement');
-const _ = require('lodash');
-const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
@@ -144,5 +146,16 @@ router.get('/:seapodId/users/:userId', auth, async (req, res) => {
     });
     return res.send(result.seapodUsers);
 });
+
+router.get('/qrcode/:vessleCode', auth, async (req, res)=> {
+    const seaPodService = new SeaPodService();
+    const result = await seaPodService.getQrImage(req.params.vessleCode);
+
+    if (result.isError) return res.status(result.statusCode).send({
+        "message": result.error
+    });
+    return res.sendFile(path.join(__dirname, '/../', result.qrImagePath));
+
+})
 
 module.exports = router;
