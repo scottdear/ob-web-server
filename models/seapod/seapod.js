@@ -203,9 +203,6 @@ const s3 = new AWS.S3({
 const uploadFile = (fileName) => {
     const fileContent = fs.readFileSync(fileName);
 
-    console.log(fileContent.mimetype)
-    console.log(fileContent.name)
-
     const params = {
         Bucket: BUCKET_NAME,
         Key: fileName,
