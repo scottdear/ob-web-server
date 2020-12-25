@@ -233,7 +233,11 @@ class UserService {
     }
 
     async getAllUsers() {
-        const users = await User.find().select('-password -previousPasswords');
+        const users = await User.find().select('-password -previousPasswords')
+            .populate('seaPods')
+            .populate('accessRequests')
+            .populate('accessInvitation');
+
         return filterUserTokensAndDevices(users);
     }
 
@@ -246,13 +250,13 @@ class UserService {
             seapods.forEach(async seapod => {
                 let owner = seapod.users.find(user => user.type == 'OWNER')
                 owner = _.pick(owner, ['_id', 'userName', 'checkInDate', 'profilePicUrl']);
-                
-                owners.push(owner)     
+
+                owners.push(owner)
             });
 
-            for(let i=0; i<owners.length; i++){
+            for (let i = 0; i < owners.length; i++) {
                 const ownerInfo = await User.findById(owners[i]._id).populate('seaPods');
-                
+
                 owners[i].seaPods = [];
                 ownerInfo.seaPods.forEach(seapod => {
                     let seapodName = seapod.SeaPodName;
@@ -263,7 +267,7 @@ class UserService {
                     }
                     owners[i].seaPods.push(seapodInstance)
                 })
-                
+
                 owners[i].country = ownerInfo.country;
                 owners[i].firstName = ownerInfo.firstName;
                 owners[i].lastName = ownerInfo.lastName;
@@ -277,7 +281,7 @@ class UserService {
                 error: error.message
             };
         }
-        
+
         return {
             isError: false,
             owners,
@@ -441,7 +445,7 @@ class UserService {
             .populate('accessRequests')
             .populate('accessInvitation');
 
-        if(source != 'external' && source != 'local'){
+        if (source != 'external' && source != 'local') {
             return {
                 isError: true,
                 error: 'Source value is invalid',
@@ -451,7 +455,7 @@ class UserService {
 
         user.selectedWeatherSource = source;
         user.save();
-        
+
         user = filterUserAndSeapods(user.toJSON(), generateFakeData(user.seaPods.length));
         return {
             isError: false,
