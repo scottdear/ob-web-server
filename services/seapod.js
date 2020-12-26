@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const _ = require('lodash');
 
 const { User } = require('../models/users/user');
 const { SeaPod } = require('../models/seapod/seapod');
@@ -418,6 +419,53 @@ class SeaPodService {
             isError: false,
             qrImagePath
         }
+
+    }
+
+    async getSeapodOwner(seapodId){
+
+        let owners = [];
+
+        try {
+            const seapod = await SeaPod.findById(seapodId);
+            
+            seapod.users.forEach(user => {
+                if(user.type=='OWNER') owners.push(_.pick(user, ['_id', 'userName', 'checkInDate', 'profilePicUrl']))
+            })
+
+            for (let i = 0; i < owners.length; i++) {
+                const ownerInfo = await User.findById(owners[i]._id).populate('seaPods');
+
+                owners[i].seaPods = [];
+                ownerInfo.seaPods.forEach(seapod => {
+                    let seapodName = seapod.SeaPodName;
+                    let seapodUser = seapod.users.find(user => user._id == owners[i]._id)
+                    const seapodInstance = {
+                        seapodName,
+                        userType: seapodUser.type
+                    }
+                    owners[i].seaPods.push(seapodInstance)
+                })
+
+                owners[i].country = ownerInfo.country;
+                owners[i].firstName = ownerInfo.firstName;
+                owners[i].lastName = ownerInfo.lastName;
+                owners[i].email = ownerInfo.email;
+                owners[i].mobileNumber = ownerInfo.mobileNumber;
+                owners[i].emergencyContacts = ownerInfo.emergencyContacts;
+            }
+        } catch (error) {
+            return {
+                statusCode: 500,
+                error: error.message
+            };
+        }
+
+        return {
+            isError: false,
+            owners,
+            statusCode: 200
+        };
 
     }
 }

@@ -158,4 +158,15 @@ router.get('/qrcode/:vessleCode', auth, async (req, res)=> {
 
 })
 
+router.get('/:seapodId/owner', [auth, admin], async (req, res) => {
+    const seaPodService = new SeaPodService();
+    const result = await seaPodService.getSeapodOwner(req.params.seapodId);
+
+    if (result.isError) return res.status(result.statusCode).json({
+        'message': result.error
+    });
+
+    return res.status(200).json(result.owners);
+});
+
 module.exports = router;
