@@ -81,7 +81,7 @@ exports.validateEmergencyContacts = function (emergencyContact) {
 
 exports.validateAcceptAccessRequest = function (requestAccessTypeAndTime) {
     const schema = Joi.object({
-        type: Joi.string().valid('MEMBER', 'GUEST'),
+        type: Joi.string().valid('MEMBER', 'GUEST', 'OWNER'),
         period: Joi.number()
     }).unknown();
 
