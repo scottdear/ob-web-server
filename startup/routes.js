@@ -10,6 +10,7 @@ const admins = require('../routes/admins');
 const accessRequests = require('../routes/accessRequests');
 const permissions = require('../routes/permissions');
 const swagger = require('../routes/swagger');
+const logger = require('../routes/logger');
 const API_VERSION = 'v1';
 
 module.exports = function (app) {
@@ -29,5 +30,6 @@ module.exports = function (app) {
     app.use(`/${API_VERSION}/api/access-requests`, accessRequests);
     app.use(`/${API_VERSION}/api/permissions`, permissions);
     app.use(`/${API_VERSION}/docs`, swagger);
+    app.use(`/${API_VERSION}/logs`, logger);
     app.use(error);
 }
