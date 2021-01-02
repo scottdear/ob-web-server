@@ -2,8 +2,13 @@
 
 class LoggerService {
 
-    async getAllLog(){
-
+    getAllLog(){
+        const log=0;
+    
+        return {
+            isError: false,
+            log
+        }
     }
 
 }
