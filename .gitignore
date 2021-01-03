@@ -2,7 +2,6 @@ node_modules/
 assets/
 Space/
 Work/
-logs.log
-unhandledExceptions.log
+logs/
 coverage/
 .env
