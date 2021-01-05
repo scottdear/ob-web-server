@@ -24,10 +24,13 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/js/log.js', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/js/log.js'));
+    console.log(__dirname);
+    
+    res.sendFile(path.join(__dirname, '/../public/js/log.js'));
+
 });
 router.get('/css/style.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/css/style.css'));
+    res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
 module.exports = router;
