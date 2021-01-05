@@ -7,8 +7,8 @@ $('.cotainer').ready(function () {
 function addLog() {
 
 	var settings = {
-        // "url": `http://localhost:3000/v1/logs`,
-        "url": `${window.location.hostname}/v1/logs`,
+        // "url": `http://localhost:3000/v1/logs/get`,
+        "url": `${window.location.hostname}/v1/logs/get`,
 		"method": "GET",
 		"timeout": 0,
 	};
