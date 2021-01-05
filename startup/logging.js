@@ -6,22 +6,22 @@ module.exports = function () {
         throw (ex);
     });
 
-    winston.exceptions.handle(new winston.transports.Console(),
+
+    winston.add(
         new winston.transports.File({
-            filename: 'unhandledExceptions.log'
-        }));
+            filename: 'logs/logs.log'
+        })
+    );
 
-    winston.exceptions.handle(new winston.transports.MongoDB({
-        db: process.env.MONGODB_URI,
-        options: { useUnifiedTopology: true },
-        collection: 'server_logs'
-    }));
-
-    winston.add(new winston.transports.File({ filename: 'logs.log' }));
-
-    winston.add(new winston.transports.MongoDB({
-        db: process.env.MONGODB_URI,
-        options: { useUnifiedTopology: true },
-        collection: 'server_logs'
-    }));
+    winston.exceptions.handle(
+        new winston.transports.Console(),
+        new winston.transports.File({
+            filename: 'logs/unhandledExceptions.log'
+        }),
+        new winston.transports.MongoDB({
+            db: process.env.MONGODB_URI,
+            options: { useUnifiedTopology: true },
+            collection: 'logs'
+        })
+    );
 }

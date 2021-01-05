@@ -1,10 +1,11 @@
-// const mongoose = require('mongoose');
+const { Log } = require('../models/log');
 
 class LoggerService {
-
-    getAllLog(){
-        const log=0;
     
+    async getAllLog(){
+
+        const log = await Log.find();
+
         return {
             isError: false,
             log

@@ -8,12 +8,12 @@ const router = express.Router();
 router.get('/' , async (req, res) => {
 
     const loggerService = new LoggerService();
-    const result = loggerService.getAllLog();
+    const result = await loggerService.getAllLog();
 
-    // if (result.isError) return res.status(result.statusCode).send({
-    //     "message": result.error
-    // });
-    return res.send(result);
+    if (result.isError) return res.status(result.statusCode).send({
+        "message": result.error
+    });
+    return res.send(result.log);
 });
 
 module.exports = router;
