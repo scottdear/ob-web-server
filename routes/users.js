@@ -121,12 +121,12 @@ router.get('/reset/:token', async (req, res) => {
     const userService = new UserService();
     const result = await userService.resetPasswordWithToken(req.params.token);
 
-    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../puplic/invalidToken.html'));
+    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/invalidToken.html'));
 
-    return res.status(200).sendFile(path.join(__dirname, '/../puplic/resetPassword.html'));
+    return res.status(200).sendFile(path.join(__dirname, '/../public/resetPassword.html'));
 });
 router.post('/reset/:token', async (req, res) => {
-    if (_.isEmpty(req.body)) return res.status(400).sendFile(path.join(__dirname, '/../puplic/error.html'));
+    if (_.isEmpty(req.body)) return res.status(400).sendFile(path.join(__dirname, '/../public/error.html'));
 
     const contextObject = {
         token: req.params.token,
@@ -135,15 +135,15 @@ router.post('/reset/:token', async (req, res) => {
     const userService = new UserService();
     const result = await userService.newPasswordWithToken(contextObject);
 
-    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../puplic/error.html'));
+    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/error.html'));
 
-    return res.status(200).sendFile(path.join(__dirname, '/../puplic/success.html'));
+    return res.status(200).sendFile(path.join(__dirname, '/../public/success.html'));
 });
 router.get('/reset/js/script.js', (req, res) => {
-    res.sendFile(path.join(__dirname, '/../puplic/js/script.js'));
+    res.sendFile(path.join(__dirname, '/../public/js/script.js'));
 });
 router.get('/reset/css/style.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '/../puplic/css/style.css'));
+    res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
 router.get('/notifications', auth, async (req, res) => {
