@@ -34,7 +34,13 @@ describe('user service', () => {
             }];
 
             User.find = jest.fn().mockImplementationOnce(() => ({
-                select: jest.fn().mockReturnValueOnce(users)
+                select: jest.fn().mockImplementationOnce(() => ({
+                    populate: jest.fn().mockImplementationOnce(() => ({
+                        populate: jest.fn().mockImplementationOnce(() => ({
+                            populate: jest.fn().mockReturnValueOnce(users)
+                        }))
+                    }))
+                }))
             }));
             
             const userService = new UserService();

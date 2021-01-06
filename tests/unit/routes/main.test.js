@@ -1,6 +1,8 @@
 const request = require('supertest');
 let server;
 
+jest.useFakeTimers()
+
 describe('main router', () => {    
     beforeEach(() => { server = require('../../../index'); })
 

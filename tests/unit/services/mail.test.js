@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail');
-const mailService = new(require('../../../services/mail'))();
+const { MailService } = require('../../../services/mail');
 
 jest.mock("@sendgrid/mail", () => {
     return {
@@ -17,7 +17,8 @@ describe('access management service', () => {
     it("should send mail with specefic value", async done => {
         const to = "receiver@mail.com";
         const verificationUrl = "URL";
-        
+
+        const mailService = new MailService();
         await mailService.sendVerificationMail(to, verificationUrl);
         setImmediate(() => {
             expect(sgMail.send).toBeCalledWith({

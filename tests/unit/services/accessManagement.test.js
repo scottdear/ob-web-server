@@ -1,5 +1,7 @@
 const accessManagement = require('../../../services/accessManagement');
 
+jest.useFakeTimers()
+
 describe('accessManagement service', () => {
     describe('areEqual method', () => {
         it('should return false when request body equals access request', () => {
