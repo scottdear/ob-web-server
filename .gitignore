@@ -5,3 +5,5 @@ Work/
 logs/
 coverage/
 .env
+.DS_Store
+*.DS_Store
