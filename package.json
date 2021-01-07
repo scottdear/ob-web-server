@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "test": "jest --watchAll --verbose --forceExit --detectOpenHandles --maxWorkers=1",
+    "test": "jest --watchAll --verbose --forceExit --detectOpenHandles --maxWorkers=3 --no-cache",
     "lint": "eslint ./helpers ./middlewares ./models ./routes ./services ./startup ./subscribers index.js",
     "start": "node index.js"
   },
@@ -19,9 +19,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://AtaMahmoudSWE@bitbucket.org/oceanbuilders/oceanbuilders_backend.git"
+    "url": "git+https://github.com/oceanbuilders/ob-web-server.git"
   },
-  "author": "Ata Mahmoud",
+  "author": "Ata Mahmoud, Ola Galal",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^16.1.8",
@@ -57,7 +57,7 @@
   "devDependencies": {
     "eslint": "^7.6.0",
     "eslint-plugin-node": "^11.1.0",
-    "jest": "^25.5.4",
+    "jest": "^26.6.3",
     "supertest": "^4.0.2"
   }
 }
