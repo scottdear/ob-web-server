@@ -53,7 +53,7 @@ const RequestAccess = mongoose.model('ReqestAccess', new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['GUEST', 'MEMBER', 'OWNER', 'TENANT', 'ADMIN', 'DEMO'],
+        enum: ['GUEST', 'VISITOR', 'MEMBER', 'OWNER', 'TENANT', 'ADMIN', 'DEMO'],
         required: true
     },
     period: {
