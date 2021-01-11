@@ -146,8 +146,8 @@ router.put('/:id/approval', auth, async (req, res) => {
     return res.status(200).send(result.accessRequest);
 });
 
-router.post('/invitations/:id', auth, async (req, res) => {
-    const { error } = validateObjectId(req.params.id);
+router.post('/invitations/:seapodId', auth, async (req, res) => {
+    const { error } = validateObjectId(req.params.seapodId);
     if (error) return res.status(400).json({
         "message": error.details[0].message
     });
@@ -157,7 +157,7 @@ router.post('/invitations/:id', auth, async (req, res) => {
         "message": isValidEmail.error.details[0].message
     });
 
-    const result = await accessManagement.addMembers(req.body, req.user._id, req.params.id);
+    const result = await accessManagement.addMembers(req.body, req.user._id, req.params.seapodId);
 
     if (result.isError) return res.status(result.statusCode).send({
         'message': result.error

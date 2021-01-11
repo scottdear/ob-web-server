@@ -355,7 +355,7 @@ class AccessManagement {
         if (acinv) return {
             isError: true,
             statusCode: 400,
-            error: "This user have an already invitation to access your Sea Pod"
+            error: "This user have an already invitation to access your SeaPod"
         };
 
         const seapod = await SeaPod.findById(seaPodId);
@@ -375,9 +375,11 @@ class AccessManagement {
         const user = await User.findOne({
             "email": body.email
         });
+
+        //TO DO: send email to the user invite him/her to the seapod
         if (!user) return {
-            isError: true,
-            statusCode: 404,
+            isError: false,
+            statusCode: 200,
             error: "User Not Found!"
         };
 
@@ -393,6 +395,8 @@ class AccessManagement {
 
         try {
             const accessInvitation = new RequestAccess({
+                name: body.name,
+                message: body.message,
                 user: {
                     _id: user._id,
                     name: `${user.firstName} ${user.lastName}`,
@@ -406,10 +410,10 @@ class AccessManagement {
                     vessleCode: seapod.vessleCode
                 },
                 type: body.type,
-                period: 0,
+                period: body.period,
                 status: 'PENDING',
-                checkIn: Date.now(),
-                isRecieved: true,
+                checkIn: body.checkIn,
+                isRecieved: false,
                 senderId: senderId,
                 recieverId: user._id,
                 permissionSetId: body.permissionSetId

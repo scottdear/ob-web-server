@@ -56,9 +56,13 @@ const RequestAccess = mongoose.model('ReqestAccess', new mongoose.Schema({
         enum: ['GUEST', 'VISITOR', 'MEMBER', 'OWNER', 'TENANT', 'ADMIN', 'DEMO'],
         required: true
     },
-    period: {
+    period: { //access for how long
         type: Number,
         default: 0,
+    },
+    checkIn: { //acces from date
+        type: Number,
+        required: true
     },
     status: {
         type: String,
@@ -74,14 +78,16 @@ const RequestAccess = mongoose.model('ReqestAccess', new mongoose.Schema({
     recieverId: {
         type: mongoose.Schema.Types.ObjectId,
     },
-    checkIn: {
-        type: Number,
-        required: true
-    },
     permissionSetId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Permissions'
     },
+    name: {
+        type: String
+    },
+    message: {
+        type: String
+    }
 }));
 
 function ValidateRequest(request) {
