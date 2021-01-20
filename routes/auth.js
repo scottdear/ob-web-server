@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
-const auth = require('../middlewares/auth');
+const path = require('path');
+const bodyParser = require('body-parser');
 
+const auth = require('../middlewares/auth');
 const { validateUser } = require('../models/users/user');
 const { validateSeaPod } = require('../models/seapod/seapod');
 const { AuthService } = require('../services/auth');
 const { ValidateAuthCredentials } = require('../services/validation');
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 router.post('/', async (req, res) => {
     //TODO: notification token and other token and devices entries(Add Validation)
@@ -47,7 +54,10 @@ router.post('/', async (req, res) => {
         'message': result.error.message
     });
 
-    return res.header('x-auth-token', result.jwtoken).status(200).json(result.user);
+    return res.status(200).json({
+        'message': result.message
+    });
+    // return res.header('x-auth-token', result.jwtoken).status(200).json(result.user);
 });
 
 router.put('/', async (req, res) => {
@@ -84,43 +94,63 @@ router.get('/me', auth, async (req, res) => {
     return res.status(200).json(result.user);
 });
 
-// router.post('/confirmation/:token', async (req, res) => {
-//     const token = req.params.token;
-//     //TODO: continue here
-//     if (token || token.length < 16) return res.status(400).json('invalid token');
-//     const userToken = await VerificationToken.findOne({
-//         token: token
-//     });
+router.get('/confirmation/:token', async (req, res) => {
+    const authService = new AuthService();
+    const result = await authService.confirm(req.params.token);
 
-//     if (!userToken) return {
-//         isError: true,
-//         message: "We were unable to find a valid token. Your token my have expired.",
-//         type: 'not-verified'
-//     };
+    if (result.isError) return res.sendFile(path.join(__dirname,'/../public/tokenVerification.html'));
 
-//     const user = await User.findOne(token._userId);
+    return res.status(200).json({
+        'message': result.message
+    });
+});
 
-//     if (!user) return {
-//         isError: true,
-//         message: "We were unable to find a user for this token."
-//     };
-//     if (user.isVerified) return {
-//         isError: true,
-//         message: 'This user has already been verified.',
-//         type: 'already-verified'
-//     }
+router.post('/confirmation/:token', async (req, res) => {
+    const authService = new AuthService();
+    const result = await authService.confirm(req.params.token);
 
-//     try {
-//         user.isVerified = true;
-//         await user.save();
-//         return {
-//             isError: false,
-//             message: "The account has been verified. Please log in."
-//         }
-//     } catch (error) {
+    if (result.isError) return res.status(result.statusCode).json({
+        'message': result.error
+    });
 
-//     }
-// });
+    return res.status(200).json({
+        'message': result.message
+    });
+});
+
+router.get('/confirmation/js/verification.js', (req, res) => {
+    res.sendFile(path.join(__dirname, '/../public/js/verification.js'));
+});
+router.get('/confirmation/css/style.css', (req, res) => {
+    res.sendFile(path.join(__dirname, '/../public/css/style.css'));
+});
+
+/*
+router.get('/reset/:token', async (req, res) => {
+    const userService = new UserService();
+    const result = await userService.resetPasswordWithToken(req.params.token);
+
+    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/invalidToken.html'));
+
+    return res.status(200).sendFile(path.join(__dirname, '/../public/resetPassword.html'));
+});
+router.post('/reset/:token', async (req, res) => {
+    if (_.isEmpty(req.body)) return res.status(400).sendFile(path.join(__dirname, '/../public/error.html'));
+
+    const contextObject = {
+        token: req.params.token,
+        body: req.body
+    }
+    const userService = new UserService();
+    const result = await userService.newPasswordWithToken(contextObject);
+
+    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/error.html'));
+
+    return res.status(200).sendFile(path.join(__dirname, '/../public/success.html'));
+});
+
+
+*/
 
 router.post('/demo', async (req, res) => {
     const contextObject = {
