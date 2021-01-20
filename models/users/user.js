@@ -16,7 +16,7 @@ const userSchema = extendSchema(personSchema, {
     }],
     isVerified: {
         type: Boolean,
-        default: true
+        default: false
     },
     accessRequests: [{
         type: mongoose.Schema.Types.ObjectId,

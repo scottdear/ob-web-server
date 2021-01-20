@@ -212,9 +212,9 @@ const uploadFile = (fileName) => {
 
     s3.upload(params, function (err, data) {
         if (err) {
-            throw err;
+            console.log(err);
         }
-        // console.log(`File uploaded successfully. ${data.Location}`);
+        console.log(`File uploaded successfully. ${data.Location}`);
     });
 };
 
