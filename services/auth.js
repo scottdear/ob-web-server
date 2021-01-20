@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 
 const { SeaPodService } = require('./seapod');
 const { UserService } = require('./user');
+const { MailService } = require('./mail')
 const { generateFakeData } = require('../helpers/utilites');
 const { filterUserAndSeapod, filterUser, filterUserAndSeapods } = require('../helpers/filtering');
 
 const { User } = require('../models/users/user');
+const { VerificationToken } = require('../models/users/verificationToken');
 const { SeaPod } = require('../models/seapod/seapod');
 const { RequestAccess } = require('../models/accessRequest');
 const { Permission } = require('../models/permission/permission');
@@ -34,15 +37,22 @@ class AuthService {
 
             await user.save();
             await seapod.save();
-            await session.commitTransaction();
-
+            
             user = filterUserAndSeapod(user.toJSON(), seapod.toJSON(), seapod.data);
+            
+            const token = new VerificationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+            await token.save();
+            
+            const url = `http://${obj.host}/v1/api/auth/confirmation/${token.token}`;
+            const mailService = new MailService();
+            await mailService.sendConfirmationMail(obj.user.userData.email, url);
 
+            await session.commitTransaction();
+            
             return {
                 isError: false,
-                user: user,
-                jwtoken: jt
-            };
+                message: `An email has been sent to ${obj.user.userData.email} with further instructions`
+            }
 
         } catch (error) {
             await session.abortTransaction();
@@ -110,11 +120,17 @@ class AuthService {
         };
 
         const isValidPassword = await bcrypt.compare(obj.password, user.password);
-        //TODO: enhance faild senario here
+
         if (!isValidPassword) return {
             isError: true,
             statusCode: 400,
             error: 'Your email and password combination was incorrect. Please try again.'
+        };
+
+        if (!user.isVerified) return {
+            isError: true,
+            statusCode: 401,
+            error: 'Your account has not been verified.'
         };
 
         const jti = uuidv4();
@@ -235,6 +251,13 @@ class AuthService {
                 error: 'User Not found!'
             }
         }
+
+        if (!user.isVerified) return {
+            isError: true,
+            statusCode: 401,
+            error: 'Your account has not been verified.'
+        };
+
         user.notifications.reverse();
         user = filterUserAndSeapods(user.toJSON(),
             generateFakeData(user.seaPods.length));
@@ -346,6 +369,12 @@ class AuthService {
                 error: 'Your email and password combination was incorrect. Please try again.'
             };
 
+            if (!user.isVerified) return {
+                isError: true,
+                statusCode: 401,
+                error: 'Your account has not been verified.'
+            };
+
             const jti = uuidv4();
             const token = user.generateAuthToken(jti);
 
@@ -377,6 +406,52 @@ class AuthService {
             }
         } finally {
             session.endSession();
+        }
+    }
+
+    async confirm(token) {
+        if (!token || token.length != 32) return {
+            isError: true,
+            statusCode: 400,
+            error: 'invalid token'
+        };
+        
+        const userToken = await VerificationToken.findOne({
+            token: token
+        });
+
+        if (!userToken) return {
+            isError: true,
+            statusCode: 400,
+            error: "We were unable to find a valid token. Your token my have expired."
+        };
+
+        const user = await User.findById(userToken._userId);
+        if (!user) return {
+            isError: true,
+            statusCode: 400,
+            error: "We were unable to find a user for this token."
+        };
+        
+        if (user.isVerified) return {
+            isError: true,
+            statusCode: 400,
+            error: 'This user has already been verified.'
+        }
+
+        try {
+            user.isVerified = true;
+            await user.save();
+            return {
+                isError: false,
+                message: "The account has been verified. Please log in."
+            }
+        } catch (error) {
+            return {
+                isError: true,
+                statusCode: 500,
+                error
+            }
         }
     }
 }

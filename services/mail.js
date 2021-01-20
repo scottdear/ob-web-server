@@ -28,6 +28,17 @@ class MailService {
         };
         await sgMail.send(msg);
     }
+
+    async sendConfirmationMail(to, url) {
+        const msg = {
+            to: to,
+            from: 'noreply@oceanbuilder.com',
+            subject: 'Verify Your Email',
+            html: `<p>Hello</p>
+            <p>Please verify your account by clicking the link: <a href='${url}'>click here</a></p>`
+        };
+        await sgMail.send(msg);
+    }
 }
 
 exports.MailService = MailService;
