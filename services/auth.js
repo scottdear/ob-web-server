@@ -37,18 +37,18 @@ class AuthService {
 
             await user.save();
             await seapod.save();
-            
+
             user = filterUserAndSeapod(user.toJSON(), seapod.toJSON(), seapod.data);
-            
+
             const token = new VerificationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
             await token.save();
-            
+
             const url = `http://${obj.host}/v1/api/auth/confirmation/${token.token}`;
             const mailService = new MailService();
             await mailService.sendConfirmationMail(obj.user.userData.email, obj.user.userData.firstName, url);
 
             await session.commitTransaction();
-            
+
             return {
                 isError: false,
                 message: `An email has been sent to ${obj.user.userData.email} with further instructions`
@@ -59,7 +59,7 @@ class AuthService {
             return {
                 isError: true,
                 error: error
-            };
+            }
         } finally {
             session.endSession();
         }
@@ -415,7 +415,7 @@ class AuthService {
             statusCode: 400,
             error: 'invalid token'
         };
-        
+
         const userToken = await VerificationToken.findOne({
             token: token
         });
@@ -432,7 +432,7 @@ class AuthService {
             statusCode: 400,
             error: "We were unable to find a user for this token."
         };
-        
+
         if (user.isVerified) return {
             isError: true,
             statusCode: 400,
@@ -454,6 +454,41 @@ class AuthService {
             }
         }
     }
+
+    async resendConfirm(email, host) {
+        try {
+            const user = await User.findOne({ email: email });
+            if (!user) return {
+                isError: true,
+                statusCode: 400,
+                error: 'User not found.'
+            };
+
+            if (user.isVerified) return {
+                isError: true,
+                statusCode: 400,
+                error: 'This account has already been verified. Please log in.'
+            };
+
+            const token = new VerificationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+            await token.save();
+
+            const url = `http://${host}/v1/api/auth/confirmation/${token.token}`;
+            const mailService = new MailService();
+            await mailService.sendConfirmationMail(email, user.firstName, url);
+
+            return {
+                isError: false,
+                message: `An email has been sent to ${email} with further instructions`
+            }
+        } catch (error) {
+            return {
+                isError: true,
+                error: error
+            }
+        }
+    }
+
 }
 
 exports.AuthService = AuthService;

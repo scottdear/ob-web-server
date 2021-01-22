@@ -10,13 +10,7 @@ const { validateSeaPod } = require('../models/seapod/seapod');
 const { AuthService } = require('../services/auth');
 const { ValidateAuthCredentials } = require('../services/validation');
 
-// router.use(bodyParser.json());
-// router.use(bodyParser.urlencoded({
-//     extended: true
-// }));
-
 router.post('/', async (req, res) => {
-    //TODO: notification token and other token and devices entries(Add Validation)
     if (_.isEmpty(req.body)) return res.status(400).json({
         'message': "user and sea pod data are required"
     });
@@ -50,13 +44,9 @@ router.post('/', async (req, res) => {
     const authService = new AuthService();
     const result = await authService.SignUpWithSeaPodCreation(contextObject);
 
-    if (result.isError) return res.status(500).json({
-        'message': result.error.message
-    });
+    if (result.isError) return res.status(500).json({ 'message': result.error.message });
 
-    return res.status(200).json({
-        'message': result.message
-    });
+    return res.status(200).json({ 'message': result.message });
     // return res.header('x-auth-token', result.jwtoken).status(200).json(result.user);
 });
 
@@ -107,13 +97,17 @@ router.get('/confirmation/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
-router.get('/confirmation/:token', async (req, res) => {
+router.get('/resend', async (req, res) => {
+    if (_.isEmpty(req.body)) return res.status(400).json({
+        'message': "user email is required"
+    });
+
     const authService = new AuthService();
-    const result = await authService.confirm(req.params.token);
+    const result = await authService.resendConfirm(req.body.email, req.get('host'));
 
-    if (result.isError) return res.status(result.statusCode).render('verification', { title: 'Verification Error', message: result.error })
+    if (result.isError) return res.status(500).json({ 'message': result.error});
 
-    return res.status(200).render('verification', { title: 'Verification Success', message: result.message })
+    return res.status(200).json({ 'message': result.message });
 });
 
 router.post('/demo', async (req, res) => {

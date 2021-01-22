@@ -130,13 +130,13 @@ class MailService {
                             <table border="0" cellspacing="0" cellpadding="0">
                             <tr>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
-                            <a href="https://www.facebook.com/OceanBuildersOfficial">
-                              <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/facebook.png" width="30" height="30" alt="Facebook" border="0" />
-                            </a>
+                                <a href="https://www.facebook.com/OceanBuildersOfficial">
+                                    <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/facebook.png" width="30" height="30" alt="Facebook" border="0" />
+                                </a>
                             </td>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
                                 <a href="https://www.instagram.com/ocean_builders/">
-                                <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/instagram.png" width="30" height="30" alt="Instagram" border="0" />
+                                    <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/instagram.png" width="30" height="30" alt="Instagram" border="0" />
                                 </a>
                             </td>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
