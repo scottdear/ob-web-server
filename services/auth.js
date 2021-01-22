@@ -45,7 +45,7 @@ class AuthService {
             
             const url = `http://${obj.host}/v1/api/auth/confirmation/${token.token}`;
             const mailService = new MailService();
-            await mailService.sendConfirmationMail(obj.user.userData.email, url);
+            await mailService.sendConfirmationMail(obj.user.userData.email, obj.user.userData.firstName, url);
 
             await session.commitTransaction();
             

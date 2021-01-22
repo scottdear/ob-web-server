@@ -107,6 +107,15 @@ router.get('/confirmation/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
+router.get('/confirmation/:token', async (req, res) => {
+    const authService = new AuthService();
+    const result = await authService.confirm(req.params.token);
+
+    if (result.isError) return res.status(result.statusCode).render('verification', { title: 'Verification Error', message: result.error })
+
+    return res.status(200).render('verification', { title: 'Verification Success', message: result.message })
+});
+
 router.post('/demo', async (req, res) => {
     const contextObject = {
         notificationToken: req.get('notificationToken'),

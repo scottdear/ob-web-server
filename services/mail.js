@@ -29,7 +29,7 @@ class MailService {
         await sgMail.send(msg);
     }
 
-    async sendConfirmationMail(to, url) {
+    async sendConfirmationMail(to, name, url) {
         const msg = {
             to: to,
             from: 'noreply@oceanbuilder.com',
@@ -92,7 +92,7 @@ class MailService {
                         </tr>
                         <tr>
                         <td class="bodycopy">
-                            Hi John. Thanks for joining our community. <br> 
+                            Hi ${name}. Thanks for joining our community. <br> 
                             Click this button to verify your email address and finish setting up your account.
                         </td>
                         </tr>
@@ -130,27 +130,27 @@ class MailService {
                             <table border="0" cellspacing="0" cellpadding="0">
                             <tr>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
-                            <a href="http://www.facebook.com/">
+                            <a href="https://www.facebook.com/OceanBuildersOfficial">
                               <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/facebook.png" width="30" height="30" alt="Facebook" border="0" />
                             </a>
                             </td>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
-                                <a href="http://www.twitter.com/">
+                                <a href="https://www.instagram.com/ocean_builders/">
                                 <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/instagram.png" width="30" height="30" alt="Instagram" border="0" />
                                 </a>
                             </td>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
-                                <a href="http://www.twitter.com/">
+                                <a href="https://twitter.com/oceanbuilders">
                                     <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/twitter.png" width="30" height="30" alt="Twitter" border="0" />
                                 </a>
                             </td>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
-                                <a href="http://www.twitter.com/">
+                                <a href="https://www.linkedin.com/company/oceanbuilders/">
                                     <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/linkedin.png" width="30" height="30" alt="LinkedIn" border="0" />
                                 </a>
                             </td>
                             <td width="30" style="text-align: center; padding: 0 5px 0 5px;">
-                                <a href="http://www.twitter.com/">
+                                <a href="https://www.youtube.com/channel/UCzA2-xKrPZZPmXz7XfoMVIQ">
                                     <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/youtube.png" width="30" height="30" alt="YouTube" border="0" />
                                 </a>
                             </td>
