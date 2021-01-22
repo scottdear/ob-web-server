@@ -28,7 +28,7 @@ class AuthService {
             const userService = new UserService();
             const creatUserResult = await userService.createUser(obj.user);
             let user = creatUserResult.user;
-            let jt = creatUserResult.jt;
+            // let jt = creatUserResult.jt;
 
             const seapodService = new SeaPodService();
             let seapod = await seapodService.createSeapod(obj.seapod, obj.user.notificationToken, obj.host, user);

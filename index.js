@@ -6,6 +6,8 @@ const cors=require('cors');
 app.use(cors());
 require('dotenv').config();
 
+app.set('view engine', 'pug')
+
 require('./startup/logging')();
 require('./startup/routes')(app);
 require('./startup/config')();

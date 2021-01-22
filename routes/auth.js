@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
 const path = require('path');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 const auth = require('../middlewares/auth');
 const { validateUser } = require('../models/users/user');
@@ -10,10 +10,10 @@ const { validateSeaPod } = require('../models/seapod/seapod');
 const { AuthService } = require('../services/auth');
 const { ValidateAuthCredentials } = require('../services/validation');
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({
-    extended: true
-}));
+// router.use(bodyParser.json());
+// router.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 
 router.post('/', async (req, res) => {
     //TODO: notification token and other token and devices entries(Add Validation)
@@ -98,59 +98,14 @@ router.get('/confirmation/:token', async (req, res) => {
     const authService = new AuthService();
     const result = await authService.confirm(req.params.token);
 
-    if (result.isError) return res.sendFile(path.join(__dirname,'/../public/tokenVerification.html'));
+    if (result.isError) return res.status(result.statusCode).render('verification', { title: 'Verification Error', message: result.error })
 
-    return res.status(200).json({
-        'message': result.message
-    });
+    return res.status(200).render('verification', { title: 'Verification Success', message: result.message })
 });
 
-router.post('/confirmation/:token', async (req, res) => {
-    const authService = new AuthService();
-    const result = await authService.confirm(req.params.token);
-
-    if (result.isError) return res.status(result.statusCode).json({
-        'message': result.error
-    });
-
-    return res.status(200).json({
-        'message': result.message
-    });
-});
-
-router.get('/confirmation/js/verification.js', (req, res) => {
-    res.sendFile(path.join(__dirname, '/../public/js/verification.js'));
-});
 router.get('/confirmation/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
-
-/*
-router.get('/reset/:token', async (req, res) => {
-    const userService = new UserService();
-    const result = await userService.resetPasswordWithToken(req.params.token);
-
-    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/invalidToken.html'));
-
-    return res.status(200).sendFile(path.join(__dirname, '/../public/resetPassword.html'));
-});
-router.post('/reset/:token', async (req, res) => {
-    if (_.isEmpty(req.body)) return res.status(400).sendFile(path.join(__dirname, '/../public/error.html'));
-
-    const contextObject = {
-        token: req.params.token,
-        body: req.body
-    }
-    const userService = new UserService();
-    const result = await userService.newPasswordWithToken(contextObject);
-
-    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/error.html'));
-
-    return res.status(200).sendFile(path.join(__dirname, '/../public/success.html'));
-});
-
-
-*/
 
 router.post('/demo', async (req, res) => {
     const contextObject = {
