@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
-const auth = require('../middlewares/auth');
+const path = require('path');
+// const bodyParser = require('body-parser');
 
+const auth = require('../middlewares/auth');
 const { validateUser } = require('../models/users/user');
 const { validateSeaPod } = require('../models/seapod/seapod');
 const { AuthService } = require('../services/auth');
 const { ValidateAuthCredentials } = require('../services/validation');
 
 router.post('/', async (req, res) => {
-    //TODO: notification token and other token and devices entries(Add Validation)
     if (_.isEmpty(req.body)) return res.status(400).json({
         'message': "user and sea pod data are required"
     });
@@ -43,11 +44,10 @@ router.post('/', async (req, res) => {
     const authService = new AuthService();
     const result = await authService.SignUpWithSeaPodCreation(contextObject);
 
-    if (result.isError) return res.status(500).json({
-        'message': result.error.message
-    });
+    if (result.isError) return res.status(500).json({ 'message': result.error.message });
 
-    return res.header('x-auth-token', result.jwtoken).status(200).json(result.user);
+    return res.status(200).json({ 'message': result.message });
+    // return res.header('x-auth-token', result.jwtoken).status(200).json(result.user);
 });
 
 router.put('/', async (req, res) => {
@@ -84,43 +84,31 @@ router.get('/me', auth, async (req, res) => {
     return res.status(200).json(result.user);
 });
 
-// router.post('/confirmation/:token', async (req, res) => {
-//     const token = req.params.token;
-//     //TODO: continue here
-//     if (token || token.length < 16) return res.status(400).json('invalid token');
-//     const userToken = await VerificationToken.findOne({
-//         token: token
-//     });
+router.get('/confirmation/:token', async (req, res) => {
+    const authService = new AuthService();
+    const result = await authService.confirm(req.params.token);
 
-//     if (!userToken) return {
-//         isError: true,
-//         message: "We were unable to find a valid token. Your token my have expired.",
-//         type: 'not-verified'
-//     };
+    if (result.isError) return res.status(result.statusCode).render('verification', { title: 'Verification Error', message: result.error })
 
-//     const user = await User.findOne(token._userId);
+    return res.status(200).render('verification', { title: 'Verification Success', message: result.message })
+});
 
-//     if (!user) return {
-//         isError: true,
-//         message: "We were unable to find a user for this token."
-//     };
-//     if (user.isVerified) return {
-//         isError: true,
-//         message: 'This user has already been verified.',
-//         type: 'already-verified'
-//     }
+router.get('/confirmation/css/style.css', (req, res) => {
+    res.sendFile(path.join(__dirname, '/../public/css/style.css'));
+});
 
-//     try {
-//         user.isVerified = true;
-//         await user.save();
-//         return {
-//             isError: false,
-//             message: "The account has been verified. Please log in."
-//         }
-//     } catch (error) {
+router.get('/resend', async (req, res) => {
+    if (_.isEmpty(req.body)) return res.status(400).json({
+        'message': "user email is required"
+    });
 
-//     }
-// });
+    const authService = new AuthService();
+    const result = await authService.resendConfirm(req.body.email, req.get('host'));
+
+    if (result.isError) return res.status(500).json({ 'message': result.error});
+
+    return res.status(200).json({ 'message': result.message });
+});
 
 router.post('/demo', async (req, res) => {
     const contextObject = {
