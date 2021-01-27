@@ -97,7 +97,7 @@ router.get('/confirmation/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
-router.get('/resend', async (req, res) => {
+router.post('/resend', async (req, res) => {
     if (_.isEmpty(req.body)) return res.status(400).json({
         'message': "user email is required"
     });
