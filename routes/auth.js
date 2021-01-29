@@ -99,11 +99,11 @@ router.get('/confirmation/css/style.css', (req, res) => {
 
 router.post('/resend', async (req, res) => {
     if (_.isEmpty(req.body)) return res.status(400).json({
-        'message': "user email is required"
+        'message': "user id is required"
     });
 
     const authService = new AuthService();
-    const result = await authService.resendConfirm(req.body.email, req.get('host'));
+    const result = await authService.resendConfirm(req.body.userId, req.get('host'));
 
     if (result.isError) return res.status(500).json({ 'message': result.error});
 

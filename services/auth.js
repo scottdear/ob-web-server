@@ -455,9 +455,9 @@ class AuthService {
         }
     }
 
-    async resendConfirm(email, host) {
+    async resendConfirm(userId, host) {
         try {
-            const user = await User.findOne({ email: email });
+            const user = await User.findById(userId);
             if (!user) return {
                 isError: true,
                 statusCode: 400,
@@ -473,6 +473,7 @@ class AuthService {
             const token = new VerificationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
             await token.save();
 
+            const email = user.email; 
             const url = `http://${host}/v1/api/auth/confirmation/${token.token}`;
             const mailService = new MailService();
             await mailService.sendConfirmationMail(email, user.firstName, url);
