@@ -29,7 +29,7 @@ class MailService {
         await sgMail.send(msg);
     }
 
-    async sendConfirmationMail(to, name, url) {
+    async sendConfirmationMail(to, name, webUrl, appUrl) {
         const msg = {
             to: to,
             from: 'noreply@oceanbuilder.com',
@@ -55,8 +55,9 @@ class MailService {
             .h1 {font-size: 33px; line-height: 38px; font-weight: bold;}
             .h2 {padding: 50px 0 20px 0; font-size: 30px; line-height: 28px; font-weight: normal; text-align: center; color: #707070}
             .bodycopy {font-size: 14px; line-height: 22px; font-weight: normal; text-align: center; color: #707070; padding: 40px 0;}
+            td.button{margin: 20px;}
             .button {width: 305px; height: 33px; background: #2D68BF; border: 1px solid #2D68BF; border-radius: 28px; text-align: center; font-size: 13px; font-family: "Varela", sans-serif; font-weight: normal; padding: 0 30px 0 30px;}
-            .button a {color: #fff; text-transform: uppercase;}
+            .button a {color: #fff; text-transform: uppercase; text-decoration: none!important}
             .footer {padding: 20px 30px 15px 30px;}
             .footercopy {font-family: "Varela", sans-serif; font-size: 14px; color: #707070; padding: 5px;}
             .footercopy a {color: #707070; text-decoration: underline;}
@@ -100,15 +101,23 @@ class MailService {
                     <table align="center" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                         <td class="button">
-                            <a href="${url}">confirm your email address</a>
+                            <a href="${webUrl}">confirm your email address using browser</a>
                         </td>
-                        </tr>
-                        <tr>
+                    </tr>
+                    <tr>
+                        <td> &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="button">
+                            <a href="${appUrl}">confirm your email address using app</a>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="bodycopy">
                             If you received this email by mistake, simply delete it. <br>
                             For questions about this, please contact: <a href="mailto:customer@oceanbuilders.com">customer@oceanbuilders.com</a>
                         </td>
-                        </tr>
+                    </tr>
                     </table>
                     </td>
                 </tr>

@@ -97,6 +97,15 @@ router.get('/confirmation/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
+router.get('/deeplink/:token', (req, res) => {
+    res.redirect('ob://oceanbuilders.com/?token=' + req.params.token);
+});
+
+// (deeplink({
+//   url: 'ob://oceanbuilders.com/auth/confirmation/?token='+req.params.token,
+//   fallback: res.redirect('/v1/api/auth/confirmation/'+req.params.token)
+// }))(req, res)
+
 router.post('/resend', async (req, res) => {
     if (_.isEmpty(req.body)) return res.status(400).json({
         'message': "user id is required"

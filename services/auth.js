@@ -43,9 +43,10 @@ class AuthService {
             const token = new VerificationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
             await token.save();
 
-            const url = `http://${obj.host}/v1/api/auth/confirmation/${token.token}`;
+            const webUrl = `http://${obj.host}/v1/api/auth/confirmation/${token.token}`;
+            const appUrl = `http://${obj.host}/v1/api/auth/deeplink/${token.token}`;
             const mailService = new MailService();
-            await mailService.sendConfirmationMail(obj.user.userData.email, obj.user.userData.firstName, url);
+            await mailService.sendConfirmationMail(obj.user.userData.email, obj.user.userData.firstName, webUrl, appUrl);
 
             await session.commitTransaction();
 
@@ -474,9 +475,10 @@ class AuthService {
             await token.save();
 
             const email = user.email; 
-            const url = `http://${host}/v1/api/auth/confirmation/${token.token}`;
+            const webUrl = `http://${host}/v1/api/auth/confirmation/${token.token}`;
+            const appUrl = `http://${host}/v1/api/auth/deeplink/${token.token}`;
             const mailService = new MailService();
-            await mailService.sendConfirmationMail(email, user.firstName, url);
+            await mailService.sendConfirmationMail(email, user.firstName, webUrl, appUrl);
 
             return {
                 isError: false,

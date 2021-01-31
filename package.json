@@ -43,6 +43,7 @@
     "lodash": "^4.17.19",
     "mime-types": "^2.1.27",
     "mongoose": "^5.7.14",
+    "node-deeplink": "^0.6.0",
     "node-forge": "^0.10.0",
     "nodemon": "^2.0.6",
     "path": "^0.12.7",
