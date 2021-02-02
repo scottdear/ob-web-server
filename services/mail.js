@@ -6,34 +6,16 @@ class MailService {
         sgMail.setApiKey(config.get('SENDGRID_API_KEY'));
     }
 
-    async sendVerificationMail(to, verificationUrl) {
-        const msg = {
-            to: to,
-            from: 'info@oceanbuilder.com',
-            subject: 'Welcome to Ocean Builder',
-            text: `please follow the following url to verifiy your account: ${verificationUrl}`,
-            // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-        };
-        await sgMail.send(msg);
-    }
+    emailTemplate(to, subject, body){
+        let cheers = subject=='URGENT NOTIFICATION'? null:
+        `<td align="center" class="footercopy">
+            Cheers!
+        </td>`;
 
-    async sendForgetPasswordMail(to, url) {
         const msg = {
             to: to,
             from: 'noreply@oceanbuilder.com',
-            subject: 'Reset Password',
-            html: `<p>you are receiving this because you have requested a reset of your password.</p>
-            <p>If you did not request this, please ignore this email.</p>
-            <p>Please follow the following url, or paste it in your browser: <a href='${url}'>click here</a></p>`
-        };
-        await sgMail.send(msg);
-    }
-
-    async sendConfirmationMail(to, name, webUrl, appUrl) {
-        const msg = {
-            to: to,
-            from: 'noreply@oceanbuilder.com',
-            subject: 'Confirm Your Email',
+            subject: subject,
             html: `
             <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
             <html xmlns="http://www.w3.org/1999/xhtml">
@@ -83,55 +65,15 @@ class MailService {
                         <img src="https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/logo.png" width="70" height="70" border="0" alt="" />
                     </td>
                 </tr>
-                <tr>
-                    <td class="innerpadding borderbottom">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                        <td class="h2">
-                            Email Confirmation
-                        </td>
-                        </tr>
-                        <tr>
-                        <td class="bodycopy">
-                            Hi ${name}. Thanks for joining our community. <br> 
-                            Click this button to verify your email address and finish setting up your account.
-                        </td>
-                        </tr>
-                    </table>
-                    <table align="center" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                        <td class="button">
-                            <a href="${webUrl}">confirm your email address using browser</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> &nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td class="button">
-                            <a href="${appUrl}">confirm your email address using app</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bodycopy">
-                            If you received this email by mistake, simply delete it. <br>
-                            For questions about this, please contact: <a href="mailto:customer@oceanbuilders.com">customer@oceanbuilders.com</a>
-                        </td>
-                    </tr>
-                    </table>
-                    </td>
-                </tr>
+                ${body}
                 <tr>
                     <td class="footer" bgcolor="#fff">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                        <td align="center" class="footercopy">
-                            Cheers!
-                        </td>
+                        <tr>${cheers}
                         </tr>
                         <tr>
                             <td align="center" class="footercopy">
-                            The Ocean Builders Team
+                                The Ocean Builders Team
                             </td>
                         </tr>
                         <tr>
@@ -177,6 +119,193 @@ class MailService {
             </body>
             </html>`
         };
+
+        return msg;
+    }
+
+    async sendForgetPasswordMail(to, name, url, resetCode) {
+
+        const body = `
+        <tr>
+            <td class="innerpadding borderbottom">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="h2">
+                            Password Reset
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            Hi ${name}, <br><br>
+                            We recevied a request to reset your Ocean Builders app password.<br>
+                            Please click on the button below and follow the instructions
+                        </td>
+                    </tr>
+                </table>
+                <table align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="button">
+                            <a href="${url}">reset password</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            Alternatively, enter the following code in Ocean Builders app:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="resetcode">
+                            ${resetCode}
+                        </td>
+                    </tr>
+                </table>
+                <table align="center" border="0" cellspacing="0" cellpadding="0">    
+                    <tr>
+                        <td class="bodycopy">
+                            If you received this email by mistake, simply delete it. <br>
+                            For questions about this, please contact: <a href="mailto:customer@oceanbuilders.com">customer@oceanbuilders.com</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>`
+
+        const msg = this.emailTemplate(to, 'Reset Password', body);
+        await sgMail.send(msg);
+    }
+
+    async sendConfirmationMail(to, name, webUrl, appUrl) {
+        const body = `
+        <tr>
+            <td class="innerpadding borderbottom">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="h2">
+                            Email Confirmation
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            Hi ${name}. Thanks for joining our community. <br> 
+                            Click this button to verify your email address and finish setting up your account.
+                        </td>
+                    </tr>
+                </table>
+                <table align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="button">
+                            <a href="${webUrl}">confirm your email address using browser</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="button">
+                            <a href="${appUrl}">confirm your email address using app</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            If you received this email by mistake, simply delete it. <br>
+                            For questions about this, please contact: <a href="mailto:customer@oceanbuilders.com">customer@oceanbuilders.com</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>`;
+
+        const msg = this.emailTemplate(to, 'Confirm Your Email', body);
+        await sgMail.send(msg);
+    }
+
+    async sendAccessRequestMail(to, name, seapodName, seapodVessalCode, date, ) {
+        const body = `
+        <tr>
+            <td class="innerpadding borderbottom">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="h2">
+                            Access Request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            <span style="text-transform: capitalize;">${name}</span> has requested access to your seapod ${seapodName} ( ${seapodVessalCode} )<br> 
+                            for permanent access starting on ${date}.<br> <br> 
+                            ${name} is awaiting your response.<br> 
+                            Please open the OceanBuilder app and respond to this request.
+                        </td>
+                    </tr>
+                </table>
+                <table align="center" border="0" cellspacing="0" cellpadding="0">
+                    <td>
+                        <img src='https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/QRplacement.png' width="130" height="130" alt="QR code" border="0">
+                    </td>
+                </table>
+            </td>
+        </tr>`
+
+        const msg = this.emailTemplate(to, 'Access Request', body);
+        await sgMail.send(msg);
+    }
+
+    async sendAccessInvitationMail(to, name, seapodName, seapodVessalCode, period, date) {
+        const body = `
+        <tr>
+            <td class="innerpadding borderbottom">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="h2">
+                            Access Invitation
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            <span style="text-transform: capitalize;">${name}</span> has invited you to access seapod ${seapodName} ( ${seapodVessalCode} )<br> 
+                            for ${period} starting on ${date}.<br> <br> 
+                            ${name} is awaiting your response.<br> 
+                            Please open the OceanBuilder app and respond to this invitation.<br>
+                            You will need to introduce the vessal code <span style="color: black;">${seapodVessalCode}</span> or scan the QR code below.
+                        </td>
+                    </tr>
+                </table>
+                <table align="center" border="0" cellspacing="0" cellpadding="0">
+                    <td>
+                        <img src='https://oceanbuilders-main-app.s3.us-east-2.amazonaws.com/QRplacement.png' width="130" height="130" alt="QR code" border="0">
+                    </td>
+                </table>
+            </td>
+        </tr>`
+
+        const msg = this.emailTemplate(to, 'Access Inivitaion', body);
+        await sgMail.send(msg);
+    }
+
+    async sendUrgentNotificationMail(to, name, seapodName, seapodVessalCode, issue, phoneNumber, email) {
+        const body = `
+        <tr>
+            <td class="innerpadding borderbottom">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="h2" style="color:#cb2828;">
+                            Urgent Notification
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            Hi ${name}, <br><br>
+                            Your seapod ${seapodName} (${seapodVessalCode}) is currently having the following issue:<br>
+                            <span style="color: black;">${issue}</span><br><br>
+                            Please remember that you can contact us any time at ${phoneNumber} or ${email}<br><br>
+                            Make sure you have notifications enabled on the Ocean Builders app if you want to be aware of any urgent isues.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>`
+
+        const msg = this.emailTemplate(to, 'URGENT NOTIFICATION', body);
         await sgMail.send(msg);
     }
 }
