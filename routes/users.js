@@ -121,12 +121,12 @@ router.get('/reset/:token', async (req, res) => {
     const userService = new UserService();
     const result = await userService.resetPasswordWithToken(req.params.token);
 
-    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/invalidToken.html'));
-
-    return res.status(200).sendFile(path.join(__dirname, '/../public/resetPassword.html'));
+    if (result.isError) return res.status(result.statusCode).render('passwordMessage', { title: 'Error', header: 'Error', message: result.error })
+    return res.status(200).render('resetPassword')
 });
+
 router.post('/reset/:token', async (req, res) => {
-    if (_.isEmpty(req.body)) return res.status(400).sendFile(path.join(__dirname, '/../public/error.html'));
+    if (_.isEmpty(req.body)) return res.status(400).render('passwordMessage', { title: 'Error', header: 'Error', message: 'body is empty' })
 
     const contextObject = {
         token: req.params.token,
@@ -135,16 +135,21 @@ router.post('/reset/:token', async (req, res) => {
     const userService = new UserService();
     const result = await userService.newPasswordWithToken(contextObject);
 
-    if (result.isError) return res.status(result.statusCode).sendFile(path.join(__dirname, '/../public/error.html'));
-
-    return res.status(200).sendFile(path.join(__dirname, '/../public/success.html'));
+    if (result.isError) return res.status(result.statusCode).render('passwordMessage', { title: 'Error', header: 'Error', message: result.error })
+    return res.status(200).render('passwordMessage', { title: 'Success', header: 'Success', message: result.message })
 });
+
 router.get('/reset/js/script.js', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/js/script.js'));
 });
+
 router.get('/reset/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
+
+// router.get('/reset/deeplink/:token', (req, res) => {
+//     res.redirect('ob://oceanbuilders.com/auth/reset/?token=' + req.params.token);
+// });
 
 router.get('/notifications', auth, async (req, res) => {
     const userService = new UserService();

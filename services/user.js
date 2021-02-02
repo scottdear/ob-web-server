@@ -138,8 +138,10 @@ class UserService {
         await user.save();
 
         const url = `http://${obj.host}/v1/api/users/reset/${token}`;
+        const resetCode = '5Y8U'
+
         const mailService = new MailService();
-        await mailService.sendForgetPasswordMail(obj.email, url);
+        await mailService.sendForgetPasswordMail(obj.email, user.firstName, url, resetCode);
 
         return {
             isError: false
@@ -211,6 +213,7 @@ class UserService {
 
         return {
             isError: false,
+            message: 'Password updated successfully and you can log in with your new password!'
         }
     }
 

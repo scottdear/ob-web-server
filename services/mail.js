@@ -154,7 +154,7 @@ class MailService {
                         </td>
                     </tr>
                     <tr>
-                        <td class="resetcode">
+                        <td style="font-family: Varela; font-size: 24px; font-style: normal; font-weight: 400; line-height: 25px; letter-spacing: 0px; text-align: center;">
                             ${resetCode}
                         </td>
                     </tr>

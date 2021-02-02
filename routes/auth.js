@@ -97,7 +97,7 @@ router.get('/confirmation/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
-router.get('/deeplink/:token', (req, res) => {
+router.get('/confirmation/deeplink/:token', (req, res) => {
     res.redirect('ob://oceanbuilders.com/auth/confirmation/?token=' + req.params.token);
 });
 

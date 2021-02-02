@@ -44,7 +44,7 @@ class AuthService {
             await token.save();
 
             const webUrl = `http://${obj.host}/v1/api/auth/confirmation/${token.token}`;
-            const appUrl = `http://${obj.host}/v1/api/auth/deeplink/${token.token}`;
+            const appUrl = `http://${obj.host}/v1/api/auth/confirmation/deeplink/${token.token}`;
             const mailService = new MailService();
             await mailService.sendConfirmationMail(obj.user.userData.email, obj.user.userData.firstName, webUrl, appUrl);
 
@@ -476,7 +476,7 @@ class AuthService {
 
             const email = user.email; 
             const webUrl = `http://${host}/v1/api/auth/confirmation/${token.token}`;
-            const appUrl = `http://${host}/v1/api/auth/deeplink/${token.token}`;
+            const appUrl = `http://${host}/v1/api/auth/confirmation/deeplink/${token.token}`;
             const mailService = new MailService();
             await mailService.sendConfirmationMail(email, user.firstName, webUrl, appUrl);
 
