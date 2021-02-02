@@ -48,6 +48,7 @@ module.exports = new mongoose.Schema({
     notifications: [notification],
     actionHistorys: [actionHistory],
     previousPasswords: [String],
+    resetPasswordCode: {type:Number},
     resetPasswordToken: {type:String},
     resetPasswordExpires: {type:Date},
     loginHistory: [loginHistory],

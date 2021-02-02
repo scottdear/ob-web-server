@@ -126,7 +126,8 @@ router.get('/reset/:token', async (req, res) => {
 });
 
 router.post('/reset/:token', async (req, res) => {
-    if (_.isEmpty(req.body)) return res.status(400).render('passwordMessage', { title: 'Error', header: 'Error', message: 'body is empty' })
+    if (_.isEmpty(req.body)) 
+        return res.status(400).render('passwordMessage', { title: 'Error', header: 'Error', message: 'body is empty' })
 
     const contextObject = {
         token: req.params.token,
@@ -147,9 +148,35 @@ router.get('/reset/css/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, '/../public/css/style.css'));
 });
 
-// router.get('/reset/deeplink/:token', (req, res) => {
-//     res.redirect('ob://oceanbuilders.com/auth/reset/?token=' + req.params.token);
-// });
+router.get('/reset/deeplink/:resetCode', async (req, res) => {
+    if (!req.params.resetCode) return res.status(400).json({
+        'message': 'reset code is required!'
+    });
+
+    const userService = new UserService();
+    const result = await userService.resetPasswordWithCode(req.params.resetCode);
+
+    if (result.isError) return res.status(result.statusCode).json({
+        'message': result.error
+    })
+    return res.status(200).redirect('ob://oceanbuilders.com/users/reset/?resetCode=' + req.params.resetCode);
+});
+
+router.post('/reset/deeplink/:resetCode', async (req, res) => {
+    if (_.isEmpty(req.params.resetCode)) return res.status(400).json({
+        'message': 'reset code is required!'
+    })
+
+    const contextObject = {
+        code: req.params.params,
+        body: req.body
+    }
+    const userService = new UserService();
+    const result = await userService.newPasswordWithCode(contextObject);
+
+    if (result.isError) return res.status(result.statusCode).render('passwordMessage', { title: 'Error', header: 'Error', message: result.error })
+    return res.status(200).render('passwordMessage', { title: 'Success', header: 'Success', message: result.message })
+});
 
 router.get('/notifications', auth, async (req, res) => {
     const userService = new UserService();

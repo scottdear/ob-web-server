@@ -124,7 +124,6 @@ class MailService {
     }
 
     async sendForgetPasswordMail(to, name, url, resetCode) {
-
         const body = `
         <tr>
             <td class="innerpadding borderbottom">
@@ -164,6 +163,30 @@ class MailService {
                         <td class="bodycopy">
                             If you received this email by mistake, simply delete it. <br>
                             For questions about this, please contact: <a href="mailto:customer@oceanbuilders.com">customer@oceanbuilders.com</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>`
+
+        const msg = this.emailTemplate(to, 'Reset Password', body);
+        await sgMail.send(msg);
+    }
+
+    async sendPasswordChangedMail(to, name) {
+        const body = `
+        <tr>  
+            <td class="innerpadding borderbottom">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="h2">
+                            Password Changed
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bodycopy">
+                            Hi ${name}, <br><br>
+                            This is a confirmation that the password for your account ${to} has just changed.
                         </td>
                     </tr>
                 </table>

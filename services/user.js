@@ -131,6 +131,9 @@ class UserService {
             error: 'User not found!'
         };
 
+        const randomCode = Math.floor(1000 + Math.random() * 9000);
+        user.resetPasswordCode= randomCode;
+
         const token = user.generatePasswordToken();
 
         user.resetPasswordToken = token;
@@ -138,10 +141,9 @@ class UserService {
         await user.save();
 
         const url = `http://${obj.host}/v1/api/users/reset/${token}`;
-        const resetCode = '5Y8U'
 
         const mailService = new MailService();
-        await mailService.sendForgetPasswordMail(obj.email, user.firstName, url, resetCode);
+        await mailService.sendForgetPasswordMail(obj.email, user.firstName, url, randomCode);
 
         return {
             isError: false
@@ -165,7 +167,28 @@ class UserService {
         }
     }
 
+    async resetPasswordWithCode(code) {
+        const user = await User.findOne({
+            resetPasswordCode: code,
+            resetPasswordExpires: { $gt: Date.now() }
+        })
+
+        if (!user) return {
+            isError: true,
+            statusCode: 401,
+            error: 'Password reset code is invalid or has expired!'
+        };
+
+        return {
+            isError: false
+        }
+    }
+    
     async newPasswordWithToken(obj) {
+        user.resetPasswordCode = undefined;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
         const user = await User.findOne({
             resetPasswordToken: obj.token,
             resetPasswordExpires: { $gt: Date.now() }
@@ -205,11 +228,69 @@ class UserService {
         user.previousPasswords.push(user.password);
         user.password = password;
 
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
         user.tokensAndDevices = [];
 
         await user.save();
+
+        const mailService = new MailService();
+        await mailService.sendPasswordChangedMail(obj.email, user.firstName);
+
+        return {
+            isError: false,
+            message: 'Password updated successfully and you can log in with your new password!'
+        }
+    }
+
+    async newPasswordWithCode(obj) {
+        user.resetPasswordCode = undefined;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        const user = await User.findOne({
+            resetPasswordCode: obj.code,
+            resetPasswordExpires: { $gt: Date.now() }
+        })
+
+        if (!user) return {
+            isError: true,
+            statusCode: 401,
+            error: 'Password reset code is invalid or has expired!'
+        };
+
+        const newPassword = obj.body.password;
+        const confirmPassword = obj.body.confirm_password;
+        if (newPassword != confirmPassword) return {
+            isError: true,
+            statusCode: 400,
+            error: 'New Password and Confirmed Password do not match!'
+        };
+
+        const passwordValidationResult = validatePassword(obj.body);
+        if (passwordValidationResult.error) return {
+            isError: true,
+            statusCode: 400,
+            'message': passwordValidationResult.error.message
+        };
+
+        const salt = await bcrypt.genSalt(slatRounds);
+        const password = await bcrypt.hash(newPassword, salt);
+
+        const isUsedPreviously = await this.isPasswordUserPreviously(newPassword, user.previousPasswords);
+        if (isUsedPreviously) return {
+            isError: true,
+            statusCode: 400,
+            error: "You Shouldn't use previously used passwords!"
+        };
+
+        user.previousPasswords.push(user.password);
+        user.password = password;
+
+        user.tokensAndDevices = [];
+
+        await user.save();
+
+        const mailService = new MailService();
+        await mailService.sendPasswordChangedMail(obj.email, user.firstName);
 
         return {
             isError: false,
