@@ -168,14 +168,18 @@ router.post('/reset/deeplink/:resetCode', async (req, res) => {
     })
 
     const contextObject = {
-        code: req.params.params,
+        code: req.params.resetCode,
         body: req.body
     }
     const userService = new UserService();
     const result = await userService.newPasswordWithCode(contextObject);
 
-    if (result.isError) return res.status(result.statusCode).render('passwordMessage', { title: 'Error', header: 'Error', message: result.error })
-    return res.status(200).render('passwordMessage', { title: 'Success', header: 'Success', message: result.message })
+    if (result.isError) return res.status(result.statusCode).json({
+        'message': result.error
+    })
+    return res.status(200).json({
+        'message': result.message
+    })
 });
 
 router.get('/notifications', auth, async (req, res) => {
