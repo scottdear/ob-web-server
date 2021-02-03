@@ -185,14 +185,15 @@ class UserService {
     }
     
     async newPasswordWithToken(obj) {
-        user.resetPasswordCode = undefined;
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
-
+        
         const user = await User.findOne({
             resetPasswordToken: obj.token,
             resetPasswordExpires: { $gt: Date.now() }
         })
+        
+        user.resetPasswordCode = undefined;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
 
         if (!user) return {
             isError: true,
@@ -242,14 +243,15 @@ class UserService {
     }
 
     async newPasswordWithCode(obj) {
-        user.resetPasswordCode = undefined;
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
-
+        
         const user = await User.findOne({
             resetPasswordCode: obj.code,
             resetPasswordExpires: { $gt: Date.now() }
-        })
+        }
+        )
+        user.resetPasswordCode = undefined;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
 
         if (!user) return {
             isError: true,
