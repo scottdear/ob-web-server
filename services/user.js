@@ -234,7 +234,7 @@ class UserService {
         await user.save();
 
         const mailService = new MailService();
-        await mailService.sendPasswordChangedMail(obj.email, user.firstName);
+        await mailService.sendPasswordChangedMail(user.email, user.firstName);
 
         return {
             isError: false,
@@ -292,7 +292,7 @@ class UserService {
         await user.save();
 
         const mailService = new MailService();
-        await mailService.sendPasswordChangedMail(obj.email, user.firstName);
+        await mailService.sendPasswordChangedMail(user.email, user.firstName);
 
         return {
             isError: false,

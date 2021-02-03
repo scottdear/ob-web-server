@@ -193,7 +193,7 @@ class MailService {
             </td>
         </tr>`
 
-        const msg = this.emailTemplate(to, 'Reset Password', body);
+        const msg = this.emailTemplate(to, 'Password Change Confirmation', body);
         await sgMail.send(msg);
     }
 
