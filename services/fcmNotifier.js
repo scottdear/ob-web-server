@@ -17,16 +17,19 @@ admin.initializeApp({
     databaseURL: 'https://ocean-builder.firebaseio.com'
 });
 
-exports.sendMultipleNotification = function (notificationData, tokens) {
+exports.sendMultipleNotification = function (notificationData) {
     // console.log(notificationData);
     admin.messaging().sendMulticast(notificationData).then((response) => {
         const failedTokens = [];
         if (response.failureCount > 0) {
             response.responses.forEach((resp, idx) => {
                 if (!resp.success)
-                    failedTokens.push(tokens[idx]);
+                    failedTokens.push(notificationData.tokens[idx]);
             });
-            // console.log('List of tokens that caused failures: ' + failedTokens);
+            console.log('List of tokens that caused failures: ' + failedTokens);
         }
+        console.log(response.successCount);
+    }).catch((error)=> {
+        console.log(error);
     });
 }
