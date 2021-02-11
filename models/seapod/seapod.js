@@ -180,6 +180,12 @@ const seaPodSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'LightiningScenes',
     },
+    selectedWeatherSource: {
+        type: String,
+        enum: ['external','local'],
+        default: 'external',
+        required: true
+    }
 });
 
 seaPodSchema.methods.generateVesselCode = function () {

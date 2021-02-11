@@ -407,7 +407,7 @@ class SeaPodService {
         });
 
         const qrImagePath = `${dir}/${vessleCode}.png`
-        
+
         const qrImage = await s3.getObject({
             Bucket: BUCKET_NAME,
             Key: qrImagePath
@@ -422,15 +422,15 @@ class SeaPodService {
 
     }
 
-    async getSeapodOwner(seapodId){
+    async getSeapodOwner(seapodId) {
 
         let owners = [];
 
         try {
             const seapod = await SeaPod.findById(seapodId);
-            
+
             seapod.users.forEach(user => {
-                if(user.type=='OWNER') owners.push(_.pick(user, ['_id', 'userName', 'checkInDate', 'profilePicUrl']))
+                if (user.type == 'OWNER') owners.push(_.pick(user, ['_id', 'userName', 'checkInDate', 'profilePicUrl']))
             })
 
             for (let i = 0; i < owners.length; i++) {
@@ -467,6 +467,39 @@ class SeaPodService {
             statusCode: 200
         };
 
+    }
+
+    async selectWeatherSource(seapodId, source) {
+        const seapod = await SeaPod.findById(seapodId)
+            .populate('permissionSets')
+            .populate('accessRequests')
+            .populate('accessInvitation')
+            .populate('lightScenes')
+            .populate('seaPodConfig')
+            .populate('users.lighting.lightScenes')
+            .populate('users.permissionSet');
+        if (!seapod) return {
+            isError: true,
+            error: 'Seapod not found!',
+            statusCode: 400
+        }
+
+        if (source != 'external' && source != 'local') {
+            return {
+                isError: true,
+                error: 'Source value is invalid',
+                statusCode: 400
+            }
+        }
+
+        seapod.selectedWeatherSource = source;
+        seapod.save();
+
+        return {
+            isError: false,
+            seapod,
+            statusCode: 200
+        };
     }
 }
 exports.SeaPodService = SeaPodService;

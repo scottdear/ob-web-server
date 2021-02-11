@@ -27,12 +27,6 @@ const userSchema = extendSchema(personSchema, {
         ref: 'ReqestAccess'
     }],
     tokensAndDevices: [tokenAndDevice],
-    selectedWeatherSource: {
-        type: String,
-        enum: ['external','local'],
-        default: 'external',
-        required: true
-    }
 });
 
 userSchema.methods.generateAuthToken = function (jti) {

@@ -169,4 +169,23 @@ router.get('/:seapodId/owner', [auth, admin], async (req, res) => {
     return res.status(200).json(result.owners);
 });
 
+router.put('/:seapodId/weatherSource/:source', auth, async (req, res) => {
+    const seapodIdError = validateObjectId(req.params.seapodId);
+    if (seapodIdError.error) return res.status(400).json({
+        "message": "Invalid seapod id!"
+    });
+
+    if (!req.params.source) return res.status(400).json({
+        'message': "Weather Source is required!"
+    });
+
+    const seaPodService = new SeaPodService();
+    const result = await seaPodService.selectWeatherSource(req.params.seapodId, req.params.source);
+
+    if (result.isError) return res.status(result.statusCode).json({
+        "message": result.error
+    });
+    return res.send(result.seapod);
+});
+
 module.exports = router;

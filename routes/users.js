@@ -319,18 +319,4 @@ router.post('/logout', auth, async (req, res) => {
     return res.send(result.message);
 });
 
-router.put('/weatherSource/:source', auth, async (req, res) => {
-    if (!req.params.source) return res.status(400).json({
-        'message': "Weather Source is required!"
-    });
-
-    const userService = new UserService();
-    const result = await userService.selectWeatherSource(req.user._id, req.params.source);
-
-    if (result.isError) return res.status(result.statusCode).json({
-        "message": result.error
-    });
-    return res.send(result.user);
-});
-
 module.exports = router;
