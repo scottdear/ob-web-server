@@ -183,7 +183,7 @@ const seaPodSchema = new mongoose.Schema({
     selectedWeatherSource: {
         type: String,
         enum: ['external','local'],
-        default: 'external',
+        default: 'local',
         required: true
     }
 });
