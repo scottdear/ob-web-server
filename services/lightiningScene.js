@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { SeaPod }= require('../models/seapod/seapod');
+const { SeaPod } = require('../models/seapod/seapod');
 const { User } = require('../models/users/user');
 const { LightiningScene } = require('../models/lightiningScene/lightiningScene');
 const { RoomConfig } = require('../models/seapod/roomConfig');
@@ -43,7 +43,7 @@ class LightiningSceneService {
             let allLightScenes;
             seapod.users.forEach(sp => {
                 if (sp._id == userId) {
-                    allLightScenes = [...seapod.lightScenes,...sp.lighting.lightScenes];
+                    allLightScenes = [...seapod.lightScenes, ...sp.lighting.lightScenes];
                     return;
                 }
             });
@@ -60,20 +60,20 @@ class LightiningSceneService {
 
             lightScene['seapodId'] = seapodId;
             lightScene['userId'] = userId;
-            const lightiningScene = new LightiningScene(lightScene); 
+            const lightiningScene = new LightiningScene(lightScene);
 
-            if (lightScene.source == 'seapod'){
+            if (lightScene.source == 'seapod') {
                 seapod.lightScenes.push(lightiningScene._id); //add to seapod
-            } else if (lightScene.source == 'user'){
+            } else if (lightScene.source == 'user') {
                 this.addLightiningSceneId(seapod.users, userId, lightiningScene._id); //add to seaPodUser
-            } else {  
+            } else {
                 return {
                     isError: true,
                     statusCode: 400,
                     error: 'LightScene source is not defiend'
                 };
             }
-            
+
             await lightiningScene.save();
             await seapod.save();
             await session.commitTransaction();
@@ -134,7 +134,7 @@ class LightiningSceneService {
             };
 
             const selectedLightScene = await LightiningScene.findById(lightScene._id);
-            if(userId != selectedLightScene.userId) return {
+            if (userId != selectedLightScene.userId) return {
                 isError: true,
                 statusCode: 401,
                 error: 'Access denied. Not your own LightScene!!'
@@ -143,7 +143,7 @@ class LightiningSceneService {
             let allLightScenes;
             seapod.users.forEach(sp => {
                 if (sp._id == userId) {
-                    allLightScenes = [...seapod.lightScenes,...sp.lighting.lightScenes];
+                    allLightScenes = [...seapod.lightScenes, ...sp.lighting.lightScenes];
                     return;
                 }
             });
@@ -210,7 +210,7 @@ class LightiningSceneService {
             };
 
             const selectedLightScene = await LightiningScene.findByIdAndDelete(lightSceneId);
-            if(userId != selectedLightScene.userId) return {
+            if (userId != selectedLightScene.userId) return {
                 isError: true,
                 statusCode: 401,
                 error: 'Access denied. Not your own LightScene!!'
@@ -272,12 +272,12 @@ class LightiningSceneService {
                 error: 'User Not Found!'
             };
 
-            if(source == 'seapod'){
-                await SeaPod.findByIdAndUpdate(seapodId, 
+            if (source == 'seapod') {
+                await SeaPod.findByIdAndUpdate(seapodId,
                     { $set: { 'lightScenes': lightScenes } }
                 )
-            } else if (source == 'user'){
-                await SeaPod.findByIdAndUpdate(seapodId, 
+            } else if (source == 'user') {
+                await SeaPod.findByIdAndUpdate(seapodId,
                     { $set: { 'users.$[element].lighting.lightScenes': lightScenes } },
                     { arrayFilters: [{ 'element._id': userId }] }
                 )
@@ -291,24 +291,40 @@ class LightiningSceneService {
 
             await session.commitTransaction();
 
+            let lightiningScene;
+            const seapodUpdated = await SeaPod.findById(seapodId)
+                .populate('lightScenes')
+                .populate({
+                    path: 'users.lighting.lightScenes',
+                    model: 'LightiningScenes'
+                });
+
+            if (source == 'seapod') {
+                lightiningScene = seapodUpdated.lightScenes
+            } else if (source == 'user') {
+                const userIndex = seapodUpdated.users.findIndex(i => i._id === userId);
+                console.log(userIndex)
+                lightiningScene = seapodUpdated.users[userIndex].lighting.lightScenes
+            }
+
             return {
                 isError: false,
                 statusCode: 200,
-                lightiningScene: lightScenes
+                lightiningScene
             }
 
         } catch (error) {
             return {
                 statusCode: 500,
                 error: error.message
-            };
+            }
         } finally {
             session.endSession();
         }
 
     }
 
-    async updateLightSceneIntensity(userId, seapodId, intensity){
+    async updateLightSceneIntensity(userId, seapodId, intensity) {
         const user = await User.findById(userId);
         if (!user) return {
             isError: true,
@@ -317,23 +333,23 @@ class LightiningSceneService {
         };
 
         const seapod = await SeaPod.findById(seapodId)
-        .populate({
-            path: 'users.lighting.lightScenes',
-            model: 'LightiningScenes'
-        });
+            .populate({
+                path: 'users.lighting.lightScenes',
+                model: 'LightiningScenes'
+            });
         if (!seapod) return {
             isError: true,
             statusCode: 404,
             error: 'SeaPod Not Found!'
-        };       
+        };
 
-        const currentUser = seapod.users.find( user => user._id == userId )
-        if(!currentUser) return {
+        const currentUser = seapod.users.find(user => user._id == userId)
+        if (!currentUser) return {
             isError: true,
             statusCode: 401,
             error: 'Access denied. Not A member at the seapod!'
         }
-    
+
         currentUser.lighting.intensity = intensity;
         await seapod.save();
 
@@ -344,89 +360,89 @@ class LightiningSceneService {
         }
     }
 
-    async updateLightSceneStatus(userId, seapodId){
+    async updateLightSceneStatus(userId, seapodId) {
         const user = await User.findById(userId);
         if (!user) return {
             isError: true,
             statusCode: 404,
             error: 'User Not Found!'
         };
-    
+
         const seapod = await SeaPod.findById(seapodId)
-        .populate({
-            path: 'users.lighting.lightScenes',
-            model: 'LightiningScenes'
-        });
+            .populate({
+                path: 'users.lighting.lightScenes',
+                model: 'LightiningScenes'
+            });
         if (!seapod) return {
             isError: true,
             statusCode: 404,
             error: 'SeaPod Not Found!'
         };
-        
-        const currentUser = seapod.users.find( user => user._id == userId )
-        if(!currentUser) return {
+
+        const currentUser = seapod.users.find(user => user._id == userId)
+        if (!currentUser) return {
             isError: true,
             statusCode: 401,
             error: 'Access denied. Not A member at the seapod!'
         }
-    
+
         currentUser.lighting.status = !currentUser.lighting.status;
         await seapod.save();
-    
+
         return {
             isError: false,
             statusCode: 200,
             lighting: currentUser.lighting
         }
     }
-    
-    async updateSelectedLightScene(userId, seapodId, lightSceneId){
+
+    async updateSelectedLightScene(userId, seapodId, lightSceneId) {
         const user = await User.findById(userId);
         if (!user) return {
             isError: true,
             statusCode: 404,
             error: 'User Not Found!'
         };
-    
+
         const lightScene = await LightiningScene.findById(lightSceneId);
         if (!lightScene) return {
             isError: true,
             statusCode: 404,
             error: 'LightScene Not Found!'
         };
-    
+
         const seapod = await SeaPod.findById(seapodId)
-        .populate('lightScenes')
-        .populate({
-            path: 'users.lighting.lightScenes',
-            model: 'LightiningScenes'
-        });
+            .populate('lightScenes')
+            .populate({
+                path: 'users.lighting.lightScenes',
+                model: 'LightiningScenes'
+            });
         if (!seapod) return {
             isError: true,
             statusCode: 404,
             error: 'SeaPod Not Found!'
         };
-        
-        const currentUser = seapod.users.find( user => user._id == userId )
-        if(!currentUser) return {
+
+        const currentUser = seapod.users.find(user => user._id == userId)
+        if (!currentUser) return {
             isError: true,
             statusCode: 401,
             error: 'Access denied. Not A member at the seapod!'
         }
-        
+
         let allLightScenes;
         seapod.users.forEach(sp => {
             if (sp._id == userId)
-                allLightScenes = [...seapod.lightScenes,...sp.lighting.lightScenes];
+                allLightScenes = [...seapod.lightScenes, ...sp.lighting.lightScenes];
         });
-    
-        const found = allLightScenes.find(scene => scene._id == lightSceneId);        
-        if(!found) return {
+
+        const found = allLightScenes.find(scene => scene._id == lightSceneId);
+        if (!found) return {
             isError: true,
             statusCode: 401,
             error: 'Access denied. LightScene is not avaliable for this user'
         }
-    
+
         seapod.selectedScene = found._id;
         await seapod.save();
 
@@ -457,7 +473,7 @@ class LightiningSceneService {
         }
     }
 
-    async updateLightIntensity(userId, lightSceneId, lightId, intensity){
+    async updateLightIntensity(userId, lightSceneId, lightId, intensity) {
         const user = await User.findById(userId);
         if (!user) return {
             isError: true,
@@ -465,7 +481,7 @@ class LightiningSceneService {
             error: 'User Not Found!'
         };
 
-        const lightScene = await LightiningScene.findById(lightSceneId).populate('rooms.config')   
+        const lightScene = await LightiningScene.findById(lightSceneId).populate('rooms.config')
         if (!lightScene) return {
             isError: true,
             statusCode: 404,
@@ -473,9 +489,9 @@ class LightiningSceneService {
         };
 
         let currentLight, lightConfig, roomConfig;
-        lightScene.rooms.forEach(room =>{
-            room.moodes.forEach(mood =>{
-                if(mood._id == lightId) {
+        lightScene.rooms.forEach(room => {
+            room.moodes.forEach(mood => {
+                if (mood._id == lightId) {
                     currentLight = mood
                     roomConfig = room.config
                     lightConfig = mood.type
@@ -483,14 +499,14 @@ class LightiningSceneService {
             })
         })
 
-        if(!currentLight) return {
+        if (!currentLight) return {
             isError: true,
             statusCode: 404,
             error: 'Light Not Found!'
         }
-        
+
         const config = roomConfig.lights.find(light => light.label == lightConfig)
-        if(!config || !config.canChangeIntensity) return {
+        if (!config || !config.canChangeIntensity) return {
             isError: true,
             statusCode: 400,
             error: 'Cannot change intensity'
@@ -506,7 +522,7 @@ class LightiningSceneService {
         }
     }
 
-    async updateLightColor(userId, lightSceneId, lightId, color){
+    async updateLightColor(userId, lightSceneId, lightId, color) {
 
         const user = await User.findById(userId);
         if (!user) return {
@@ -515,7 +531,7 @@ class LightiningSceneService {
             error: 'User Not Found!'
         };
 
-        const lightScene = await LightiningScene.findById(lightSceneId).populate('rooms.config')   
+        const lightScene = await LightiningScene.findById(lightSceneId).populate('rooms.config')
         if (!lightScene) return {
             isError: true,
             statusCode: 404,
@@ -523,9 +539,9 @@ class LightiningSceneService {
         };
 
         let currentLight, lightConfig, roomConfig;
-        lightScene.rooms.forEach(room =>{
-            room.moodes.forEach(mood =>{
-                if(mood._id == lightId) {
+        lightScene.rooms.forEach(room => {
+            room.moodes.forEach(mood => {
+                if (mood._id == lightId) {
                     currentLight = mood
                     roomConfig = room.config
                     lightConfig = mood.type
@@ -533,14 +549,14 @@ class LightiningSceneService {
             })
         })
 
-        if(!currentLight) return {
+        if (!currentLight) return {
             isError: true,
             statusCode: 404,
             error: 'Light Not Found!'
         }
-        
+
         const config = roomConfig.lights.find(light => light.label == lightConfig)
-        if(!config || !config.canChangeColor) return {
+        if (!config || !config.canChangeColor) return {
             isError: true,
             statusCode: 400,
             error: 'Cannot change color'
@@ -556,7 +572,7 @@ class LightiningSceneService {
         }
     }
 
-    async updateLightStatus(userId, lightSceneId, lightId){
+    async updateLightStatus(userId, lightSceneId, lightId) {
         const user = await User.findById(userId);
         if (!user) return {
             isError: true,
@@ -564,7 +580,7 @@ class LightiningSceneService {
             error: 'User Not Found!'
         };
 
-        const lightScene = await LightiningScene.findById(lightSceneId)   
+        const lightScene = await LightiningScene.findById(lightSceneId)
         if (!lightScene) return {
             isError: true,
             statusCode: 404,
@@ -572,13 +588,13 @@ class LightiningSceneService {
         };
 
         let currentLight;
-        lightScene.rooms.forEach(room =>{
-            room.moodes.forEach(mood =>{
-                if(mood._id == lightId) currentLight = mood
+        lightScene.rooms.forEach(room => {
+            room.moodes.forEach(mood => {
+                if (mood._id == lightId) currentLight = mood
             })
         })
 
-        if(!currentLight) return {
+        if (!currentLight) return {
             isError: true,
             statusCode: 404,
             error: 'Light Not Found!'
@@ -593,13 +609,13 @@ class LightiningSceneService {
         }
     }
 
-    async addDefaultLightScenes(userId, seapod){
-        const bigBedroom5Lights = await RoomConfig.findOne({label: 'Big Bedroom 5 Lights'});
-        const twoBrightLights = await RoomConfig.findOne({label: 'Two Bright Lights'});
+    async addDefaultLightScenes(userId, seapod) {
+        const bigBedroom5Lights = await RoomConfig.findOne({ label: 'Big Bedroom 5 Lights' });
+        const twoBrightLights = await RoomConfig.findOne({ label: 'Two Bright Lights' });
 
         const day = new LightiningScene({
             source: "seapod",
-            isDefault: true, 
+            isDefault: true,
             sceneName: "Default Day LightScene",
             rooms: [
                 {
@@ -747,7 +763,7 @@ class LightiningSceneService {
         );
         await seapod.populate('lightScenes').execPopulate();
 
-        const userAtSeapod = seapod.users.find(user =>  user._id == userId);
+        const userAtSeapod = seapod.users.find(user => user._id == userId);
         if (!userAtSeapod) return {
             isError: true,
             statusCode: 404,
@@ -755,7 +771,7 @@ class LightiningSceneService {
         };
         userAtSeapod.lighting['selectedScene'] = day._id;
         await seapod.populate('users.lighting.selectedScene').execPopulate();
-        
+
         return seapod;
     }
 }
