@@ -318,7 +318,7 @@ class UserService {
     }
 
     async getAllUsers() {
-        const users = await User.find().select('-password -previousPasswords')
+        const users = await User.find().select('-password -previousPasswords -notificationSettings -actionHistorys -notifications -loginAuditTrials')
             .populate('seaPods')
             .populate('accessRequests')
             .populate('accessInvitation');

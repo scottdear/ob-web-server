@@ -43,15 +43,21 @@ module.exports = new mongoose.Schema({
         maxlength: 50,
         match: /[A-Za-z]./
     },
-    
+    languages: [{
+        type: String,
+        minlength: 3,
+        maxlength: 50,
+        match: /[A-Za-z]./
+    }],
+
     loginAuditTrials: [loginAuditTrial],
     notifications: [notification],
     actionHistorys: [actionHistory],
     previousPasswords: [String],
-    resetPasswordCode: {type:Number},
-    resetPasswordToken: {type:String},
-    resetPasswordExpires: {type:Date},
+    resetPasswordCode: { type: Number },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
     loginHistory: [loginHistory],
-    profileImageUrl:{type:String,default:""},
+    profileImageUrl: { type: String, default: "" },
     notificationSettings: [notificationSetting],
 });
