@@ -303,7 +303,6 @@ class LightiningSceneService {
                 lightiningScene = seapodUpdated.lightScenes
             } else if (source == 'user') {
                 const userIndex = seapodUpdated.users.findIndex(i => i._id === userId);
-                console.log(userIndex)
                 lightiningScene = seapodUpdated.users[userIndex].lighting.lightScenes
             }
 
